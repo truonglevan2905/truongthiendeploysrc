@@ -14,10 +14,10 @@
 		<div class="nav">
 			<ul class="bar">
 				<li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
-				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/members']"><i class="fa fa-group"></i>
+				<li *ngIf="checkedPremission=='3'||checkedPremission=='4'"><a [routerLink]="['/members']"><i class="fa fa-group"></i>
 						Members</a></li>
 				<li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
-				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH
+				<li *ngIf="checkedPremission=='3'||checkedPremission=='4'"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH
 						GIÁ</a></li>
 			</ul>
 			<ul class="left">
