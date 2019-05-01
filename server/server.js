@@ -35,6 +35,12 @@ app.use('/apicomment',apiComment);
 app.use('/apitopic',apiTopic);
 app.use('/apithread',apiThread);
 app.use('/apimail',apiEmail);
+app.use(express.static(__dirname + '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG'));
+
+app.get('*', function(req,res) {
+  // Replace the '/dist/<to_your_project_name>/index.html'
+  res.sendFile(path.join(__dirname+ '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG/index.html'));
+});
 var server=http.createServer(app);
 var io=require('../socketio/io').initialize(server);
 server.listen(3000,function(req,res){
