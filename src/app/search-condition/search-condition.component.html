@@ -1,0 +1,12 @@
+<div id="header">
+  <a href="/" title="Board index" id="logo"><img src="assets/styles/oxygen/imageset/logo.png" width="126"
+      height="42" alt="" title="" /></a>
+  <div class="search_box">
+    <form [formGroup]="searchForm" (submit)="onSearch()">
+      <fieldset>
+        <input formControlName="key" type="text" maxlength="128" title="Search for keywords" class=""
+          placeholder="Search for keywords" />
+      </fieldset>
+    </form>
+  </div>
+</div>

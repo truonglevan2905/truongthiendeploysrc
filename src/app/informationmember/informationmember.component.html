@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+<head>
+
+
+	<style>
+	 ul li{
+
+		display: inline;
+	 }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+</head>
+
+<body id="phpbb" class="section-viewtopic ltr">
+<div id="wrap">
+<a id="top" name="top" accesskey="t"></a>
+	<app-search-condition></app-search-condition>
+	<div class="nav">
+		<ul class="bar">
+			<li><a href="./index.php?style=747"><i class="fa fa-home"></i> Board index</a></li>
+			<li><a href="./memberlist.php?style=747"><i class="fa fa-group"></i> Members</a></li>
+			<li><a href="./faq.php?style=747"><i class="fa fa-info"></i> FAQ</a></li>
+			
+			
+		</ul>
+		<ul class="left">
+				<li><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
+				<li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
+				<li  *ngFor="let item of listMember"><a [routerLink]="['/informationmember']" title="Personal Information" accesskey="x" *ngIf="userName!=null"><img src="{{item.image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
+				
+				</a></li>
+				<li *ngFor="let item of listMember"><a  title="Logout" accesskey="x" *ngIf="userName!=null" (click)="logout()">Logout
+				
+				</a></li>
+			
+			
+
+
+			</ul>
+	</div>
+	<div class="container">
+	<div id="page-header">
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747" accesskey="h">Board index</a></li>
+				<li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=1">Test Category 1</a></li><li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></li>
+			</ul>
+			
+			
+		</div>
+	</div>
+
+	<a name="start_here"></a>
+	<div id="page-body">
+		
+
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body --><div style="display: none !important;">Unread forum<br /></div>
+
+<div class="clear"></div>
+
+
+	<div class="head">
+		<a href="#p3">Sticky</a>
+		<!-- Poster -->
+		<span class="white_label">
+			by <a href="./memberlist.php?style=747&amp;mode=viewprofile&amp;u=54"></a>
+		</span>
+	</div>
+	
+	<a id="unread"></a>
+	<div>
+
+			
+
+		
+     </div>   
+
+	<hr class="divider" />
+
+
+<div style="float:left;width:30%;height:auto;">
+   <div style="margin-left:50px;" *ngFor="let item of listMember">
+   <img src="{{item.image}}" style="width:80px;height:150px;margin-top: 20px;"/><br/>
+		<a>{{userName}}</a><br/>
+		<a (click)="openDialog()" style="margin-left: -30px;">Cập nhật thông tin</a>
+   </div>
+</div>
+<div style="float:right;width:68%;height:auto;" >
+	<h1 style="color:black;">THÔNG TIN TÀI KHOẢN</h1>
+	<div *ngFor="let item of listMember">
+  <form >
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="username" class="control-label">UserName:</label>
+         
+          <input type="text" class="form-control" name="username" disabled   [(ngModel)]="item.userName"  [ngModelOptions]="{standalone: true}"/>
+        </div>
+      </div>
+      <div class="form-group">
+          <div class="col-sm-12">
+            <label for="position" class="control-label">Position:</label>
+            <input type="text" class="form-control" name="position"  disabled  [(ngModel)]="item.position" [ngModelOptions]="{standalone: true}"/>
+            
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="address" class="control-label">Address:</label>
+            <input type="text" id="address" class="form-control"  disabled [(ngModel)]="item.address" [ngModelOptions]="{standalone: true}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="idnumber" class="control-label">IdNumber:</label>
+            <input type="text" id="idnumber" class="form-control"  disabled [(ngModel)]="item.idNumber" [ngModelOptions]="{standalone: true}"/>
+          </div>
+				</div>
+				<div class="form-group">
+          <div class="col-sm-12">
+            <label for="email" class="control-label">Email:</label>
+            <input type="text" id="email" class="form-control"  disabled [(ngModel)]="item.email" [ngModelOptions]="{standalone: true}"/>
+          </div>
+				</div>
+				
+				<div class="form-group">
+          <div class="col-sm-12">
+            <label for="phonenumber" class="control-label">PhoneNumber:</label>
+            <input type="text" id="phonenumber" class="form-control"  disabled [(ngModel)]="item.phoneNumber" [ngModelOptions]="{standalone: true}"/>
+          </div>
+				</div>
+				<div class="form-group">
+          <div class="col-sm-12">
+            <label for="joindate" class="control-label">Join Date:</label>
+            <input type="text" id="joindate" class="form-control"  disabled [(ngModel)]="item.joinDate" [ngModelOptions]="{standalone: true}"/>
+          </div>
+				</div>
+    </form>
+ </div>
+  </div>
+
+	
+
+
+
+
+<div style="clear: both;"></div>
+
+	<div class="head"><a href="./viewonline.php?style=747">Who is online</a></div>
+	<div class="middle">Users browsing this forum: No registered users and 3 guests</div>
+</div>
+
+	<div id="page-footer">
+		
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747">Board index</a></li>
+				
+			</ul>
+			<ul class="bread">
+				<li class="icon-team"><a href="./memberlist.php?style=747&amp;mode=leaders">The team</a></li><li class="icon-cookie"><a href="./ucp.php?style=747&amp;mode=delete_cookies">Delete all board cookies</a></li>
+				<li class="icon-time">All times are UTC </li>
+			</ul>
+		</div>
+
+		<div class="copyright">Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
+			
+		</div>
+	</div>
+</div>
+	<div class="footer">
+		Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
+	</div>
+</div>
+
+<div>
+	<a id="bottom" name="bottom" accesskey="z"></a>
+	
+</div>
+
+</body>
+</html>

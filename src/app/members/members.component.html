@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+
+<body id="phpbb" class="section-index ltr">
+	<div id="wrap">
+		<a id="top" name="top" accesskey="t"></a>
+		<app-search-condition></app-search-condition>
+		<div class="nav">
+			<ul class="bar">
+				<li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
+				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/members']"><i class="fa fa-group"></i>
+						Members</a></li>
+				<li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
+				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH
+						GIÁ</a></li>
+			</ul>
+			<ul class="left">
+
+				<li *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
+				<li><a [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i>
+						Login</a></li>
+				<li *ngIf="userName!=null"><a [routerLink]="['/informationmember']" title="Personal Information" accesskey="x"><img
+						 src="{{image}}" style="width:30px;height:30px;margin-top:-10px; " />{{userName}}
+
+					</a></li>
+				<li *ngIf="userName!=null"><a title="Logout" accesskey="x" (click)="logout()">Logout
+
+					</a></li>
+
+
+
+
+			</ul>
+		</div>
+		<div class="container">
+			<div id="page-header">
+				<div class="breadcrumbs">
+					<ul class="crumb">
+						<li class="icon-home"><a href="/" accesskey="h">Board index</a></li>
+					</ul>
+				</div>
+			</div>
+			<a name="start_here"></a>
+			<div id="page-body">
+				<form method="post" action="memberlist_style_747_sid_47ef40484cd2d7764257c87c6557004b.html">
+					<h2 class="solo">Members</h2>
+					<div class="panel">
+						<div class="inner"><span class="corners-top"><span></span></span>
+							<ul class="linklist">
+								<li>
+									<a href="memberlist_style_747_mode_searchuser_sid_47ef40484cd2d7764257c87c6557004b.html">Find a member</a>
+									&bull;
+
+
+									<form action="search_style_747_sid_47ef40484cd2d7764257c87c6557004b.html" method="get" id="search">
+										<fieldset>
+											<input type="text" [(ngModel)]="searchTopic" maxlength="150" title="Search for keywords" class=""
+											 placeholder="Search for keywords" />
+										</fieldset>
+									</form>
+
+
+								</li>
+
+							</ul>
+							<span class="corners-bottom"><span></span></span>
+						</div>
+					</div>
+					<div class="forumbg forumbg-table custom">
+						<div class="inner"><span class="corners-top"><span></span></span>
+							<table class="table1" cellspacing="1" id="memberlist">
+								<thead>
+									<tr>
+										<th class="name"><span class="rank-img"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_m_sd_a.html">Position</a></span><a
+											 href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_a_sd_a.html">Username</a></th>
+										<th class="posts"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_d_sd_a.html#memberlist">activeStatus</a></th>
+										<th class="info"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_f_sd_a.html#memberlist">bannedStatus</a></th>
+										<th class="joined"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_c_sd_d.html#memberlist">Joined</a></th>
+									</tr>
+								</thead>
+								<tbody *ngFor="let cus of customers |paginate: { itemsPerPage: 10, currentPage: p }">
+									<tr class="bg1">
+										<td><span class="rank-img">{{cus.position}}</span><a routerLink="/memberManage/{{cus.userName}}" style="color: #AA0000;"
+											 class="username-coloured">{{cus.userName}}</a></td>
+										<td class="posts"><a href="search_style_747_author_id_2_sr_posts_sid_47ef40484cd2d7764257c87c6557004b.html"
+											 title="Search user’s posts">{{cus.activeStatus}}</a></td>
+										<td class="info">
+											<div><a href="http://www.phpBB3styles.net/" title="Visit website: http://www.phpBB3styles.net/">{{cus.bannedStatus}}</a></div>
+										</td>
+										<td>{{cus.joinDate}}</td>
+									</tr>
+
+
+								</tbody>
+							</table>
+							<span class="corners-bottom"><span></span></span>
+						</div>
+					</div>
+				</form>
+				<hr />
+				<ul class="linklist">
+					<li class="rightside pagination">
+						<pagination-controls (pageChange)="p = $event"></pagination-controls>
+					</li>
+				</ul>
+				<form method="post" id="jumpbox" action="index.html" onsubmit="if(this.f.value == -1){return false;}">
+					<fieldset class="jumpbox">
+						<label for="f" accesskey="j">Jump to:</label>
+						<select name="f" id="f" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
+							<option value="-1">Select a forum</option>
+							<option value="-1">------------------</option>
+							<option value="1">Test Category 1</option>
+							<option value="2">&nbsp; &nbsp;Test Forum 1</option>
+							<option value="3">&nbsp; &nbsp;Test Forum 2</option>
+							<option value="4">&nbsp; &nbsp;Test Forum 3</option>
+							<option value="6">&nbsp; &nbsp;&nbsp; &nbsp;Test Forum 4</option>
+							<option value="5">&nbsp; &nbsp;Test Forum 5</option>
+							<option value="7">&nbsp; &nbsp;Test Forum 6</option>
+							<option value="9">&nbsp; &nbsp;Test Forum 7</option>
+							<option value="8">phpBB3styles.net</option>
+							<option value="14">&nbsp; &nbsp;Styles Support</option>
+							<option value="18">&nbsp; &nbsp;Styles Request</option>
+							<option value="13">&nbsp; &nbsp;Feedback & Tips</option>
+							<option value="12">&nbsp; &nbsp;Announcements</option>
+						</select>
+						<input type="submit" value="Go" class="button2" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div>
+		<a id="bottom" name="bottom" accesskey="z"></a>
+	</div>
+</body>

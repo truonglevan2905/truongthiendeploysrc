@@ -1,0 +1,51 @@
+
+<h2 mat-dialog-title>Cập nhật thông tin</h2>
+<mat-dialog-content>
+   
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      
+            <div class="form-group">
+                <div class="col-sm-12">
+                  <label for="password" class="control-label">Password:</label>
+                  <input type="text" class="form-control" id="password" name="password" placeholder="Password" formControlName="password" readonly="true"/>
+                  
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label for="address" class="control-label">Address:</label>
+                  <input type="text" id="address"  class="form-control" name="address" class="form-control"  formControlName="address" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label for="idnumber" class="control-label">IdNumber:</label>
+                  <input type="text" id="idnumber" class="form-control" name="idnumber"  formControlName="idnumber"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label for="email" class="control-label">Email:</label>
+                  <input type="text" id="email" class="form-control"  name="email"  formControlName="email"  />
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <label for="phonenumber" class="control-label">PhoneNumber:</label>
+                  <input type="text" id="phonenumber" class="form-control" name="phonenumber"  formControlName="phonenumber"  />
+                </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-sm-12">
+                    <label for="image" class="control-label">Image:</label>
+                    <input type="file" id="image" class="form-control" name="image" />
+                  </div>
+                </div>
+              <button mat-raised-button type="submit">Cập nhật</button>
+          </form>
+       
+</mat-dialog-content>
+<mat-dialog-actions style="float:right;">
+  <button mat-raised-button (click)="closeDialog()">Close</button>
+</mat-dialog-actions>

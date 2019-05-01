@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+<head>
+
+  
+	<style>
+	 ul li{
+
+		display: inline;
+   }
+   #customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+  width: 100%;
+}
+
+#customers td, #customers th {
+ 
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+	</style>
+	
+</head>
+
+<body id="phpbb" class="section-viewtopic ltr">
+<div id="wrap">
+<a id="top" name="top" accesskey="t"></a>
+	<div id="header">
+		<div id="header">
+			<a href="/" title="Board index" id="logo"><img src="assets/styles/oxygen/imageset/logo.png" width="126" height="42" alt="" title="" /></a>
+			<div class="search_box">
+				<form action="search_style_747_sid_47ef40484cd2d7764257c87c6557004b.html" method="get" id="search">
+					<fieldset>
+						<input name="keywords" type="text" maxlength="128" title="Search for keywords" class="" placeholder="Search for keywords" />
+					</fieldset>
+				</form>
+			</div>
+		  </div>
+		<a href="./index.php?style=747" title="Board index" id="logo"><img src="./styles/oxygen/imageset/logo.png" width="126" height="42" alt="" title="" /></a>
+		
+	
+		
+		
+	</div>
+	<div class="nav" >
+			<ul class="bar">
+				<li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
+				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
+				<li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
+			<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
+			</ul>
+			<ul class="left" >
+			 
+				<li  *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
+				<li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
+				<li *ngIf="userName!=null"  ><a [routerLink]="['/informationmember']" title="Personal Information"  accesskey="x"><img src="{{image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
+				
+				</a></li>
+				<li  *ngIf="userName!=null"><a  title="Logout" accesskey="x"  (click)="logout()">Logout
+				
+				</a></li>
+			
+			
+
+
+			</ul>
+		</div>
+	<div class="container">
+	<div id="page-header">
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747" accesskey="h">Board index</a></li>
+				<li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=1">Test Category 1</a></li><li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></li>
+			</ul>
+			
+			
+		</div>
+	</div>
+
+	<a name="start_here"></a>
+	<div id="page-body">
+		
+<h2><a href="./viewtopic.php?style=747&amp;f=2&amp;t=3">Sticky</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body --><div style="display: none !important;">Unread forum<br /></div>
+
+<div class="topic-actions">
+
+	
+
+	
+		<div class="search-box">
+			<form method="get" id="topic-search" action="./search.php?style=747">
+			<fieldset>
+				<input class="inputbox search tiny"  type="text" name="keywords" id="search_keywords" size="20" value="Search this topic…" onclick="if(this.value=='Search this topic…')this.value='';" onblur="if(this.value=='')this.value='Search this topic…';" />
+				<input class="button2" type="submit" value="Search" />
+				<input type="hidden" name="t" value="3" />
+<input type="hidden" name="sf" value="msgonly" />
+<input type="hidden" name="style" value="747" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+	
+	
+
+</div>
+<div class="clear"></div>
+
+
+	<div class="head">
+		<a href="#p3">Hộp thư</a>
+		<!-- Poster -->
+	
+	</div>
+	
+
+<div>
+<div style="float:left;width:20% ;background: hsla(hue, saturation, lightness, alpha)">
+ <p><a href="#"><img src="assets/img/hopthu.png" style="width:30px;height:20px;">Hộp thư đến</a></p>
+ <p><a href="#"><img src="assets/img/mail.png">Soạn thư</a></p>
+ <p><a href="#">Xoá thư</a></p>
+ 
+</div>
+<div style="float:right;width:80% ;">
+		<table id="customers" *ngFor="let item of messageArray">
+	  
+   
+				<tr>
+				
+				  <td><input type="checkbox"/>{{item.text}}</td>
+				  <td>TopicName:{{item.topicname}}</td>
+				  <td>{{item.ngay}}</td>
+				   
+				</tr>
+				
+				 
+			  </table>
+  <table id="customers" *ngFor="let item of email">
+	  
+   
+    <tr>
+    
+	  <td><input type="checkbox"/>{{item.content}}</td>
+	  <td>TopicName:{{item.topicName}}</td>
+      <td>{{item.createdEmailDate}}</td>
+	   
+    </tr>
+    
+     
+  </table>
+</div>
+</div>
+	
+
+	
+
+
+
+<div style="clear: both;"></div>
+
+	<div class="head"><a href="./viewonline.php?style=747">Who is online</a></div>
+	<div class="middle">Users browsing this forum: No registered users and 3 guests</div>
+</div>
+
+	
+</div>
+	<div class="footer">
+		Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
+	</div>
+</div>
+
+<div>
+	<a id="bottom" name="bottom" accesskey="z"></a>
+	
+</div>
+
+</body>
+</html>

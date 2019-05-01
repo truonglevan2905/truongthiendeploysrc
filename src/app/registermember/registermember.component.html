@@ -1,0 +1,106 @@
+
+<html>
+  <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="assets/lid/bootstrap.min.css">
+    <title>Google Recaptcha Tutorial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  
+  </head>
+    <body>
+  
+  <div class="container"><br />
+   
+    <h1>ĐĂNG KÝ THÀNH VIÊN</h1><br />
+    <form [formGroup]="reactiveForm" (ngSubmit)="onClickSubmit(registerlogin.value)" #registerlogin ="ngForm">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+          <label for="username" >User Name:</label>
+          <label *ngIf="submitted && f.username.errors" class="invalid-feedback" style="float: right;color: red;">
+            <label *ngIf="f.username.errors.required" style="color: red;">UserName is required</label>
+            </label>
+          <input type="text" class="form-control" name="username"  formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" >
+        </div>
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+          <label for="password">Password:</label>
+          <label *ngIf="submitted && f.password.errors" class="invalid-feedback" style="float: right;">
+            <div *ngIf="f.password.errors.required" style="color: red;">Password is required</div>
+            <div *ngIf="f.password.errors.minlength" style="color: red;">Password must be at least 6 characters</div>
+          </label>
+          <input type="password" class="form-control"  formControlName="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+         
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="form-group col-md-4">
+        <label for="fullname">Address:</label>
+        <label *ngIf="submitted && f.address.errors" class="invalid-feedback" style="float: right;color: red;">
+          <div *ngIf="f.address.errors.required" style="color: red;">Address is required</div>
+         
+        </label>
+        <input type="text" class="form-control" name="address"   formControlName="address">
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+          <label for="idnumber">IDNumber:</label>
+          <label *ngIf="submitted && f.idnumber.errors" class="invalid-feedback" style="float: right;">
+            <div *ngIf="f.idnumber.errors.required" style="color: red;">IDNumber is required</div>
+            <div *ngIf="f.idnumber.errors.minlength" style="color: red;">IDNumber must be at least 10 characters</div>
+            <div *ngIf="f.idnumber.errors.maxlength" style="color: red;">IDNumber must be at less 12 characters</div>
+            <div *ngIf="f.idnumber.errors.pattern" style="color: red;">IDNumber must be a number</div>
+          </label>
+          <input type="text" class="form-control" name="idnumber"  formControlName="idnumber">
+        </div>
+      
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+          <label for="email">Email:</label>
+          <label *ngIf="submitted && f.email.errors" class="invalid-feedback" style="float:right;">
+            <div *ngIf="f.email.errors.required" style="color: red;">Email is required</div>
+            <div *ngIf="f.email.errors.email" style="color: red;">Email must be a valid email address</div>
+          </label>
+          <input type="text" class="form-control" name="email"  formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" >
+        </div>
+        <div class="col-md-4"></div>
+        <div class="form-group col-md-4">
+          <label for="phonenumber">PhoneNumber:</label>
+          <label *ngIf="submitted && f.phonenumber.errors" class="invalid-feedback" style="float: right;">
+            <div *ngIf="f.phonenumber.errors.required" style="color: red;">PhoneNumber is required</div>
+            <div *ngIf="f.phonenumber.errors.minlength" style="color: red;">PhoneNumber must be at least 10 characters</div>
+            <div *ngIf="f.phonenumber.errors.maxlength" style="color: red;">PhoneNumber must be at less 12 characters</div>
+            <div *ngIf="f.phonenumber.errors.pattern" style="color: red;">PhoneNumber must be a number</div>
+          </label>
+          <input type="text" class="form-control" name="phonenumber"   formControlName="phonenumber">
+        </div>
+      </div>
+      <div>
+        
+        <div  style="float:right;">
+          <button type="submit" class="btn btn-success" style="margin-left:38px">Đăng ký</button>
+          <button type="button" (click)="goBack()" class="btn btn-success" style="margin-left:38px">Về trang chủ</button>
+        </div>
+       
+        
+      </div>
+  
+    
+  
+        </form>
+  </div>
+  
+  
+  </body>
+  </html>
+  

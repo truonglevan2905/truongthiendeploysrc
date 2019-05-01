@@ -1,0 +1,22 @@
+
+<h2 mat-dialog-title>PHẢN HỒI HỦY BÀI VIẾT</h2>
+<mat-dialog-content>
+ <p>Email người nhận:<input type="text"  [(ngModel)]="email" /></p>
+  
+  <angular-editor [(ngModel)]="htmlContent" [config]="config" style="background: honeydew;"></angular-editor>
+  
+   
+  <div class="topic-actions">
+    <div class="buttons movedown">
+    
+      <button  class="butn"  (click)="sendEmail()">Send Email</button>
+    
+    </div>
+  
+  </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions style="float:right;">
+  <button mat-raised-button (click)="closeDialog()">Close</button>
+</mat-dialog-actions>

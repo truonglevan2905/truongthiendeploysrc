@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	
+</head>
+
+<body id="phpbb" class="section-index ltr">
+
+	<div id="wrap">
+		<a id="top" name="top" accesskey="t"></a>
+		<app-search-condition></app-search-condition>
+
+
+		<div class="nav" >
+			<ul class="bar">
+				<li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
+				<li ><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
+				<li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
+			<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
+			</ul>
+			<ul class="left" >
+			 
+				<li  *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
+				<li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
+				<li *ngIf="userName!=null"  ><a [routerLink]="['/informationmember']" title="Personal Information"  accesskey="x"><img src="{{image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
+				
+				</a></li>
+				<li  *ngIf="userName!=null"><a  title="Logout" accesskey="x"  (click)="logout()">Logout
+				
+				</a></li>
+			
+			
+
+
+			</ul>
+		</div>
+		<div class="container">
+			<div id="page-header">
+				<div class="breadcrumbs">
+					<ul class="crumb">
+						<li class="icon-home"><a href="/" accesskey="h">Board index</a></li>
+					</ul>
+				</div>
+			</div>
+			<a name="start_here"></a>
+			<div id="page-body">
+				<ul class="linklist">
+					<li><a href="search_style_747_search_id_unanswered_sid_47ef40484cd2d7764257c87c6557004b.html">View unanswered
+							posts</a> &bull; <a
+							href="search_style_747_search_id_active_topics_sid_47ef40484cd2d7764257c87c6557004b.html">View active
+							topics</a></li>
+				</ul>
+				<div class="inner">
+					<div class="forum_head">
+						<ul class="topiclist">
+							<li class="header">
+								<dl class="icon">
+									<dt style="color: red">Đại sảnh</dt>
+									<dd class="topics"><dfn>Topics</dfn></dd>
+									<dd class="posts"><dfn>Posts</dfn></dd>
+									<dd class="lastpost"><dfn>Last post</dfn></dd>
+								</dl>
+							</li>
+						</ul>
+					</div>
+					<div class="forum_mid">
+						<ul class="topiclist posts">
+							<app-topics></app-topics>
+						</ul>
+					</div>
+				</div>
+				<div *ngFor="let category of lstCategory"
+				[class.selected]="category === categorySelected"
+					(click)="onSelectCate(category)">		
+					<div class="inner">
+						<div class="forum_head">
+							<ul class="topiclist">
+								<li class="header">
+									<dl class="icon">
+										<dt>{{category}}</dt>
+										<dd class="topics"><dfn>Topics</dfn></dd>
+										<dd class="posts"><dfn>Posts</dfn></dd>
+										<dd class="lastpost"><dfn>Last post</dfn></dd>
+									</dl>
+								</li>
+							</ul>
+						</div>
+						<div *ngIf="categorySelected === category" class="forum_mid">
+								<ul class="topiclist posts">
+										<app-topics [categorySelected]="categorySelected"></app-topics>
+								</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="head">
+					Information
+				</div>
+				<div class="middle">
+					<div class="login">
+						<form method="post" action="S003" class="headerspace">
+							<h3><a href="S003">Login</a>&nbsp; &bull; &nbsp;<a href="S004">Register</a></h3>
+							<fieldset class="quick-login">
+								<label for="username">Username:</label>&nbsp;<input type="text" name="username" id="username" size="10"
+									class="inputbox" title="Username" />
+								<label for="password">Password:</label>&nbsp;<input type="password" name="password" id="password"
+									size="10" class="inputbox" title="Password" />
+								| <label for="autologin">Log me on automatically each visit <input type="checkbox" name="autologin"
+										id="autologin" /></label>
+								<input type="submit" name="login" value="Login" class="button2" />
+								<input type="hidden" name="redirect"
+									value="./index.php?style=747&amp;style=747&amp;sid=47ef40484cd2d7764257c87c6557004b" />
+							</fieldset>
+						</form>
+					</div>
+					<div class="whos_online">
+						<h3><a href="viewonline_style_747_sid_47ef40484cd2d7764257c87c6557004b.html">Who is online</a></h3>
+						<p>In total there are <strong>58</strong> users online :: 6 registered, 0 hidden and 52 guests (based on
+							users active over the past 10 minutes)<br />Most users ever online was <strong>339</strong> on 21 Dec
+							2013, 00:39<br /> <br />Registered users: <span style="color: #9E8DA7;" class="username-coloured">Baidu
+								[Spider]</span>, <span style="color: #9E8DA7;" class="username-coloured">Bing [Bot]</span>, <span
+								style="color: #9E8DA7;" class="username-coloured">Dotbot [Bot]</span>, <span style="color: #9E8DA7;"
+								class="username-coloured">Exabot [Bot]</span>, <span style="color: #9E8DA7;"
+								class="username-coloured">Google [Bot]</span>, <span style="color: #9E8DA7;"
+								class="username-coloured">Seznam.cz [Bot]</span>
+							<br />Legend: <a style="color:#AA0000"
+								href="memberlist_style_747_mode_group_g_5_sid_47ef40484cd2d7764257c87c6557004b.html">Administrators</a>,
+							<a style="color:#FF00CC"
+								href="memberlist_style_747_mode_group_g_7_sid_47ef40484cd2d7764257c87c6557004b.html">Style Authors</a>
+						</p>
+					</div>
+					<div class="chart">
+						<h3>Statistics</h3>
+						<p>Total posts <strong>8286</strong> &bull; Total topics <strong>3102</strong> &bull; Total members
+							<strong>6487</strong> &bull; Our newest member <strong><a
+									href="memberlist_style_747_mode_viewprofile_u_11093_sid_47ef40484cd2d7764257c87c6557004b.html">psushanth</a></strong>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<a id="bottom" name="bottom" accesskey="z"></a>
+	</div>
+</body>
+</html>
