@@ -10,31 +10,7 @@
 		<a id="top" name="top" accesskey="t"></a>
 
 		<app-search-condition></app-search-condition>
-
-
-		<div class="nav" >
-			<ul class="bar">
-				<li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
-				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
-				<li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
-			<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
-			</ul>
-			<ul class="left" >
-			 
-				<li  *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
-				<li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
-				<li *ngIf="userName!=null"  ><a [routerLink]="['/informationmember']" title="Personal Information"  accesskey="x"><img src="{{image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
-				
-				</a></li>
-				<li  *ngIf="userName!=null"><a  title="Logout" accesskey="x"  (click)="logout()">Logout
-				
-				</a></li>
-			
-			
-
-
-			</ul>
-		</div>
+	<app-link-bar></app-link-bar>
 		<div class="container">
 			<div id="page-header">
 				<div class="breadcrumbs1">
@@ -54,34 +30,31 @@
 				<!-- Code right here -->
 				<div *ngIf="lstResult.length > 0">
 					
-					<div class="middle" *ngFor="let thread of lstResult">
-						<a routerLink="/thread/{{thread.threadid}}">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL-ahFmvGAylltkMR4FastYsyGdT8Bzh1zGl1arJO7wsKo8Mo4Ig"
+					<div class="middle" *ngFor="let thread of lstResult | paginate: { itemsPerPage: 10, currentPage: p }">
+						<a routerLink="/thread/{{thread.threadId}}">
+							<img src="{{thread.imageThread}}"
 							style="width: 26%; height: 150px;">
 						</a>
 						<div style="width: 72%; float:right;">
-							<a routerLink="/thread/{{thread.threadid}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
+							<a routerLink="/thread/{{thread.threadId}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
 							<br>
+							<div *ngIf="thread.commentList.length>0">
 							<label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content.substring(0, 40)}}...</label>
 							<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content}}...</label>
+							</div>
 							<br>
 							</a>
 							<div style="font-size: 10px; bottom: 0">
-							<b>Tạo bởi:</b> &nbsp; <a routerLink="/aa" routerLinkActive="active" style="text-decoration: none; font-size: 12px; color:dodgerblue">{{thread.createdBy}}</a>
+							<b>Tạo bởi:</b> &nbsp; <a routerLink="/memberManage/{{thread.createdBy}}" routerLinkActive="active" style="text-decoration: none; font-size: 12px; color:dodgerblue">{{thread.createdBy}}</a>
 							&nbsp; - &nbsp;Vào lúc: {{thread.createdDate | date: 'hh:mm dd/MM/yyyy'}}
 							&nbsp; - &nbsp;Lượt xem: {{thread.numberOfViews}}
 							&nbsp; - &nbsp;Số bình luận: {{thread.numberOfComments}}
 							<br>
-							<fb-like url="https://www.google.com/search?q=thread/{{thread.threadid}}"></fb-like>
+							<fb-like url="https://www.google.com/search?q=thread/{{thread.threadId}}"></fb-like>
 							</div>
 						</div>
 					</div>
-					<mat-paginator [length]="length"
-							[pageSize]="pageSize"
-							[pageSizeOptions]="pageSizeOptions"
-							[showFirstLastButtons]="true"
-							(page)="changePage($event)">
-				</mat-paginator>
+					<pagination-controls (pageChange)="p = $event" ></pagination-controls>
 				</div>
 				
 				<!-- Code end here -->

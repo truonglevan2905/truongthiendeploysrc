@@ -1,88 +1,141 @@
 import { Component, OnInit } from '@angular/core';
-import {Threads} from 'models/Threads.js';
-import {ThreadService} from '../thread.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
-import {DialoginvalidcomponentComponent} from '../dialoginvalidcomponent/dialoginvalidcomponent.component';
-import {Router} from "@angular/router";
-import {Emails} from 'models/Emails.js';
-import {MembersService} from '../members.service'; 
+import { Threads } from 'models/Threads.js';
+import { ThreadService } from '../thread.service';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SocketService } from '../socket.service';
+import { DialoginvalidcomponentComponent } from '../dialoginvalidcomponent/dialoginvalidcomponent.component';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { Emails } from 'models/Emails.js';
+import { MembersService } from '../members.service';
+
 @Component({
   selector: 'app-checktopics',
   templateUrl: './checktopics.component.html',
   styleUrls: ['./checktopics.component.css']
 })
 export class ChecktopicsComponent implements OnInit {
-       thread:Threads[]=[];
-      animal:String;
-      userName:String;
-      email1:Emails;
-      file:any[]=[];
-      checkedPremission:String;
-    image:String;
-  constructor(public threadService:ThreadService,
+  thread: Threads[] = [];
+  animal: String;
+  userName: String;
+  email1: Emails;
+  search: any;
+  file: any[] = [];
+  
+ 
+  checkedPremission: String;
+  image: String;
+  constructor(public threadService: ThreadService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
-    public membersService:MembersService
-    ) {
-      this.userName=localStorage.getItem("sessionusername");
-      this.checkedPremission=localStorage.getItem("sessionpremission");
-     }
-     loadUserName():void{
-     
-      this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-        data.forEach((item,index)=>{
-            this.image=item.image;
-        })
-        console.log(this.image);
-       });
-    }
+    public socketService: SocketService,
+    public membersService: MembersService
+  ) {
+    this.userName = localStorage.getItem("sessionusername");
+    this.checkedPremission = localStorage.getItem("sessionpremission");
+    this.socketService.newMessageReceivedCheckThread().subscribe(data=>{
+         this.thread=data;
+    })
+    this.socketService.newMessageRemoveThreadId().subscribe(data=>{
+      this.thread=data;
+    })
+   
+  }
+  loadUserName(): void {
+
+    this.membersService.getMemberByUsername(this.userName).subscribe(data => {
+      data.forEach((item, index) => {
+        this.image = item.image;
+      })
+
+    });
+  }
+  onSearch(data) {
+    console.log(data);
+  }
   ngOnInit() {
    this.auThenThreads();
-   this.loadUserName();
-  }
+    this.loadUserName();
 
-  auThenThreads():void{
-    this.threadService.checkThreads().subscribe(data=>this.thread=data);
-    console.log("3232323223"+this.thread);
   }
- 
-  responseAdmin(data,data1):void{
-   
-    this.email1=
+  
+  auThenThreads(): void {
+    this.threadService.checkThreads().subscribe(data =>{
+      this.thread=data;
+      //  data.forEach((item,index)=>{
+      //      if(item.commentList.length>0){
+             
+      //      }
+      //  })
+           
+        
+    });
+    
+  }
+  removeAdmin(data,data1,data2,data3):void{
+    this.email1 =
     {
-      topicName:data1,
-      userName:localStorage.getItem("sessionusername"),
-      content:"Bài viết của bạn đã được đánh giá phù hợp với nội dung hệ thống yêu cầu",
-      status:false
-    }    
-    this.threadService.updateStatusThreads(data).subscribe(x => console.log('Observer got a next value: ' + x),
+      topicName: data1,
+      userName:data3,
+      content: "Bài viết của bạn đã được không phù hợp",
+      status: false
+    }
+    this.threadService.addEmail(this.email1).subscribe(x => console.log('Observer got a next value: ' + x),
     err => console.log("success"),
     () => console.log('Observer got a complete notification')
   );
-  this.threadService.addEmail(this.email1).subscribe(x => console.log('Observer got a next value: ' + x),
-  err => console.log("success"),
-  () => console.log('Observer got a complete notification')   
-  );
-  this.router.navigate(['danhgiacheck']);   
-
-  
+  this.threadService.deleteTheadId(data2);
+  this.socketService.sendMessageRemoveThreadId({id:data,threadid:data2,username:localStorage.getItem("sessionusername")});
+  this.showError("Bài viết  xóa thành công");
+//   this.threadService.deleteTheadId(data2).subscribe(x => console.log('Observer got a next value: ' + x),
+//   err => console.log("success"),
+//   () => console.log('Observer got a complete notification')
+// );
+// location.reload(true);
   }
-  openDialog(): void {
+  responseAdmin(data, data1,data2,data3): void {
+
+    this.email1 =
+      {
+        topicName: data1,
+        userName:data3,
+        content: "Bài viết của bạn đã được đánh giá phù hợp",
+        status: false
+      }
+      this.threadService.addEmail(this.email1).subscribe(x => console.log('Observer got a next value: ' + x),
+      err => console.log("success"),
+      () => console.log('Observer got a complete notification')
+    );
+    this.threadService.updateStatusThreads(data).subscribe(x => console.log('Observer got a next value: ' + x),
+      err => console.log("success"),
+      () => console.log('Observer got a complete notification')
+    );
+   
+    this.socketService.SendMessageCheckThread({id:data,threadid:data2,username:localStorage.getItem("sessionusername")});
+ 
+ this.showError("Kiểm duyệt thành công cho bài viết"+data1);
+  }
+  openDialog(data): void {
+  this.threadService.deleteTheadId(data);
     const dialogRef = this.dialog.open(DialoginvalidcomponentComponent, {
-      
-        width: '750px'
-       
+
+      width: '750px'
+
     });
     dialogRef.afterClosed().subscribe(result => {
       this.animal = result;
     });
   }
-  logout():void{
+  showError(error: String): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: { errorMsg: error }, width: '250px'
+    });
+  }
+  logout(): void {
     window.localStorage.clear();
     location.reload(true);
-  
-   
-    }
+
+
+  }
 }

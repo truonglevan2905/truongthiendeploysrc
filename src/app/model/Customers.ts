@@ -6,9 +6,10 @@ export class Customers{
     address:String;
     idNumber:Number;
     email:String;
-    phoneNumber:Number;
+    phoneNumber: String;
     image:String;
     bannedStatus:String;
     activeStatus:boolean;
+    onlineStatus:Boolean;
     
 }

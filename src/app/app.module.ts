@@ -32,7 +32,7 @@ import { CreatetopicComponent } from './createtopic/createtopic.component';
 import { HopthuComponent } from './hopthu/hopthu.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SearchConditionComponent } from './search-condition/search-condition.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatSnackBarModule } from '@angular/material';
 import { CreatethreadComponent } from './createthread/createthread.component';
 import { MatPaginatorModule } from '@angular/material';
 import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
@@ -42,25 +42,36 @@ import { MatFormFieldModule, MatSelectModule} from '@angular/material';
 import { InformationmemberComponent } from './informationmember/informationmember.component';
 import { DialoginvalidcomponentComponent } from './dialoginvalidcomponent/dialoginvalidcomponent.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { FormatdataPipe } from '../app/pipe/formatdata.pipe';
+import { SortDatePipe } from '../app/pipe/sort-date.pipe';
+import { SorthopthuPipe } from '../app/pipe/sorthopthu.pipe';
+import { AnnouncementAdminComponent } from './announcement-admin/announcement-admin.component';
+import { MatProgressSpinnerModule } from '@angular/material';
+import { ProgressSpinnerDialogComponentComponent } from './progress-spinner-dialog-component/progress-spinner-dialog-component.component';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import { LinkBarComponent } from './link-bar/link-bar.component';
+import { ChatComponent } from './chat/chat.component';
+import { VideocallComponent } from './videocall/videocall.component';
+
 const configsocket: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('298608384746-7h4kc2475k4u337dcbdu27f9llqsh4j6.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com')
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('269883347224444')
+    provider: new FacebookLoginProvider('561602290896109')
   },
   {
     id: LinkedInLoginProvider.PROVIDER_ID,
     provider: new LinkedInLoginProvider('78iqy5cu2e1fgr')
   }
 ]);
-
 export function provideConfig() {
   return config;
 }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,6 +95,14 @@ export function provideConfig() {
     MemberManagementComponent,
     InformationmemberComponent,
     DialoginvalidcomponentComponent,
+    FormatdataPipe,
+    SortDatePipe,
+    SorthopthuPipe,
+    AnnouncementAdminComponent,
+    ProgressSpinnerDialogComponentComponent,
+    LinkBarComponent,
+    ChatComponent,
+    VideocallComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +118,10 @@ export function provideConfig() {
     , MatPaginatorModule
     , JwSocialButtonsModule
     , MatFormFieldModule
-    , MatSelectModule,
+    , MatSelectModule
+    , MatSnackBarModule
+    , NotifierModule,
+    MatProgressSpinnerModule,
     SocketIoModule.forRoot(configsocket),
     RouterModule.forRoot([
       { path: 'login', component:ChecktopicsComponent },
@@ -116,7 +138,7 @@ export function provideConfig() {
     useFactory: provideConfig
   }],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorDialogComponent,DialoginvalidcomponentComponent,CreatetopicComponent]
+  entryComponents: [ErrorDialogComponent,DialoginvalidcomponentComponent,CreatetopicComponent, ProgressSpinnerDialogComponentComponent]
  
 })
 export class AppModule { }

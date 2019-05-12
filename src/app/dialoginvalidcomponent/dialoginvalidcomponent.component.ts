@@ -6,6 +6,7 @@ import {Topics} from 'models/Topics';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {Threads} from 'models/Threads.js';
 import {ThreadService } from '../thread.service';
+import {MembersService} from '../members.service';
 @Component({
   selector: 'app-dialoginvalidcomponent',
   templateUrl: './dialoginvalidcomponent.component.html',
@@ -18,7 +19,7 @@ export class DialoginvalidcomponentComponent implements OnInit {
   userName:String;
   name = 'Angular 6';
   htmlContent='';
-  email='pr.hoangthien@gmail.com';
+  email:String;
   thread:Threads;
   config: AngularEditorConfig = {
     editable: true,
@@ -47,28 +48,43 @@ export class DialoginvalidcomponentComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
      private fb: FormBuilder,
      public dialog: MatDialog,
-     public threadService:ThreadService
+     public threadService:ThreadService,
+     public membersService:MembersService
      ) { }
 
   ngOnInit() {
     this.name;
     this.config;
     this.htmlContent;
+    this.loadUserName();
   }
   closeDialog(): void {
     this.dialogRef.close();
   }
+  loadUserName():void{
+     
+    this.membersService.getMemberByUsername(localStorage.getItem("sessionusername")).subscribe(data=>{
+     data.forEach((item,index)=>{
+         this.email=item.email;
+         console.log(this.email);
+     })
+  
+    });
+  
+  
+  }
   sendEmail():void{
      if(this.email!=""&&this.htmlContent!=null){
        console.log(this.htmlContent+""+this.email);
-          this.threadService.sendEmail(this.htmlContent,'pr.hoangthien@gmail.com').subscribe(x => console.log('Observer got a next value: ' + x),
+          this.threadService.sendEmail(this.htmlContent,this.email).subscribe(x => console.log('Observer got a next value: ' + x),
           err => console.log("success"),
           () => console.log('Observer got a complete notification')
         );
-        this.email="";
-        this.htmlContent="";
         this.showError("Email gửi thành công");
         
+        this.email="";
+        this.htmlContent="";
+       
      }
      else{
        this.showError("Email gửi không thành công!");

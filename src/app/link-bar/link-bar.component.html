@@ -1,0 +1,24 @@
+<div class="nav" >
+  <ul class="bar">
+    <li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
+    <li *ngIf="userName!=null"><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
+    <li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
+  <li *ngIf="checkedPremission === '3'||checkedPremission === '4'"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
+  <li *ngIf="userName!=null"><a [routerLink]="['/chat']"><i class="fa fa-info"></i>CHAT</a></li>	
+  </ul>
+  <ul class="left" >
+   
+    <li  *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
+    <li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
+    <li *ngIf="userName!=null"  ><a [routerLink]="['/informationmember']" title="Personal Information"  accesskey="x"><img src="{{image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
+    
+    </a></li>
+    <li  *ngIf="userName!=null"><a  title="Logout" accesskey="x"  (click)="logout()">Logout
+    
+    </a></li>
+  
+  
+
+
+  </ul>
+</div>

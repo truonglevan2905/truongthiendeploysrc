@@ -10,20 +10,7 @@
 		<a id="top" name="top" accesskey="t"></a>
 
 		<app-search-condition></app-search-condition>
-
-
-		<div class="nav">
-			<ul class="bar">
-				<li><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
-				<li class="active"><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
-				<li><a href="S002"><i class="fa fa-info"></i> MAIL</a></li>
-			</ul>
-			<ul class="left">
-				<li><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
-				<li><a [routerLink]="['/login']" title="Login" accesskey="x"><i class="fa fa-sign-in"></i> Login</a>
-				</li>
-			</ul>
-		</div>
+		<app-link-bar></app-link-bar>
 		<div class="container">
 			<div id="page-header">
 				<div class="breadcrumbs1">
@@ -36,7 +23,7 @@
 				</div>
       </div>
       <div class="middle">
-				<table style="font-size: 20px;">
+				<table class="padded-table">
 					<tr>
 						<td>
 							<img style="height: 200px; width: 200px;" src="https://previews.123rf.com/images/medusa81/medusa811209/medusa81120900021/15512980-user-icon.jpg">
@@ -45,29 +32,21 @@
 								<form *ngIf="userInfo !== null" [formGroup]="userFormGroup" (onsubmit)="updateUser()">
 										<table>
 											<tr>
-												<td>Email: </td>
-												<td><input  type="text" readonly="true" formControlName="email"></td>
+												<td>Email:</td>
+												<td>{{userInfo.email}}<br></td>
 											</tr>
 											<tr>
-												<td>Address: </td>
-												<td><input type="text" readonly="isDisableEdit" formControlName="address"></td>
+												<td>Địa chỉ:</td>
+												<td>{{userInfo.address}}<br></td>
 											</tr>
 											<tr>
-												<td>Phone Number: </td>
-												<td><input type="text" readonly="isDisableEdit" formControlName="phoneNumber"></td>
+												<td>Số điện thoại:</td>
+												<td>{{userInfo.phoneNumber}}<br></td>
 											</tr>
-											<tr>
-												<td>Email: </td>
-												<td><input readonly="true" formControlName="bannedStatus"></td>
-											</tr>
-											<tr *ngIf="!isDisableEdit">
-												<td>Password: </td>
-												<td><input type="password" formControlName="password"></td>
-											</tr>
-											<tr *ngIf="isMod || isAdmin">
-												<td>Banned Status</td>
+											<tr >
+												<td>Banned Status:</td>
 												<td>
-														<mat-select formControlName="bannedStatus">
+														<mat-select [disabled]="!isMod || !isAdmin" formControlName="bannedStatus" style="width: 300px;">
 																<mat-option value="true">
 																	Banned
 																</mat-option>
@@ -75,25 +54,29 @@
 																		Available
 																	</mat-option>
 															</mat-select>
+													<br>
+														
 												</td>
 											</tr>
 											<tr *ngIf="isAdmin">
-													<td>Position: </td>
+													<td>Position:</td>
 													<td>
-														<mat-select formControlName="position">
-																<mat-option value="Member">
-																	Member
-																</mat-option>
-																<mat-option value="Sub Admin">
-																	Sub Admin
-																</mat-option>
-																<mat-option value="Administrator">
-																	Administrator
-																</mat-option>
-																<mat-option value="Doctor">
-																	Doctor
-																</mat-option>
-															</mat-select>
+															<mat-select [disabled]="!isAdmin" formControlName="position" style="width: 300px;">
+																	<mat-option value="Member">
+																		Member
+																	</mat-option>
+																	<mat-option value="SubAdmin">
+																		Sub Admin
+																	</mat-option>
+																	<mat-option value="Admin">
+																		Administrator
+																	</mat-option>
+																	<mat-option value="Doctor">
+																		Doctor
+																	</mat-option>
+																</mat-select>
+														<br>
+														
 														</td>
 												</tr>
 											<tr>
@@ -127,13 +110,13 @@
 				<!-- Code right here -->
 				<div *ngIf="lstResult.length > 0">
 					
-					<div class="middle" *ngFor="let thread of lstResult">
-						<a routerLink="/thread/{{thread.threadid}}">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL-ahFmvGAylltkMR4FastYsyGdT8Bzh1zGl1arJO7wsKo8Mo4Ig"
+					<div class="middle" *ngFor="let thread of lstResult | paginate: { itemsPerPage: 10, currentPage: p }">
+						<a routerLink="/thread/{{thread.threadId}}">
+							<img src="{{thread.imageThread}}"
 							style="width: 26%; height: 150px;">
 						</a>
 						<div style="width: 72%; float:right;">
-							<a routerLink="/thread/{{thread.threadid}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
+							<a routerLink="/thread/{{thread.threadId}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
 							<br>
 							<label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content.substring(0, 40)}}...</label>
 							<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content}}...</label>
@@ -145,16 +128,11 @@
 							&nbsp; - &nbsp;Lượt xem: {{thread.numberOfViews}}
 							&nbsp; - &nbsp;Số bình luận: {{thread.numberOfComments}}
 							<br>
-							<fb-like url="https://www.google.com/search?q=thread/{{thread.threadid}}"></fb-like>
+							<fb-like url="https://www.google.com/search?q=thread/{{thread.threadId}}"></fb-like>
 							</div>
 						</div>
 					</div>
-					<mat-paginator [length]="length"
-							[pageSize]="pageSize"
-							[pageSizeOptions]="pageSizeOptions"
-							[showFirstLastButtons]="true"
-							(page)="changePage($event)">
-				</mat-paginator>
+					<pagination-controls (pageChange)="p = $event" ></pagination-controls>
 				</div>
 				
 				

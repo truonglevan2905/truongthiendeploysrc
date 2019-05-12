@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import {Customers } from './model/Customers';
 import {Customer} from 'models/Members';
-import { Observable, of } from 'rxjs';
+import { Observable, of, config } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
+declare var require: any;
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
-  private memberURI='http://localhost:3000/apimember/';
+  private config = require('src/assets/config.json');
+  private memberURI= this.config['api_connect'] + '/apimember/';
   customer:Customers[]=[];
   authen:Boolean;
   constructor(private http: HttpClient) { }

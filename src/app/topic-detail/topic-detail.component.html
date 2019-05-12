@@ -2,28 +2,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link rel="icon" type="image/x-icon" href="favicon.ico"> -->
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-  crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-  crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-  crossorigin="anonymous"></script> -->
-
-<!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-  crossorigin="anonymous">
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" rel="stylesheet"> -->
+  
 
 </head>
 
@@ -31,29 +10,7 @@
   <div id="wrap">
     <a id="top" name="top" accesskey="t"></a>
     <app-search-condition></app-search-condition>
-    <div class="nav" >
-        <ul class="bar">
-          <li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
-          <li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
-          <li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
-        <li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
-        </ul>
-        <ul class="left" >
-         
-          <li  *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
-          <li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
-          <li *ngIf="userName!=null"  ><a [routerLink]="['/informationmember']" title="Personal Information"  accesskey="x"><img src="{{image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
-          
-          </a></li>
-          <li  *ngIf="userName!=null"><a  title="Logout" accesskey="x"  (click)="logout()">Logout
-          
-          </a></li>
-        
-        
-  
-  
-        </ul>
-      </div>
+	<app-link-bar></app-link-bar>
     <div class="container">
       <div id="page-header">
         <div class="breadcrumbs">
@@ -70,44 +27,10 @@
       <a name="start_here"></a>
       <div id="page-body">
 
-        <h2><a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></h2>
+        <h2>{{category}}</h2>
 
 
-        <div>
-          <!-- NOTE: remove the style="display: none" when you want to have the forum description on the forum body -->
-          <div style="display: none !important;">Unread forum<br /></div>
-        </div>
-
-        <div class="topic-actions">
-
-
-          <div class="buttons">
-            <a class="btn" routerLink="/createthread/{{name}}">Tạo bài viết</a>
-            
-           
-          </div>
-
-          <div class="search-box">
-            <form method="get" id="forum-search" action="./search.php?style=747">
-              <fieldset>
-                <input class="inputbox search tiny light" type="text" name="keywords" id="search_keywords" size="20"
-                  value="Search this forum…" onclick="if (this.value == 'Search this forum…') this.value = '';"
-                  onblur="if (this.value == '') this.value = 'Search this forum…';" />
-                <input class="button2" type="submit" value="Search" />
-                <input type="hidden" name="fid[0]" value="2" />
-                <input type="hidden" name="style" value="747" />
-
-              </fieldset>
-            </form>
-          </div>
-
-          <div class="pagination">
-            6 topics &bull; Page <strong>1</strong> of <strong>1</strong>
-          </div>
-
-
-        </div>
-
+   
 
         <div class="inner">
           <div class="forum_head">
@@ -123,31 +46,35 @@
             </ul>
           </div>
           <div class="forum_mid">
-            <ul *ngFor="let thread of threadsThongBao " class="topiclist topics">
-
-
-              <li class="row bg1 announce">
-                <dl class="icon"
-                  style="background-image: url(./styles/oxygen/imageset/new.png); background-repeat: no-repeat;">
-                  <dt title="Unread posts"> <a> {{thread.topicName}}</a>
-                   
-                     &raquo;
-                   
-                  </dt>
-                  <dd class="posts">{{thread.numberOfLikes}}<span class="smaller">Replies</span></dd>
-                  <dd class="views">{{thread.numberOfViews}} <span class="smaller">Views</span></dd>
-                  <dd class="lastpost"><span>Last post by <a
-                        href="./memberlist.php?style=747&amp;mode=viewprofile&amp;u=54">{{thread.createdBy}} </a>
-                      <br /></span>
-                  </dd>
-                </dl>
-              </li>
-
-
-            </ul>
+             
+            <div class="middle" *ngFor="let thread of threadsThongBao">
+              <a routerLink="/thread/{{thread.threadId}}">
+                <img src="./../../assets/img/THONGBAO.jpg"
+                style="width: 26%; height: 150px;">
+              </a>
+              <div style="width: 72%; float:right;">
+                <a routerLink="/thread/{{thread.threadId}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
+                <br>
+                <div *ngIf="thread.commentList.length>0">
+                <label *ngIf="thread.commentList[0].content.length > 40 " style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content.substring(0, 40)}}...</label>
+                <label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content}}...</label>
+                 </div>
+                <br>
+                </a>
+                <div style="font-size: 10px; bottom: 0">
+                <b>Tạo bởi:</b> &nbsp; <a routerLink="/memberManage/{{thread.createdBy}}" routerLinkActive="active" style="text-decoration: none; font-size: 12px; color:dodgerblue">{{thread.createdBy}}</a>
+                &nbsp; - &nbsp;Vào lúc: {{thread.createdDate | date: 'hh:mm dd/MM/yyyy'}}
+                &nbsp; - &nbsp;Lượt xem: {{thread.numberOfViews}}
+                &nbsp; - &nbsp;Số bình luận: {{thread.numberOfComments}}
+                <br>
+                <fb-like url="https://www.google.com/search?q=thread/{{thread.threadId}}"></fb-like>
+                </div>
+              </div>
+            </div>
           </div>
+         
         </div>
-
+      
 
 
         <div class="inner">
@@ -166,23 +93,31 @@
           <div class="forum_mid">
             <ul class="topiclist topics">
 
-
-              <li *ngFor="let thread of threads | paginate: { itemsPerPage: 10, currentPage: p } " class="row bg2">
-                
-                <dl class="icon"
-                  style="background-image: url(./styles/oxygen/imageset/new.png); background-repeat: no-repeat;">
-                  <dt title="Unread posts"> <a routerLink="/thread/{{thread.threadid}}"
-                       class="topictitle">{{thread.threadName}}</a>
-                    <br />
-                    <img src="assets/img/girl.jpg" width="20" height="20" alt="Attachment(s)"
-                      title="Attachment(s)" /> by {{thread.createdBy}}&raquo;
-                  </dt>
-                  <dd class="posts">{{thread.lastUpdate}} <span class="smaller">Replies</span></dd>
-                  <dd class="views">{{thread.numberOfViews}}<span class="smaller">Views</span></dd>
-                  <dd class="lastpost"><span>{{thread.createdDate}} <br /></span>
-                  </dd>
-                </dl>
-              </li>
+              
+              <div class="middle" *ngFor="let thread1 of threads | paginate: { itemsPerPage: 10, currentPage: p }">
+                <a routerLink="/thread/{{thread1.threadId}}">
+                  <img src="./../../assets/img/hinhforum.png"
+                  style="width: 26%; height: 150px;"/>
+                </a>
+                <div style="width: 72%; float:right;">
+                  <a routerLink="/thread/{{thread1.threadId}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread1.threadName}}</b>
+                  <br>
+                  <div *ngIf="thread1.commentList.length>0">
+                  <label *ngIf="thread1.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;">{{thread1.commentList[0].content.substring(0, 40)}}...</label>
+                  <label *ngIf="thread1.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;">{{thread1.commentList[0].content}}...</label>
+                  </div>
+                  <br>
+                  </a>
+                  <div style="font-size: 10px; bottom: 0">
+                  <b>Tạo bởi:</b> &nbsp; <a routerLink="/memberManage/{{thread1.createdBy}}" routerLinkActive="active" style="text-decoration: none; font-size: 12px; color:dodgerblue">{{thread1.createdBy}}</a>
+                  &nbsp; - &nbsp;Vào lúc: {{thread1.createdDate | date: 'hh:mm dd/MM/yyyy'}}
+                  &nbsp; - &nbsp;Lượt xem: {{thread1.numberOfViews}}
+                  &nbsp; - &nbsp;Số bình luận: {{thread1.numberOfComments}}
+                  <br>
+                  <fb-like url="https://www.google.com/search?q=thread/{{thread1.threadId}}"></fb-like>
+                  </div>
+                </div>
+              </div>
 
 
 
@@ -192,138 +127,23 @@
             
           </div>
         </div>
+        <div class="buttons" *ngIf="userName !== null">
+            <a routerLink="/createthread/{{name}}" class="butn"><span></span>Post a new topic</a>
+          </div>
+        <label style="float:right;"><pagination-controls (pageChange)="p = $event" ></pagination-controls></label>
 
-
-        <form method="post" action="./viewforum.php?style=747&amp;f=2">
-          <fieldset class="display-options">
-            <label style="float:right;"><pagination-controls (pageChange)="p = $event" ></pagination-controls></label>
-            <label>Display topics from previous: <select name="st" id="st">
-                <option value="0" selected="selected">All Topics</option>
-                <option value="1">1 day</option>
-                <option value="7">7 days</option>
-                <option value="14">2 weeks</option>
-                <option value="30">1 month</option>
-                <option value="90">3 months</option>
-                <option value="180">6 months</option>
-                <option value="365">1 year</option>
-              </select></label>
-            <label>Sort by <select name="sk" id="sk">
-                <option value="a">Author</option>
-                <option value="t" selected="selected">Post time</option>
-                <option value="r">Replies</option>
-                <option value="s">Subject</option>
-                <option value="v">Views</option>
-              </select></label>
-            <label><select name="sd" id="sd">
-                <option value="a">Ascending</option>
-                <option value="d" selected="selected">Descending</option>
-              </select> <input type="submit" name="sort" value="Go" class="button2" /></label>
-   
-          </fieldset>
-        </form>
+    
 
         <hr class="seperator" />
-
-        <div class="topic-actions">
-
-          <div class="buttons">
-            <a href="./posting.php?style=747&amp;mode=post&amp;f=2" class="butn"><span></span>Post a new topic</a>
-          </div>
-
-          <div class="pagination">
-            6 topics &bull; Page <strong>1</strong> of <strong>1</strong>
-          </div>
-
-        </div>
-
-        <p></p>
-        <p><a href="/" class="left-box left" accesskey="r">Return to Board index</a></p>
-
-        <form method="post" id="jumpbox" action="./viewforum.php?style=747"
-          onsubmit="if(this.f.value == -1){return false;}">
+        
 
 
-          <fieldset class="jumpbox">
 
-            <label for="f" accesskey="j">Jump to:</label>
-            <select name="f" id="f"
-              onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
-
-              <option value="-1">Select a forum</option>
-              <option value="-1">------------------</option>
-              <option value="1">Test Category 1</option>
-
-              <option value="2" selected="selected">&nbsp; &nbsp;Test Forum 1</option>
-
-              <option value="3">&nbsp; &nbsp;Test Forum 2</option>
-
-              <option value="4">&nbsp; &nbsp;Test Forum 3</option>
-
-              <option value="6">&nbsp; &nbsp;&nbsp; &nbsp;Test Forum 4</option>
-
-              <option value="5">&nbsp; &nbsp;Test Forum 5</option>
-
-              <option value="7">&nbsp; &nbsp;Test Forum 6</option>
-
-              <option value="9">&nbsp; &nbsp;Test Forum 7</option>
-
-              <option value="8">phpBB3styles.net</option>
-
-              <option value="14">&nbsp; &nbsp;Styles Support</option>
-
-              <option value="18">&nbsp; &nbsp;Styles Request</option>
-
-              <option value="13">&nbsp; &nbsp;Feedback &amp; Tips</option>
-
-              <option value="12">&nbsp; &nbsp;Announcements</option>
-
-
-            </select>
-            <input type="submit" value="Go" class="button2" />
-          </fieldset>
-        </form>
-
-
-        <h3><a href="./viewonline.php?style=747">Who is online</a></h3>
-        <p>Users browsing this forum: No registered users and 3 guests</p>
-
-        <h3>Forum permissions</h3>
-        <p>You <strong>cannot</strong> post new topics in this forum<br />You <strong>cannot</strong> reply to topics in
-          this forum<br />You <strong>cannot</strong> edit your posts in this forum<br />You <strong>cannot</strong>
-          delete your posts in this forum<br />You <strong>cannot</strong> post attachments in this forum<br /></p>
+       
       </div>
 
-      <div id="page-footer">
-
-        <div class="breadcrumbs">
-          <ul class="crumb">
-            <li class="icon-home"><a href="./index.php?style=747">Board index</a></li>
-
-          </ul>
-          <ul class="bread">
-            <li class="icon-team"><a href="./memberlist.php?style=747&amp;mode=leaders">The team</a></li>
-            <li class="icon-cookie"><a href="./ucp.php?style=747&amp;mode=delete_cookies">Delete all board cookies</a>
-            </li>
-            <li class="icon-time">All times are UTC </li>
-          </ul>
-        </div>
-
-        <div class="copyright">Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB
-          Group
-
-        </div>
-      </div>
-    </div>
-    <div class="footer">
-      Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
     </div>
   </div>
-
-  <div>
-    <a id="bottom" name="bottom" accesskey="z"></a>
-
-  </div>
- 
 </body>
 
 </html>

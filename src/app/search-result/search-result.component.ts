@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ThreadService } from '../thread.service';
-import { MatIcon } from '@angular/material';
+import { MatIcon, MatDialog } from '@angular/material';
 import {PageEvent} from '@angular/material';
 import { MembersService } from '../members.service';
+import { ProgressSpinnerDialogComponentComponent } from '../progress-spinner-dialog-component/progress-spinner-dialog-component.component';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
@@ -12,20 +14,18 @@ import { MembersService } from '../members.service';
 export class SearchResultComponent implements OnInit {
   key: string;
   lstResult: any;
-  length = 100;
   userName:String;
-  pageSize = 10;
-  pageIndex = 1; 
-  pageSizeOptions: number[] = [5, 10, 15, 20];
   checkedPremission:String;
   image:String;
   // MatPaginator Output
   pageEvent: PageEvent;
-
+  dialogRef: any;
   constructor(
+    private notifireService: NotifierService,
     private activatedRoute: ActivatedRoute,
     private threadService: ThreadService,
     private membersService:MembersService,
+    private dialog: MatDialog,
     private router: Router) {
       this.userName=localStorage.getItem("sessionusername");
       this.checkedPremission=localStorage.getItem("sessionpremission");
@@ -36,11 +36,7 @@ export class SearchResultComponent implements OnInit {
     });
   }
 
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-  }
   loadUserName():void{
-     
     this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
       data.forEach((item,index)=>{
           this.image=item.image;
@@ -51,30 +47,29 @@ export class SearchResultComponent implements OnInit {
   
   }
   ngOnInit() {
+    
+    this.dialogRef = this.dialog.open(ProgressSpinnerDialogComponentComponent, {
+      disableClose: true
+    });
     this.search();
     if(this.userName!=""||this.userName!=null){
       this.loadUserName(); 
      }
   }
-  changePage(event?: PageEvent) {
-    this.pageIndex = event.pageIndex + 1;
-    this.pageSize = event.pageSize;
-    this.search();
-  }
+
   logout():void{
     window.localStorage.clear();
     location.reload(true);
-  
-   
-    }
+  }
   public search() {
+    this.notifireService.notify('default', 'Tao vua search xong do');
     this.key = this.activatedRoute.snapshot.paramMap.get('key');
     this.lstResult = [];
-    this.threadService.search(this.key, this.pageIndex, this.pageSize).subscribe(data => {
+    this.threadService.search(this.key).subscribe(data => {
       console.log(this.lstResult)
       this.lstResult = data;
-      this.length = this.lstResult.length;
+      
+      this.dialogRef.close();
     })
-   
   }
 }

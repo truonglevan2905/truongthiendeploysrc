@@ -53,7 +53,8 @@ exports.updateMemberByUsername = function(userInfo, callback) {
         { "userName" : userInfo.userName },
         {
             password: userInfo.password, 
-            address: userInfo.address, 
+            address: userInfo.address,
+            phoneNumber: userInfo.phoneNumber,
             position: userInfo.position,
             phoneNumber: userInfo.phoneNumber
         }, function(err, numberAffected, rawResponse) {

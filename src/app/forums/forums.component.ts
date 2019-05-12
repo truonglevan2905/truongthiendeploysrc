@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ApplicationRef } from '@angular/core';
 import { ForumsService } from '../forums.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Topics } from '../model/Topics';
 import { FormGroup, FormControl } from '@angular/forms';
 import {MembersService} from '../members.service'; 
+import { NotifierService } from 'angular-notifier';
+import { SocketService } from '../socket.service';
+
 @Component({
   selector: 'app-forums',
   templateUrl: './forums.component.html',
   styleUrls: ['./forums.component.css']
 })
+
 export class ForumsComponent implements OnInit {
   lstCategory = ['Giáo dục', 'Dinh dưỡng', 'Sự phát triển của bé', 'Phòng bệnh và chữa bệnh cho trẻ', 'Khác'];
   categorySelected: string;
@@ -19,32 +23,19 @@ export class ForumsComponent implements OnInit {
    file:any[]=[];
    checkedPremission:String;
    image:String;
-  
+   notifier: any;
   constructor(
 
     private forumsService: ForumsService,
-    public membersService:MembersService
+    public membersService:MembersService,
+    public notifierService: NotifierService,
+    public appRef: ApplicationRef,
+    private socketService: SocketService
   ) { 
-this.userName=localStorage.getItem("sessionusername");
-this.checkedPremission=localStorage.getItem("sessionpremission");
   }
-   loadUserName():void{
-     
-     this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-      console.log(this.image);
-     });
-   
-   
-   }
   ngOnInit() {
 
     this.loadDataTopic();
-    if(this.userName!=""||this.userName!=null){
- this.loadUserName(); 
-}
   }
   loadDataTopic() {
 
@@ -57,10 +48,8 @@ this.checkedPremission=localStorage.getItem("sessionpremission");
   onSelectCate(category: string): void {
     this.categorySelected = category;
   }
-  logout():void{
-  window.localStorage.clear();
-  location.reload(true);
 
- 
-  }
+  showNotification( type: string, message: string ): void {
+		this.socketService.notifier(message);
+	}
 }

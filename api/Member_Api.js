@@ -70,7 +70,7 @@ router.post('/addMember',function (req,res) {
      
   
     })
-    adminModel.save({},function (err) {
+    adminModel.save(function (err) {
         if(err){
             res.send("There was a problem adding the information to the database.");
         }else{
@@ -90,14 +90,16 @@ router.delete('/:id',function (req,res) {
     })
   });
   
-  router.get('/updateMember', function (req, res) {
+  router.post('/updateMember', function (req, res) {
+      console.log('helo' + req.body)
+      console.log(req.body)
       var adminModel = new Member({
           userName: req.body.userName,
           password: req.body.password,
           email: req.body.email,
           phoneNumber: req.body.phoneNumber,
-          image:req.file.originalname
-
+          position: req.body.position,
+          address: req.body.address
       })
 
       memberDAO.updateMemberByUsername(adminModel, function (dataRes) {

@@ -50,7 +50,7 @@ router.post('/addEmail',function(req,res){
        
     
       })
-      emailModel.save({},function (err) {
+      emailModel.save(function (err) {
         if(err){
             res.send("There was a problem adding the information to the database.");
         }else{

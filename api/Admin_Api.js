@@ -1,53 +1,63 @@
 var express = require('express');
 var router = express.Router();
+
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
 const mongoose = require('mongoose');
-var Admin=require('../models/Admins');
-var adminDAO=require('../dao/Admin_DAO');
-
-/* GET users listing. */
-router.get('/admin', function(req, res) {
-  adminDAO.getAllAdmin(function(data){
-    res.send(data);
-  })
-
-});
-router.post('/addAdmin',function (req,res) {
-  var adminModel=new Admin({
-    userName:req.body.userName,
-    password:req.body.password,
-    position:req.body.position,
-    activeStatus:req.body.activeStatus
-   
-
-  })
-  adminModel.save({},function (err) {
-      if(err){
-          res.status(500).send("There was a problem adding the information to the database.");
-      }else{
-          res.send("Success");
-      }
-  })
-});
-
-router.get('/getByAdminByUserPass/:name/:pass',function(req,res){
-    
-      adminDAO.isCheckAdmin(req.params.name,req.params.pass,function(data){
+var Emails=require('../models/Emails');
+var emailDAO=require('../dao/Email_DAO');
+router.get('/', function(req, res) {
+    emailDAO.getAllEmails(function(data){
+         res.send(data);
+    })
+ 
+ });
+ router.get('/getByUserName/:name', function(req, res) {
+    emailDAO.getAllEmailByUserName(req.params.name,function(data){
         res.send(data);
-      })
+    })
+ 
+ });
+router.delete('/:id',function(req,res){
+   emailDAO.deleteEmailByID(req.params.id,function(data){
+    if(data==false){
+        res.send("There was a problem adding the information to the database.");
+    }
+    else{
+        res.send("Success");
+    }
+   })
+}) ;
+router.post('/sendEmail',function(req,res){
+       console.log(req.body.content+"111111111111111"+req.body.email);
+    emailDAO.sendEmail(req.body.content,req.body.email,function(data){
+        console.log("---"+req.body.content+"-----------"+req.body.receiver);
+        console.log(data);
+        if(data=="success"){
+            res.send("Success");
+        }else{
+            res.send("There was a problem adding the information to the database.");  
+        }
+    })
 })
-router.delete('/:id',function (req,res) {
-  var id_Admin=req.params.id;
-  adminDAO.deleteAdminByID(id_Admin,function (data) {
-      if(data==false){
-          res.status(500).send("There was a problem adding the information to the database.");
-      }
-      else{
-          res.send("Success");
-      }
-  })
-});
+router.post('/addEmail',function(req,res){
+    var emailModel=new Emails({
+        topicName:req.body.topicName,
+        userName:req.body.userName,
+        content:req.body.content,
+        status:true
+       
+    
+      })
+      emailModel.save(function (err) {
+        if(err){
+            res.send("There was a problem adding the information to the database.");
+        }else{
+            res.send("Success");
+        }
+    })
 
+
+})
 module.exports = router;

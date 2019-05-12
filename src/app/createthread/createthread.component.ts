@@ -5,10 +5,13 @@ import {Threads} from 'models/Threads.js';
 import {ThreadService} from '../thread.service';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { Socket } from 'ngx-socket-io';
+import { SocketService } from '../socket.service';
 import { Emails } from 'models/Emails.js';
 import {MembersService} from '../members.service'; 
-
+import {Router} from "@angular/router";
+import { Comments } from '../model/Comments';
+import { CommentsService } from '../comments.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-createthread',
@@ -17,14 +20,19 @@ import {MembersService} from '../members.service';
 })
 export class CreatethreadComponent implements OnInit {
   name = 'Angular 6';
+  title = '';
   htmlContent = '';
   thread: Threads;
   userName:String;
   room: String;
   email: Emails;
   file:any[]=[];
+  nameTopic:String;
+  k:Boolean;
+  imagethread:String;
   checkedPremission:String;
    image:String;
+   position:String;
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -51,32 +59,53 @@ export class CreatethreadComponent implements OnInit {
   constructor(private route: ActivatedRoute,
      public threadService:ThreadService,
      public dialog: MatDialog,
-     private socket: Socket,
-     public membersService:MembersService
+     private socket: SocketService,
+     public membersService:MembersService,
+     private router: Router,
+     private commentservice: CommentsService
     
     ) {
 
       this.userName=localStorage.getItem("sessionusername"); 
       this.checkedPremission=localStorage.getItem("sessionpremission");
+      this.socket.reveiverMessageHopThu();
      }
  onSubmited():void{
   var topicName = this.route.snapshot.paramMap.get('name');
-
+     this.nameTopic=topicName;
+ 
+     console.log("111111111111"+this.nameTopic);
+     
+     if(this.position=="Admin"||this.position=="SubAdmin"){
+            this.k=true;
+            this.imagethread="./../../assets/img/THONGBAO.jpg";
+     }
+     else{
+       this.k=false;
+       this.imagethread="./../../assets/img/hinhforum.png";
+     }
+     const comment = new Comments();
+     comment.content = this.htmlContent;
+     const commentList = [];
+     commentList.push(comment);
     this.thread =
       {
-        threadName: this.htmlContent,
-        topicName: topicName,
+        threadName: this.title,
+        topicName: this.nameTopic,
 
         numberOfViews: 0,
         numberOfLikes: 0,
         numberOfComments: 0,
         lastUpdateBy:localStorage.getItem("sessionusername") ,
-        lastUpdate: "2019-04-21",
+        lastUpdate: new Date(),
         isEvent: false,
-        isAuthen: false,
+        isAuthen: this.k,
+        isAnnouncement:this.k,
         deletedBy: localStorage.getItem("sessionusername"),
         createdBy: localStorage.getItem("sessionusername"),
-        commentList: []
+        image:this.image,
+        imageThread:this.imagethread,
+        commentList: commentList
 
       }
     this.email =
@@ -86,34 +115,60 @@ export class CreatethreadComponent implements OnInit {
         content: "Bài viết của đang chờ tình trạng kiểm duyệt",
         status: false
       }
-    if (this.htmlContent != '') {
-      this.threadService.addThread(this.thread).subscribe(x => console.log('Observer got a next value: ' + x),
-        err => console.log("success"),
-        () => console.log('Observer got a complete notification')
-      );
-      this.threadService.addEmail(this.email).subscribe(x => console.log('Observer got a next value: ' + x),
-        err => console.log("success"),
-        () => console.log('Observer got a complete notification')
-      );
-      this.threadService.sendMessage({username: "Admin", topicname: topicName, text: this.email.content, ngay: Date.now()});
-      this.showError("Thành công");
-      this.htmlContent = "";
-    }
-    else {
-      this.showError("Không thành công")
+    if (this.htmlContent != '' && this.title !== '') {
+      this.threadService.addThread(this.thread).subscribe(data => {
+        if (isNullOrUndefined(data)) {
+          this.showError("Lỗi kết nối đến server", null)
+        } else {
+          const id = +data.threadId;
+          const comm =
+          {
+            threadId:id,
+            userName: localStorage.getItem("sessionusername"),
+            content: this.htmlContent,
+            image: "assets/img/user.png",
+            position:this.position,
+            numberOfLikes: 0,
+            numberOfDislikes:0,
+            statusLike:false,
+            statusDisLike:false
+          }
+
+          this.commentservice.addComments(comm).subscribe(x => console.log('Observer got a next value: ' + x),
+            err => console.log("success"),
+            () => console.log('Observer got a complete notification')
+          )
+    
+          this.showError("Thành công", data);
+          
+          this.htmlContent = "";
+          }
+          this.threadService.addEmail(this.email).subscribe(x => console.log('Observer got a next value: ' + x),
+            err => console.log("success"),
+            () => console.log('Observer got a complete notification')
+          );
+      });
+    } else {
+      this.showError("Vui lòng nhập nội dung và tiêu đề", null)
     }
       
  }
- showError(error:String):void{
-  this.dialog.open(ErrorDialogComponent, {
+ showError(error: string, data: any): void{
+  const dialogRef = this.dialog.open(ErrorDialogComponent, {
     data: {errorMsg: error} ,width : '250px'
   });
+  if (data !== null) {
+    dialogRef.afterClosed().subscribe(res => {
+      this.router.navigate(['thread/' + data.threadId]);
+    })
+  }
 }
 loadUserName():void{
      
   this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
     data.forEach((item,index)=>{
         this.image=item.image;
+        this.position=item.position;
     })
     console.log(this.image);
    });

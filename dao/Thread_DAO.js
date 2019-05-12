@@ -17,7 +17,7 @@ isConnect.Connect_DB(function(value){
 
 
 exports.deleteThreadsByID=function(id,callback){
-    Threads.deleteOne({threadid:id},function(err){
+    Threads.deleteOne({threadId:id},function(err){
         var isCheck=true;
         if (err) {
             isCheck=false;
@@ -35,9 +35,15 @@ exports.getAllThreads=function(callback) {
         callback(JSON.stringify(data));
     })
 };
-exports.getAllThreadsByTopic=function(id,callback){
+exports.getAllThreadsById=function(id,callback) {
+    Threads.find({threadId:id},function (err,data) {
+        //callback(JSON.stringify(data));
+        callback(JSON.stringify(data));
+    })
+};
+exports.getAllThreadsByTopic=function(id,authen,k,callback){
     console.log(id);
-    Threads.find({topicName:id},function (err,data) {
+    Threads.find({topicName:id,isAnnouncement:authen,isAuthen:k},function (err,data) {
         callback(JSON.stringify(data));
     })
 };
@@ -59,6 +65,18 @@ exports.auThencationTopics=function(callback){
         callback(JSON.stringify(data));
     })
 }
+exports.updateNewofView=function(id,number1,callback){
+    Threads.updateOne({threadId:id},{numberOfViews:number1},function(err){
+        var status="";
+        if(err){
+            status=false;
+        }
+        else{
+            status=success;
+        }
+        callback(status);
+    })
+}
 exports.search = function(key, callback) {
     Threads.find({
         "$and": [{
@@ -77,15 +95,14 @@ exports.search = function(key, callback) {
             callback(data);
         }
 
-    }).sort({ createdDate: 1 });
+    }).sort({ createdDate: 1 })
 }
 exports.searchByUserName = function(username, callback) {
+    console.log('user name is:' + username)
     Threads.find({
         "$and": [{
             deletedDate: null,
-            "$or": [{
-                createdBy: username
-            }],
+            createdBy: username
         }]
     }, function(err, data) {
         if (err) {
@@ -95,5 +112,5 @@ exports.searchByUserName = function(username, callback) {
             callback(data);
         }
 
-    }).sort({ createdDate: 1 });
+    }).sort({ createdDate: 1 })
 }

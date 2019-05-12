@@ -11,7 +11,7 @@ autoIncrement.initialize(connection);
 var ThreadSchema=new mongoose.Schema({
 
     
-    threadid:Number,
+    threadId:Number,
     threadName:String,
     topicName:String,
     numberOfViews:Number,
@@ -21,8 +21,11 @@ var ThreadSchema=new mongoose.Schema({
     lastUpdate:String,
     isEvent:Boolean,
     isAuthen:Boolean,
+    isAnnouncement:Boolean,
     deletedBy:String,
     createdBy:String,
+    image:String,
+    imageThread:String,
     commentList: [
         {
     commentId:Number,
@@ -30,6 +33,7 @@ var ThreadSchema=new mongoose.Schema({
     userName:String,
     content:String,
     numberOfLikes:Number,
+    
     commentDate:{
         type:Date,default:Date.now()
                 }
@@ -37,7 +41,7 @@ var ThreadSchema=new mongoose.Schema({
         }
                  ],
     deletedDate:{
-        type:Date,default: null
+      type:Date,default:null
     },
    
     createdDate:{
@@ -49,7 +53,7 @@ var ThreadSchema=new mongoose.Schema({
 });
 ThreadSchema.plugin(autoIncrement.plugin, {
     model: 'Threads',
-    field: 'threadid',
+    field: 'threadId',
   
     
     startAt: 1,

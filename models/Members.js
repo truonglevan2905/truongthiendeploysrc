@@ -17,13 +17,14 @@ var MemberSchema=new mongoose.Schema({
     address:String,
     idNumber:Number,
     email:String,
-    phoneNumber:Number,
+    phoneNumber:String,
     image:String,
     joinDate:{
         type:Date,default:Date.now()
     },
     bannedStatus:String,
-    activeStatus:Boolean
+    activeStatus:Boolean,
+    onlineStatus:Boolean
 
 
 });

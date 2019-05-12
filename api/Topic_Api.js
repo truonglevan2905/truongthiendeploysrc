@@ -29,7 +29,7 @@ router.get('/', function(req, res) {
      
   
     })
-    topicModel.save({},function (err) {
+    topicModel.save(function (err) {
         if(err){
             res.send("There was a problem adding the information to the database.");
         }else{

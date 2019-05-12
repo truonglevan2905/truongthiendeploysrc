@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<style>
+	 ul li{
+
+		display: inline;
+	 }
+	</style>
+	
+</head>
+
+<body id="phpbb" class="section-viewtopic ltr">
+<div id="wrap">
+<a id="top" name="top" accesskey="t"></a>
+<app-search-condition></app-search-condition>
+<app-link-bar></app-link-bar>
+	<div class="container">
+	<div id="page-header">
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747" accesskey="h">Board index</a></li>
+				<li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=1">Test Category 1</a></li><li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></li>
+			</ul>
+			
+			
+		</div>
+	</div>
+
+	<a name="start_here"></a>
+	<div id="page-body">
+		
+<h2><a href="./viewtopic.php?style=747&amp;f=2&amp;t=3">Sticky</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body --><div style="display: none !important;">Unread forum<br /></div>
+
+<div class="topic-actions">
+
+	<div class="buttons movedown">
+	
+		<button *ngIf="checkedPremission==3||checkedPremission==4"  class="butn"  title="Post a reply" (click)="onselect(a=true)">Post a reply</button>
+	
+	</div>
+
+	
+		<div class="search-box">
+			<form method="get" id="topic-search" action="./search.php?style=747">
+			<fieldset>
+				<input class="inputbox search tiny"  type="text" name="keywords" id="search_keywords" size="20" value="Search this topic…" onclick="if(this.value=='Search this topic…')this.value='';" onblur="if(this.value=='')this.value='Search this topic…';" />
+				<input class="button2" type="submit" value="Search" />
+				<input type="hidden" name="t" value="3" />
+<input type="hidden" name="sf" value="msgonly" />
+<input type="hidden" name="style" value="747" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+		<div class="pagination">
+			<pagination-controls (pageChange)="p = $event"></pagination-controls>
+		</div>
+	
+
+</div>
+<div class="clear"></div>
+
+
+	<div class="head">
+		<a href="#p3">Sticky</a>
+		<!-- Poster -->
+		<span class="white_label">
+			by <a href="./memberlist.php?style=747&amp;mode=viewprofile&amp;u=54"></a>
+		</span>
+	</div>
+	
+	<a id="unread"></a>
+	<div>
+	<div *ngIf="isCheck" id="khungbaiviet" style="border:1px;background-color:lightgrey;height: auto;border: 5px;" >
+	
+		<div class="container1" style="background: white;">
+			<h1 style="color:black;">Tạo các thông báo </h1>
+			<angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+		
+			<button style="background-color: red;border-radius:5px; height:30px; float: right; " (click)="createCommit()"><span style="color:white;">Tạo thông báo</span></button>
+		  </div>
+					</div>
+					<div *ngFor="let comment of messageArray1">
+							<div style="width:15%;height:auto;float:left;" >
+							  <img src="{{image}}" style="width:50px;height:50px;margin-left:50px;margin-top: 20px;"/><br/>
+							  <a href="#" style="margin-left: 20px;">{{userName|uppercase}}-{{position|uppercase}}</a><br/>
+							</div>			
+					<div id="p3" class="post bg2 unreadpost" style="width:85%;height:auto;float:right;" >
+						<div style="width:100%;height:50px;border:10px;background:#CDCDB4;">
+							
+					<span style="color:black;">{{comment.user}}--{{time| date: 'hh:mm dd/MM/yyyy'}}</span>
+						</div>
+						<div style="width:100%;height:auto;">
+								{{comment.message|titlecase}}
+						</div>
+						
+						
+					</div>
+				</div>
+		<div *ngFor="let comment of comments | paginate: { itemsPerPage: 8, currentPage: p }">
+			<div style="width:15%;height:auto;float:left;">
+			  <img src="{{comment.image}}" style="width:50px;height:50px;margin-left:50px;margin-top: 20px;"/><br/>
+			  <a href="#" style="margin-left: 20px;">{{comment.userName|uppercase}}-{{comment.position|uppercase}}</a><br/>
+			  
+			</div>			
+	<div id="p3" class="post bg2 unreadpost" style="width:85%;height:auto;float:right;" >
+		<div style="width:100%;height:50px;border:10px;background:#CDCDB4;">
+			
+	<span style="color:black;">{{comment.userName|uppercase}}--{{comment.commentDate| date: 'hh:mm dd/MM/yyyy'}}</span>
+		</div>
+		<div style="width:100%;height:auto;">
+				{{comment.content|titlecase}}
+		</div>
+		
+		
+	</div>
+</div>
+		
+     </div>   
+
+	<hr class="divider" />
+
+
+<div class="topic-actions">
+	
+	
+		<div class="pagination">
+			<pagination-controls (pageChange)="p = $event"></pagination-controls>
+		</div>
+		
+	
+</div>
+
+
+	<p></p><p><a href="./viewforum.php?style=747&amp;f=2" class="left-box left" accesskey="r">Return to Test Forum 1</a></p>
+
+
+
+
+<div style="clear: both;"></div>
+
+	<div class="head"><a href="./viewonline.php?style=747">Who is online</a></div>
+	<div class="middle">Users browsing this forum: No registered users and 3 guests</div>
+</div>
+
+	<div id="page-footer">
+		
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747">Board index</a></li>
+				
+			</ul>
+			<ul class="bread">
+				<li class="icon-team"><a href="./memberlist.php?style=747&amp;mode=leaders">The team</a></li><li class="icon-cookie"><a href="./ucp.php?style=747&amp;mode=delete_cookies">Delete all board cookies</a></li>
+				<li class="icon-time">All times are UTC </li>
+			</ul>
+		</div>
+
+		<div class="copyright">Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
+			
+		</div>
+	</div>
+</div>
+	<div class="footer">
+		Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
+	</div>
+</div>
+
+<div>
+	<a id="bottom" name="bottom" accesskey="z"></a>
+	
+</div>
+
+</body>
+</html>

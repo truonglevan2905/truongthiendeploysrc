@@ -67,34 +67,45 @@ export class RegistermemberComponent implements OnInit {
   get f() { return this.reactiveForm.controls; }
   onClickSubmit(data): void {
     this.submitted = true;
-    
+
+    this.memberservice.getMemberByUsername(data.username).subscribe(value=>{
+      var k;
+        if(value.length>=1){
+          this.showError("UserName đã trùng với member hệ thống");
+        }
+        else{
+          if (this.reactiveForm.valid) {
+     
+      
+            this.customers = {
+              userName: data.username,
+              password: data.password,
+              position: "Customer",
+              address: data.address,
+              idNumber: data.idnumber,
+              email: data.email,
+              phoneNumber: data.phonenumber,
+              image:"assets/img/user.png",
+              bannedStatus: "saasa",
+              activeStatus: true,
+              onlineStatus:false
+            }
+            this.memberservice.addNewsMember(this.customers).subscribe(x => console.log('Observer got a next value: ' + x),
+              err => console.log("success"),
+              () => console.log('Observer got a complete notification')
+            );
+            
+            this.showError("Đăng ký thành viên thành công");
+            this.reactiveForm.reset();
+           
+            return ;
+           
+          }
+        }
+      
+    })
    
-    if (this.reactiveForm.valid) {
-     
-      
-      this.customers = {
-        userName: data.username,
-        password: data.password,
-        position: "Customer",
-        address: data.address,
-        idNumber: data.idnumber,
-        email: data.email,
-        phoneNumber: data.phonenumber,
-        image:"assets/img/user.png",
-        bannedStatus: "saasa",
-        activeStatus: true
-      }
-      this.memberservice.addNewsMember(this.customers).subscribe(x => console.log('Observer got a next value: ' + x),
-        err => console.log("success"),
-        () => console.log('Observer got a complete notification')
-      );
-      
-      this.showError("Đăng ký thành viên thành công");
-      this.reactiveForm.reset();
-     
-      return ;
-     
-    }
+  
 
 
 

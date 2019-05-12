@@ -1,0 +1,270 @@
+<p>
+  chat works!
+</p>
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js"></script>
+	<style>
+	 ul li{
+
+		display: inline;
+	 }
+	</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	
+ 
+
+</head>
+
+<body id="phpbb" class="section-viewtopic ltr">
+<div id="wrap">
+<a id="top" name="top" accesskey="t"></a>
+
+	<div id="header">
+		
+		<app-search-condition></app-search-condition>
+		<app-link-bar></app-link-bar>
+		
+	</div>
+	
+	<div class="container">
+	<div id="page-header">
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747" accesskey="h">Board index</a></li>
+				<li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=1">Test Category 1</a></li><li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></li>
+			</ul>
+			
+			
+		</div>
+	</div>
+
+	<a name="start_here"></a>
+	<div id="page-body">
+		
+<h2><a href="./viewtopic.php?style=747&amp;f=2&amp;t=3">Sticky</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body --><div style="display: none !important;">Unread forum<br /></div>
+
+<div class="topic-actions">
+	
+		<div class="pagination">
+			<a href="#unread">First unread post</a> &bull; 1 post
+			 &bull; Page <strong>1</strong> of <strong>1</strong>
+		</div>
+	
+
+</div>
+<div class="clear"></div>
+
+
+	<div class="head">
+		<a href="#p3">Sticky</a>
+		<!-- Poster -->
+		<span class="white_label">
+			by <a href="./memberlist.php?style=747&amp;mode=viewprofile&amp;u=54"></a>
+		</span>
+	</div>
+	
+	<a id="unread"></a>
+	
+
+	<hr class="divider" />
+ 
+
+
+
+
+  <!-- {{message}}
+	<div>
+		<video id="device" controls autoplay #remote>
+		</video>
+		<video id="me" controls autoplay #me></video>
+	</div>
+	<button mat-raised-button color="primary" (click)="showRemote()" [disabled]="callActive">Connect</button>
+	<button mat-raised-button color="warn" (click)="hangup()" [disabled]="!callActive">Disconnect</button>
+	 -->
+
+	 <!-- <h1>My id - {{mypeerid}}</h1>
+	 <input type="text" [(ngModel)]="anotherid">
+	 <button (click)="connect()">Connect</button>
+	 <button (click)="videoconnect()">VideoChat</button>
+	 <video #myvideo></video> -->
+
+	 <!-- <div style="float:left;width:25% ;height:auto;">
+    <div style="background-color:dodgerblue;height:50px ;">
+		<h1 style="text-align: center;">GROUP</h1>
+	</div>
+
+	 </div>
+	 <div  style="width:50%;height:auto;">
+sasa
+	 </div>
+	 <div style="float:right;width: 25%;height: auto;">
+sasa
+
+	 </div>
+ -->
+ <div class="main_section" >
+    <div class="container">
+        <div class="chat_container">
+            <div class="col-sm-3 chat_sidebar">
+                <div class="row">
+                    <div class="title-block">
+                        <div class="input-group col-md-12">
+                            <h3>Groups</h3>
+                        </div>
+                    </div>
+                    <div class="group_list">
+						<ul>
+							<li><input type="text" style="width: 150px;"  [(ngModel)]="nameGroup"/><button class="btn btn-danger pull-right" (click)="createGroup(nameGroup,userName,position)" *ngIf="checkedPrivate=='false'">CREATE</button></li>
+						</ul>
+                        <ul class="list-unstyled">
+                            <li class="left clearfix" *ngFor="let group of groups">
+                                <h4 style="color: black;">{{group.nameGroup}}</h4>
+                                <button class="pull-right btn btn-success" (click)="joinGroup(group.nameGroup,userName)" *ngIf="statusGroup=='false'">Join</button>
+                                <button class="pull-right btn btn-danger"  (click)="leaveGroup(userName,group.nameGroup)" *ngIf="statusGroup=='true'&& group.nameGroup==statusUser">Leave</button> 
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="title-block">
+                        <div class="input-group col-md-12">
+                            <span class="pull-left" style="color:#fff;"><strong>{{connectionState | async}}</strong></span>
+                            <span class="badge pull-right" [ngClass]="{ connected:(connectionState | async) === 'Connected', 
+                            reconnect:(connectionState | async) === 'Reconnecting',
+                            disconnected:(connectionState | async) === 'Disconnected'}">&nbsp;</span>
+                        </div>
+
+                        <div class="input-group col-md-12" style="margin-top: 10px;">
+                            <button class="btn btn-success" (click)="reConnect()" *ngIf="(connectionState | async) !== 'Connected'">Re-Connect</button>
+                            <button class="btn btn-danger pull-right" (click)="logout()">Log-Out</button>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div class="col-sm-6 message_section" *ngIf="authenNumber==0 && checkedPrivate=='false' ">
+			<div class="col-sm-6 chat_sidebar" >
+					<div class="row" style="width:400px ;">
+						<div class="title-block">
+							<div class="input-group col-md-12">
+								<h3>Members Online</h3>
+							</div>
+						</div>
+						<div class="member_list">
+							<ul class="list-unstyled">
+								<li class="left clearfix" *ngFor="let member of listMemberOnline">
+									<div (click)="chooseMember(member)">
+									<span class="chat-img pull-left">
+										<img src="{{member.image}}" alt="User Avatar" class="img-circle">
+									</span>
+									<div class="chat-body clearfix" >
+										<div class="header_sec">
+											<strong><h4>{{member.userName}}</h4><button  class="btn btn-success" (click)="invitePeople(member.username,member.image)" *ngIf="buttonMoi=='false'">Mời</button><a [routerLink]="['/call']">Call</a></strong>
+											<strong style="float: right;" ><h4>{{member.position}}</h4></strong>
+											<strong></strong>
+											<span class="badge pull-right connected">&nbsp;</span>
+										</div>
+									</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div> 
+</div>
+            <div class="col-sm-6 message_section" >
+				
+
+				
+                <div class="row" *ngIf="authenNumber!=0 ||checkedPrivate=='true' ">
+                  
+                    <!--group_message_section-->
+                    <div class="chat_area">
+                        <ul class="list-unstyled">
+                            <li class="left clearfix" *ngFor="let message of arrayMessage" >
+									
+										<img src="{{message.image}}" alt="User Avatar" class="img-circle" style="width:30px;height:30px;" />
+									
+									
+								
+                                <div class="chat-body1 clearfix">
+                                    <span class="user">{{message.userName}}</span>
+                                    <p>{{message.content}}</p>
+                                    <div class="chat_time" >{{message.createdContent | date:'hh:mm a'}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                  
+                    <div class="message_write">
+                        <textarea class="form-control" placeholder="type a message" [(ngModel)]="messageData"></textarea>
+                        <div class="clearfix"></div>
+                        <div class="chat_bottom">
+                            <button type="button" class="pull-right btn btn-success" (click)="sendMessage(content=messageData,username=this.userName,image=this.image,groupname=groupchoosen)">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 chat_sidebar" *ngIf="authenNumber!=0 ||checkedPrivate=='true'">
+                <div class="row">
+                    <div class="title-block">
+                        <div class="input-group col-md-12">
+                            <h3>Members</h3>
+                        </div>
+                    </div>
+                    <div class="member_list">
+                        <ul class="list-unstyled">
+                            <li class="left clearfix" *ngFor="let member of joinningAttender">
+                                <span class="chat-img pull-left">
+                                    <img src="{{member.image}}" alt="User Avatar" class="img-circle">
+                                </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                        <strong class="primary-font">{{member.userName}}</strong>
+                                        <span class="badge pull-right connected">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+<div style="clear: both;"></div>
+
+	<div class="head"><a href="./viewonline.php?style=747">Who is online</a></div>
+	<div class="middle">Users browsing this forum: No registered users and 3 guests</div>
+</div>
+
+	<div id="page-footer">
+		
+		
+
+		<div class="copyright">Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
+			
+		</div>
+	</div>
+</div>
+	<div class="footer">
+		Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
+	</div>
+</div>
+
+<div>
+	<a id="bottom" name="bottom" accesskey="z"></a>
+	
+</div>
+
+</body>
+</html>

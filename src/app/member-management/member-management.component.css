@@ -1,0 +1,6 @@
+table.padded-table td {
+    padding: 10px;
+}
+table.padded-table {
+    font-size: 20px;
+}

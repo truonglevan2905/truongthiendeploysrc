@@ -17,46 +17,8 @@
 <body id="phpbb" class="section-viewtopic ltr">
 <div id="wrap">
 <a id="top" name="top" accesskey="t"></a>
-	<div id="header">
-		<div id="header">
-			<a href="/" title="Board index" id="logo"><img src="assets/styles/oxygen/imageset/logo.png" width="126" height="42" alt="" title="" /></a>
-			<div class="search_box">
-				<form action="search_style_747_sid_47ef40484cd2d7764257c87c6557004b.html" method="get" id="search">
-					<fieldset>
-						<input name="keywords" type="text" maxlength="128" title="Search for keywords" class="" placeholder="Search for keywords" />
-					</fieldset>
-				</form>
-			</div>
-		  </div>
-		<a href="./index.php?style=747" title="Board index" id="logo"><img src="./styles/oxygen/imageset/logo.png" width="126" height="42" alt="" title="" /></a>
-		
-	
-		
-		
-	</div>
-	<div class="nav" >
-			<ul class="bar">
-				<li class="active"><a [routerLink]="['/forums']"><i class="fa fa-home"></i> Board index</a></li>
-				<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/members']"><i class="fa fa-group"></i> Members</a></li>
-				<li *ngIf="userName!=null"><a [routerLink]="['/hopthu']"><i class="fa fa-info"></i> MAIL</a></li>
-			<li *ngIf="checkedPremission==3||checkedPremission==4"><a [routerLink]="['/danhgia']"><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
-			</ul>
-			<ul class="left" >
-			 
-				<li  *ngIf="userName==null"><a [routerLink]="['/registernember']"><i class="fa fa-plus"></i> Register</a></li>
-				<li><a  [routerLink]="['/login']" title="Login" accesskey="x" *ngIf="userName==null"><i class="fa fa-sign-in"></i> Login</a></li>
-				<li *ngIf="userName!=null"  ><a [routerLink]="['/informationmember']" title="Personal Information"  accesskey="x"><img src="{{image}}" style="width:30px;height:30px;margin-top:-10px; "/>{{userName}}
-				
-				</a></li>
-				<li  *ngIf="userName!=null"><a  title="Logout" accesskey="x"  (click)="logout()">Logout
-				
-				</a></li>
-			
-			
-
-
-			</ul>
-		</div>
+	<app-search-condition></app-search-condition>
+	<app-link-bar></app-link-bar>
 	<div class="container">
 	<div id="page-header">
 		<div class="breadcrumbs">
@@ -72,47 +34,11 @@
 	<a name="start_here"></a>
 	<div id="page-body">
 		
-<h2><a href="./viewtopic.php?style=747&amp;f=2&amp;t=3">Sticky</a></h2>
-<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body --><div style="display: none !important;">Unread forum<br /></div>
-
-<div class="topic-actions">
-
-	<div class="buttons movedown">
-	
-		<a href="./posting.php?style=747&amp;mode=reply&amp;f=2&amp;t=3" class="butn" title="Post a reply"><span></span>Post a reply</a>
-	
-	</div>
-
-	
-		<div class="search-box">
-			<form method="get" id="topic-search" action="./search.php?style=747">
-			<fieldset>
-				<input class="inputbox search tiny"  type="text" name="keywords" id="search_keywords" size="20" value="Search this topic…" onclick="if(this.value=='Search this topic…')this.value='';" onblur="if(this.value=='')this.value='Search this topic…';" />
-				<input class="button2" type="submit" value="Search" />
-				<input type="hidden" name="t" value="3" />
-<input type="hidden" name="sf" value="msgonly" />
-<input type="hidden" name="style" value="747" />
-
-			</fieldset>
-			</form>
-		</div>
-	
-		<div class="pagination">
-			<a href="#unread">First unread post</a> &bull; 1 post
-			 &bull; Page <strong>1</strong> of <strong>1</strong>
-		</div>
-	
-
-</div>
 <div class="clear"></div>
 
 
 	<div class="head">
-		<a href="#p3">Sticky</a>
-		<!-- Poster -->
-		<span class="white_label">
-			by <a href="./memberlist.php?style=747&amp;mode=viewprofile&amp;u=54"></a>
-		</span>
+		Tạo bài viết mới
 	</div>
 	
 	<a id="unread"></a>
@@ -121,53 +47,56 @@
 	<hr class="divider" />
   <div  id="khungbaiviet" style="border:1px;background-color:lightgrey;height: auto;border: 5px;" >
 	
-    <div class="leftthread">
-      <header>
-        <h1 style="color:black;">Tạo Bài Viết</h1>
-       
-      </header>
-      <angular-editor [(ngModel)]="htmlContent" [config]="config" style="background: honeydew;"></angular-editor>
+	<div class="leftthread">
+		<header>
+			<h1 style="color:black;">
+			Tiêu đề: <input [(ngModel)]="title" required>
+			</h1>
+		 
+		</header>
+		<angular-editor [(ngModel)]="htmlContent" [config]="config" style="background: honeydew;"></angular-editor>
+	
+	 
+		<div class="topic-actions">
+		  <div class="buttons movedown">
+		  
+			<button  class="butn"  (click)="onSubmited()">Taọ bài viết</button>
+		  
+		  </div>
+		
+		</div>
+	   
+			</div>
+			<div class="rightthread">
+				<h2>Lưu ý</h2>
+				<ul>
+				 <li>Tiêu đề bài viết gõ dấu rõ ràng, tiêu đề không chữ hoa</li><br/>
+				  <li>Không dùng cách tiêu đề như "Cứu em với ", "chết em rồi"</li><br/>
+				  <li>Quảng cáo, giới thiệu sản phẩm & dịch vụ vui lòng đăng tại ZaoDich</li><br/>
+				  <li>Than phiền về sản phẩm dịch vụ, vui lòng đăng tại Người tiêu dùng phản hồi</li><br/>
+				  <li>Nếu bạn có thắc mắc, vui lòng xem các câu hỏi thường gặp</li>
+				</ul><br/><br/>
+				<h2>Bài viết chia sẻ</h2>
+				<ul>
   
-   
-      <div class="topic-actions">
-        <div class="buttons movedown">
-        
-          <button  class="butn"  (click)="onSubmited()">Taọ bài viết</button>
-        
-        </div>
-      
-      </div>
-     
-          </div>
+				  <li>Kinh nghiệm khiến thức hữu ích cho mọi người</li><br/>		
+				  <li>Cảm xúc suy nghĩ về cuộc sống, công việc, gia, đình, con cái</li><br/>
+				  <li>Thắc mắc về vấn đề bạn quan tâm</li><br/>
+				  
+				</ul><br/><br/>
+				<h2>Bài viết không nên chia sẻ</h2>
+				<ul>
+				  <li>Nội dung phản cảm</li><br/>		
+				  <li>Nội dung chia rẻ dân tộc, tôn giáo, vùng miền</li><br/>		
+				  <li>Nội dung chia rẻ chính trị, bí mật nhà nước</li><br/>		
+				  <li>Thông tin thiếu kiểm chứng</li><br/>		
+				  <li>Thông tin đời tư cá nhân</li><br/>		
+  
+				</ul>
+					</div>
+	  
 
-
-          <div class="rightthread">
-			  <h2>Lưu ý</h2>
-			  <ul>
-               <li>Tiêu đề bài viết gõ dấu rõ ràng, tiêu đề không chữ hoa</li><br/>
-				<li>Không dùng cách tiêu đề như "Cứu em với ", "chết em rồi"</li><br/>
-				<li>Quảng cáo, giới thiệu sản phẩm & dịch vụ vui lòng đăng tại ZaoDich</li><br/>
-				<li>Than phiền về sản phẩm dịch vụ, vui lòng đăng tại Người tiêu dùng phản hồi</li><br/>
-				<li>Nếu bạn có thắc mắc, vui lòng xem các câu hỏi thường gặp</li>
-			  </ul><br/><br/>
-			  <h2>Bài viết chia sẻ</h2>
-			  <ul>
-
-				<li>Kinh nghiệm khiến thức hữu ích cho mọi người</li><br/>		
-				<li>Cảm xúc suy nghĩ về cuộc sống, công việc, gia, đình, con cái</li><br/>
-				<li>Thắc mắc về vấn đề bạn quan tâm</li><br/>
-				
-			  </ul><br/><br/>
-			  <h2>Bài viết không nên chia sẻ</h2>
-			  <ul>
-				<li>Nội dung phản cảm</li><br/>		
-				<li>Nội dung chia rẻ dân tộc, tôn giáo, vùng miền</li><br/>		
-				<li>Nội dung chia rẻ chính trị, bí mật nhà nước</li><br/>		
-				<li>Thông tin thiếu kiểm chứng</li><br/>		
-				<li>Thông tin đời tư cá nhân</li><br/>		
-
-			  </ul>
-                  </div>
+       
 	
 	
 		
@@ -180,22 +109,9 @@
 
 <div style="clear: both;"></div>
 
-	<div class="head"><a href="./viewonline.php?style=747">Who is online</a></div>
-	<div class="middle">Users browsing this forum: No registered users and 3 guests</div>
 </div>
 
-	<div id="page-footer">
-		
-		
-
-		<div class="copyright">Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
-			
-		</div>
-	</div>
 </div>
-	<div class="footer">
-		Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
-	</div>
 </div>
 
 <div>

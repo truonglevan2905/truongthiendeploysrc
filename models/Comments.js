@@ -14,10 +14,16 @@ var CommentSchema=new mongoose.Schema({
     threadId:Number,
     userName:String,
     content:String,
+    image:String,
+    position:String,
     numberOfLikes:Number,
+    numberOfDislikes:Number,
+    statusLike:Boolean,
+    statusDisLike:Boolean,
     commentDate:{
         type:Date,default:Date.now()
     }
+
 
 
 

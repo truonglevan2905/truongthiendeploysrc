@@ -47,20 +47,39 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      console.log("TK"+user.name+""+user.email+"");
     });
   }
   signInWithGoogle(): void {
-    console.log("google");
-        this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.authState.subscribe((user) => {
+      window.localStorage.setItem('sessionusername', user.name);
+      window.localStorage.setItem('sessionpremission', 1 + '');
+      window.localStorage.setItem('isLoginSocial', 'true');
+      window.localStorage.setItem('image', user.photoUrl);
+      this.router.navigate(['forums']);
+    });
   }
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.authService.authState.subscribe((user) => {
+      window.localStorage.setItem('sessionusername', user.name);
+      window.localStorage.setItem('sessionpremission', 1 + '');
+      window.localStorage.setItem('isLoginSocial', 'true');
+      window.localStorage.setItem('image', user.photoUrl);
+      this.router.navigate(['forums']);
+    });
   }
 
   signInWithLinkedIn(): void {
     this.authService.signIn(LinkedInLoginProvider.PROVIDER_ID);
+    this.authService.authState.subscribe((user) => {
+      window.localStorage.setItem('sessionusername', user.name);
+      window.localStorage.setItem('sessionpremission', 1 + '');
+      window.localStorage.setItem('isLoginSocial', 'true');
+      window.localStorage.setItem('image', user.photoUrl);
+      this.router.navigate(['forums']);
+    });
   }
 
   signOut(): void {

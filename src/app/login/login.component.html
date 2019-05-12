@@ -2,62 +2,65 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
 
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign Up Form by Colorlib</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-    crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-    crossorigin="anonymous"></script>
+  <!-- Font Icon -->
+  
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-    crossorigin="anonymous">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Main css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="assets/lid/css/style.css">
+  <script src="assets/lid/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/lid/js/main.js"></script>
   
 </head>
 
-<body id="phpbb" class="section-index ltr" style="background-color: white;">
+<body >
 
-    <img src="assets/img/logowebtuoitho.png" width="250" height="120" alt="" title=""  style="margin-left:40% "/>
-  <form #userlogin ="ngForm" (ngSubmit)="onClickSubmit(userlogin.value)">
-    <div class="form-group" style="margin-left: 30%;margin-right: 30%;">
-     
-      <input type="text"   class="form-control" id="usr" name="username" placeholder="Tên người dùng hoặc Email" ngModel>
-    </div>
-    <div class="form-group" style="margin-left: 30%;margin-right: 30%;">
-     
-      <input type="password"  class="form-control" id="pwd" name="password" placeholder="Mật khẩu" ngModel>
-    </div>
-   
-    <div class="form-group" style="margin-left:60% ;">
-        <a href="#">Quên mật khẩu</a>
-     </div>
-  
-    <button type="submit" class="btn btn-primary" style="margin-left: 40%;margin-right: 40%;width:20% ;border-radius: 20px;">Đăng nhập</button><br/>
-    <div class="form-group" style="margin-left:43% ;">
-        <a href="#">Đi đến Webtretho Đăng ký</a>
-     </div>
-    
-    
-     
-  </form>
-  <div class="card-block" style="margin-left:40%;">
-    <button class="btn btn-social-icon btn-google mx-1" (click)="signInWithGoogle()"><span class="fa fa-google"></span></button>
-    <button class="btn btn-social-icon btn-facebook mx-1" (click)="signInWithFB()"><span class="fa fa-facebook"></span></button>
-    <button class="btn btn-social-icon btn-linkedin mx-1" (click)="signInWithLinkedIn()"><span class="fa fa-linkedin"></span></button>
+  <div class="main">
+
+    <section class="sign-in">
+      <div class="container">
+          <div class="signin-content">
+              <div class="signin-image">
+                  <figure><img src="assets/styles/oxygen/imageset/logo.png" alt="sing up image"></figure>
+                  <a href="#" class="signup-image-link">Create an account</a>
+              </div>
+
+              <div class="signin-form">
+                  <h2 class="form-title">Sign up</h2>
+                  <form #userlogin ="ngForm" (ngSubmit)="onClickSubmit(userlogin.value)" class="register-form" id="login-form">
+                      <div class="form-group">
+                          <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                          <input type="text"  class="form-control" name="username" id="username" placeholder="User Name" ngModel/>
+                      </div>
+                      <div class="form-group">
+                          <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                          <input type="password" name="password" id="password" class="form-control" placeholder="Password" ngModel/>
+                      </div>
+                    
+                      <div class="form-group form-button">
+                          <button type="submit" name="signin" id="signin" class="form-submit" value="Log in">Log in</button>
+                            
+                      </div>
+                  </form>
+                  <div class="social-login">
+                      <span class="social-label">Or login with</span>
+                      <ul class="socials">
+                          <li><a (click)="signInWithFB()"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                          <li><a (click)="signInWithGoogle()"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                          <li><a (click)="signInWithLinkedIn()"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
   </div>
   
 </body>

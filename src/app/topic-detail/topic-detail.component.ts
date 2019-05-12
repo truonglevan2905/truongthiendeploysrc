@@ -20,6 +20,7 @@ export class TopicDetailComponent implements OnInit {
        userName:String;
        checkedPremission:String;
        image:String;
+       category: string = '';
   constructor(public topicdeatilService:TopicDetailService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
@@ -30,65 +31,66 @@ export class TopicDetailComponent implements OnInit {
     }
 
   getAllThreads():void{
-  this.threadsThongBao=[{
-    threadid:11,
-    threadName:1111,
-    topicName:"Thông báo về việc nâng cấp bảo mật và thay đổi mật khẩu tài khoản",
-    content:"sasasasa",
-    numberOfViews:999,
-    numberOfLikes:999,
-    numberOfComments:999999,
-    lastUpdateBy:"Thiện Hoàng",
-    lastUpdate:"Thiện Hoàng",
-    isEvent:true,
-    deletedDate:"sấ",
-    deletedBy:"ass",
-    createdBy:"Admin",
-    createdDate:"asa",
+//   this.threadsThongBao=[{
+//     threadid:11,
+//     threadName:1111,
+//     topicName:"Thông báo về việc nâng cấp bảo mật và thay đổi mật khẩu tài khoản",
+//     content:"sasasasa",
+//     numberOfViews:999,
+//     numberOfLikes:999,
+//     numberOfComments:999999,
+//     lastUpdateBy:"Thiện Hoàng",
+//     lastUpdate:"Thiện Hoàng",
+//     isEvent:true,
+//     deletedDate:"sấ",
+//     deletedBy:"ass",
+//     createdBy:"Admin",
+//     createdDate:"asa",
 
     
-  },
-  {
-    threadid:11,
-    threadName:1111,
-    topicName:"Thỏa thuận về điều khoản và Điều kiện sử dụng ",
-    content:"sasasasa",
-    numberOfViews:999,
-    numberOfLikes:999,
-    numberOfComments:999999,
-    lastUpdateBy:"Thiện Hoàng",
-    lastUpdate:"Thiện Hoàng",
-    isEvent:true,
-    deletedDate:"sấ",
-    deletedBy:"ass",
-    createdBy:"Admin",
-    createdDate:"asa",
+//   },
+//   {
+//     threadid:11,
+//     threadName:1111,
+//     topicName:"Thỏa thuận về điều khoản và Điều kiện sử dụng ",
+//     content:"sasasasa",
+//     numberOfViews:999,
+//     numberOfLikes:999,
+//     numberOfComments:999999,
+//     lastUpdateBy:"Thiện Hoàng",
+//     lastUpdate:"Thiện Hoàng",
+//     isEvent:true,
+//     deletedDate:"sấ",
+//     deletedBy:"ass",
+//     createdBy:"Admin",
+//     createdDate:"asa",
 
     
-  },
-  {
-    threadid:11,
-    threadName:1111,
-    topicName:"Chính sách bảo mật",
-    content:"sasasasa",
-    numberOfViews:999,
-    numberOfLikes:999,
-    numberOfComments:999999,
-    lastUpdateBy:"Thiện Hoàng",
-    lastUpdate:"Thiện Hoàng",
-    isEvent:true,
-    deletedDate:"sấ",
-    deletedBy:"ass",
-    createdBy:"Admin",
-    createdDate:"asa",
+//   },
+//   {
+//     threadid:11,
+//     threadName:1111,
+//     topicName:"Chính sách bảo mật",
+//     content:"sasasasa",
+//     numberOfViews:999,
+//     numberOfLikes:999,
+//     numberOfComments:999999,
+//     lastUpdateBy:"Thiện Hoàng",
+//     lastUpdate:"Thiện Hoàng",
+//     isEvent:true,
+//     deletedDate:"sấ",
+//     deletedBy:"ass",
+//     createdBy:"Admin",
+//     createdDate:"asa",
 
     
-  }
-];
+//   }
+// ];
      var topicName=this.route.snapshot.paramMap.get('topicName');
    
      this.name=topicName;
-   this.topicdeatilService.getAllTheardByNameTopic(topicName).subscribe(data=>this.threads=data);
+   this.topicdeatilService.getAllTheardByNameTopic(topicName,false,true).subscribe(data=>this.threads=data);
+   this.topicdeatilService.getAllTheardByNameTopic(topicName,true,true).subscribe(data=>this.threadsThongBao=data);
   }
   loadUserName():void{
      
@@ -103,6 +105,7 @@ export class TopicDetailComponent implements OnInit {
   }
   ngOnInit() {
   this.getAllThreads();
+  this.category = this.route.snapshot.paramMap.get('topicName');
   if(this.userName!=""||this.userName!=null){
     this.loadUserName(); 
    }
@@ -125,4 +128,5 @@ export class TopicDetailComponent implements OnInit {
       this.animal = result;
     });
   }
+ 
 }
