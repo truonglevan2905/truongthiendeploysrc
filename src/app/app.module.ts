@@ -52,16 +52,17 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { LinkBarComponent } from './link-bar/link-bar.component';
 import { ChatComponent } from './chat/chat.component';
 import { VideocallComponent } from './videocall/videocall.component';
-
-const configsocket: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+declare var require: any;
+const configAPI = require('src/assets/config.json');
+const configsocket: SocketIoConfig = { url: configAPI['api_connect'], options: {} };
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('22065040623-9kpcjkham0iukr08mvi5bhg731r506g2.apps.googleusercontent.com')
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('561602290896109')
+    provider: new FacebookLoginProvider('1422002741258233')
   },
   {
     id: LinkedInLoginProvider.PROVIDER_ID,

@@ -45,40 +45,30 @@ export class LoginComponent implements OnInit {
          return this.auThen;
       }
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
+
   }
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    this.authService.authState.subscribe((user) => {
-      window.localStorage.setItem('sessionusername', user.name);
-      window.localStorage.setItem('sessionpremission', 1 + '');
-      window.localStorage.setItem('isLoginSocial', 'true');
-      window.localStorage.setItem('image', user.photoUrl);
-      this.router.navigate(['forums']);
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
+      this.authService.authState.subscribe((user) => {
+        console.log(user);
+        window.localStorage.setItem('sessionusername', user.name);
+        window.localStorage.setItem('sessionpremission', 1 + '');
+        window.localStorage.setItem('isLoginSocial', 'true');
+        window.localStorage.setItem('image', user.photoUrl);
+        this.router.navigate(['forums']);
+      });
     });
   }
 
   signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    this.authService.authState.subscribe((user) => {
-      window.localStorage.setItem('sessionusername', user.name);
-      window.localStorage.setItem('sessionpremission', 1 + '');
-      window.localStorage.setItem('isLoginSocial', 'true');
-      window.localStorage.setItem('image', user.photoUrl);
-      this.router.navigate(['forums']);
-    });
-  }
-
-  signInWithLinkedIn(): void {
-    this.authService.signIn(LinkedInLoginProvider.PROVIDER_ID);
-    this.authService.authState.subscribe((user) => {
-      window.localStorage.setItem('sessionusername', user.name);
-      window.localStorage.setItem('sessionpremission', 1 + '');
-      window.localStorage.setItem('isLoginSocial', 'true');
-      window.localStorage.setItem('image', user.photoUrl);
-      this.router.navigate(['forums']);
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(() => {
+      this.authService.authState.subscribe((user) => {
+        window.localStorage.setItem('sessionusername', user.name);
+        window.localStorage.setItem('sessionpremission', 1 + '');
+        window.localStorage.setItem('isLoginSocial', 'true');
+        window.localStorage.setItem('image', user.photoUrl);
+        this.router.navigate(['forums']);
+      });
     });
   }
 
