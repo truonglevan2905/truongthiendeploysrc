@@ -59,7 +59,7 @@ var server=https.createServer({
 var io=require('./socketio/io').initialize(server);
 
 server.listen(process.env.PORT || 5000,function(req,res){
-    console.log('RUNNING');
+    console.log('RUNNING with port: ' + process.env.PORT);
 })
 
 module.exports = app;
