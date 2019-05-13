@@ -58,7 +58,7 @@ var server=https.createServer({
 
 var io=require('./socketio/io').initialize(server);
 
-server.listen(3000,function(req,res){
+server.listen(process.env.PORT || 5000,function(req,res){
     console.log('RUNNING');
 })
 
