@@ -51,10 +51,11 @@ app.get('*', function(req,res) {
   // Replace the '/dist/<to_your_project_name>/index.html'
   res.sendFile(path.join(__dirname+ '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG/index.html'));
 });
-var server=https.createServer({
-  key: fs.readFileSync('./server.key', 'utf8'),
-  cert: fs.readFileSync('./server.cert', 'utf8')
-}, app);
+// var server=https.createServer({
+//   key: fs.readFileSync('./server.key', 'utf8'),
+//   cert: fs.readFileSync('./server.cert', 'utf8')
+// }, app);
+var server=http.createServer(app);
 
 var io=require('./socketio/io').initialize(server);
 
