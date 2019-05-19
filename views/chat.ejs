@@ -4813,39 +4813,39 @@ input.button3:hover {
 </div>
 <script>
         var customeConfig;
+//         $.ajax({
+//     url: "https://service.xirsys.com/ice",
+//     data: {
+//       ident: "vanpho",
+//       secret: "2b1c2dfe-4374-11e7-bd72-5a790223a9ce",
+//       domain: "vanpho93.github.io",
+//       application: "default",
+//       room: "default",
+//       secure: 1
+//     },
+//     success: function (data, status) {
+//       // data.d is where the iceServers object lives
+//       customConfig = data.d;
+//       console.log(customConfig);
+//     },
+//     async: false
+//   });
         $.ajax({
-    url: "https://service.xirsys.com/ice",
-    data: {
-      ident: "vanpho",
-      secret: "2b1c2dfe-4374-11e7-bd72-5a790223a9ce",
-      domain: "vanpho93.github.io",
-      application: "default",
-      room: "default",
-      secure: 1
-    },
-    success: function (data, status) {
-      // data.d is where the iceServers object lives
-      customConfig = data.d;
-      console.log(customConfig);
-    },
-    async: false
+      type: "POST",
+      dataType: "json",
+      url: "https://global.xirsys.net",
+      data: {
+          ident: "thienhoang",
+          secret: "7806ea8c-7928-11e9-a6a5-0242ac110007",
+          application: "chat",
+          secure: 1
+      },
+      success: function (data, status) {
+       customeConfig=data.d;
+       console.log(customeConfig);
+      },
+      async: false
   });
-  //       $.ajax({
-  //     type: "POST",
-  //     dataType: "json",
-  //     url: "https://global.xirsys.net",
-  //     data: {
-  //         ident: "thienhoang",
-  //         secret: "7806ea8c-7928-11e9-a6a5-0242ac110007",
-  //         application: "chat",
-  //         secure: 1
-  //     },
-  //     success: function (data, status) {
-  //      customeConfig=data.d;
-  //      console.log(customeConfig);
-  //     },
-  //     async: false
-  // });
         var peer = new Peer({  debug: 3, config: customeConfig}); 
         peer.on('open',function(id){
          document.getElementById('txt').value=id;
