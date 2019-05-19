@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 import { Comments } from '../model/Comments';
 import { CommentsService } from '../comments.service';
 import { isNullOrUndefined } from 'util';
-
+import { TopicServiceService } from '../topic-service.service';
 @Component({
   selector: 'app-createthread',
   templateUrl: './createthread.component.html',
@@ -61,6 +61,7 @@ export class CreatethreadComponent implements OnInit {
      public dialog: MatDialog,
      private socket: SocketService,
      public membersService:MembersService,
+     public topicService:TopicServiceService,
      private router: Router,
      private commentservice: CommentsService
     
@@ -70,6 +71,19 @@ export class CreatethreadComponent implements OnInit {
       this.checkedPremission=localStorage.getItem("sessionpremission");
       this.socket.reveiverMessageHopThu();
      }
+     decodeEntities(str) {
+      // this prevents any overhead from creating the object each time
+      const element = document.createElement('div');
+      if(str && typeof str === 'string') {
+          // strip script/html tags
+          str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+          str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+          element.innerHTML = str;
+          str = element.textContent;
+          element.textContent = '';
+        }
+        return str;
+    }
  onSubmited():void{
   var topicName = this.route.snapshot.paramMap.get('name');
      this.nameTopic=topicName;
@@ -125,7 +139,7 @@ export class CreatethreadComponent implements OnInit {
           {
             threadId:id,
             userName: localStorage.getItem("sessionusername"),
-            content: this.htmlContent,
+            content: this.decodeEntities(this.htmlContent),
             image: "assets/img/user.png",
             position:this.position,
             numberOfLikes: 0,
@@ -133,7 +147,7 @@ export class CreatethreadComponent implements OnInit {
             statusLike:false,
             statusDisLike:false
           }
-
+  
           this.commentservice.addComments(comm).subscribe(x => console.log('Observer got a next value: ' + x),
             err => console.log("success"),
             () => console.log('Observer got a complete notification')
@@ -147,6 +161,7 @@ export class CreatethreadComponent implements OnInit {
             err => console.log("success"),
             () => console.log('Observer got a complete notification')
           );
+        
       });
     } else {
       this.showError("Vui lòng nhập nội dung và tiêu đề", null)
@@ -164,7 +179,11 @@ export class CreatethreadComponent implements OnInit {
   }
 }
 loadUserName():void{
-     
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
   this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
     data.forEach((item,index)=>{
         this.image=item.image;
@@ -172,7 +191,7 @@ loadUserName():void{
     })
     console.log(this.image);
    });
-
+  }
 }
 ngOnInit() {
   this.name;

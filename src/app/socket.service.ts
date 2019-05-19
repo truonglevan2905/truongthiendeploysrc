@@ -57,6 +57,9 @@ export class SocketService {
   sendMessageRemoveCommentId(data){
       this.socket.emit('messagecommentid',data);
   }
+  sendMessageRemoveCommentId1(data){
+    this.socket.emit('messagecommentid1',data);
+}
   sendMessageRemoveThreadId(data){
       this.socket.emit('messagethreadid',data);
   }
@@ -76,9 +79,37 @@ export class SocketService {
     return observable;
  
 }
+getAllMessageJoining11111(data){
+    this.socket.emit('messagelist',data);
+}
+ReceviverMessageJonning(){
+    
+    let observable = new Observable<GroupUsers[]>(observer=>{
+        this.socket.on("newmessagfromgroupjonning", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+}
 newMessageReceivedComment(){
     let observable = new Observable<Comment[]>(observer=>{
         this.socket.on("newmessagecomment", (data)=>{
+        console.log("saasss"+data);
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+}
+newMessageReceivedCommentToDelete(){
+    let observable = new Observable<String>(observer=>{
+        this.socket.on("newmessagecomment1", (data)=>{
         console.log("saasss"+data);
             observer.next(data);
            
@@ -156,6 +187,20 @@ joinningRoom(data){
  RecieverMessageToSomeOn(){
     let observable = new Observable<GroupUsers[]>(observer=>{
         this.socket.on("newmessagfromgroup", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+}
+RecevicerMessageLeaveGroupUser(){
+   
+    
+    let observable = new Observable<GroupUsers[]>(observer=>{
+        this.socket.on("receivermessageleaveroom", (data)=>{
         
             observer.next(data);
            
@@ -246,5 +291,38 @@ SendMessageLeaveRoom(data){
 }
 SendMessageCheckThread(data){
     this.socket.emit("checkthread",data);
+}
+sendMessageClickLike(data){
+    this.socket.emit("messagelike",data);
+}
+sendMessageClickDisLike(data){
+    this.socket.emit("messagedislike",data);
+}
+
+receiverMessageDisLike(){
+    let observable = new Observable<Comments[]>(observer=>{
+        this.socket.on("receiverdislike", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+    
+}
+receiverMessageLike(){
+    let observable = new Observable<Comments[]>(observer=>{
+        this.socket.on("receiverlike", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+    
 }
 }

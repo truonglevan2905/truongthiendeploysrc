@@ -352,9 +352,7 @@ ul.rightside {
 
 /* Table styles
 ----------------------------------------*/
-table.table1 {
-	/* See tweaks.css */
-}
+
 
 #ucp-main table.table1 {
 	padding: 2px;
@@ -1614,8 +1612,8 @@ fieldset.polls dd div {
 	min-height: 80px;
 	color: #666666;
 	border-left: 1px solid #FFFFFF;
-	width: 22%;
-	float: right;
+	
+	
 	display: inline;
 }
 .pm .postprofile {
@@ -2047,8 +2045,7 @@ ul.cplist {
 	margin-left: 2px;
 }
 
-#minitabs a {
-}
+
 
 #minitabs a:hover {
 	text-decoration: none;
@@ -2664,8 +2661,7 @@ input.disabled {
 	float: left;
 }
 
-.search-box input {
-}
+
 
 input.search {
 	background-image: none;
@@ -2687,13 +2683,7 @@ tweaks required due to its poor CSS support.
 * html table, * html select, * html input { font-size: 100%; }
 * html hr { margin: 0; }
 
-table.table1 {
-	width: 99%;		/* IE < 6 browsers */
-	/* Tantek hack */
-	voice-family: "\"}\"";
-	voice-family: inherit;
-	width: 100%;
-}
+
 html>body table.table1 { width: 100%; }	/* Reset 100% for opera */
 
 * html ul.topiclist li { position: relative; }
@@ -3001,9 +2991,7 @@ dl.details dd {
 li.reported:hover {
 	background-color: #ECD5D8 !important;
 }
-.sticky, .announce {
-	/* you can add a background for stickies and announcements*/
-}
+
 
 div.rules {
 	background-color: #ECD5D8;

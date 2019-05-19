@@ -56,16 +56,20 @@ export class ThreadComponent implements OnInit {
     this.checkedPremission=localStorage.getItem("sessionpremission");
    }
    loadUserName():void{
-     
-    this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-      console.log(this.image);
-     });
-  
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+          
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        
+    })
+    console.log(this.image);
+   });
   }
+}
   ngOnInit() {
     this.getTopicDetailByID();
     if(this.userName!=""||this.userName!=null){
@@ -81,6 +85,7 @@ export class ThreadComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('topicName');
      console.log("Thread component");
    this.threadservice.getAllTheardByNameTopic(id).subscribe(data=>this.thread=data);
+   console.log(this.thread)
    // this.topic=this.topicdeatilService.getTopicDetailByID("0000"+id);
        
 

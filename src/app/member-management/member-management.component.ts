@@ -21,6 +21,7 @@ export class MemberManagementComponent implements OnInit {
 
   pageSize = 10;
   image:String;
+  position:String;
   nameBar:String;
   pageIndex = 1; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
@@ -42,17 +43,20 @@ export class MemberManagementComponent implements OnInit {
   //  this.checkedPremission=localStorage.getItem("sessionpremission");
   }
   loadUserName():void{
-     
-    this. memberServie.getMemberByUsername(this.nameBar).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-     
-     });
-   
-  
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.memberServie.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+}
   ngOnInit() {
     this.nameBar = localStorage.getItem("sessionusername");
     this.loadUserName();

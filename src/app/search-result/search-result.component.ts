@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ThreadService } from '../thread.service';
 import { MatIcon, MatDialog } from '@angular/material';
@@ -6,12 +6,14 @@ import {PageEvent} from '@angular/material';
 import { MembersService } from '../members.service';
 import { ProgressSpinnerDialogComponentComponent } from '../progress-spinner-dialog-component/progress-spinner-dialog-component.component';
 import { NotifierService } from 'angular-notifier';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
+  
   key: string;
   lstResult: any;
   userName:String;
@@ -26,7 +28,8 @@ export class SearchResultComponent implements OnInit {
     private threadService: ThreadService,
     private membersService:MembersService,
     private dialog: MatDialog,
-    private router: Router) {
+    private router: Router,
+    private sanitizer:DomSanitizer) {
       this.userName=localStorage.getItem("sessionusername");
       this.checkedPremission=localStorage.getItem("sessionpremission");
       this.router.events.subscribe((val) => {
@@ -36,16 +39,22 @@ export class SearchResultComponent implements OnInit {
     });
   }
 
+
   loadUserName():void{
-    this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-      console.log(this.image);
-     });
-  
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        
+    })
+    console.log(this.image);
+   });
   }
+}
   ngOnInit() {
     
     this.dialogRef = this.dialog.open(ProgressSpinnerDialogComponentComponent, {

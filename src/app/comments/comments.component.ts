@@ -12,6 +12,8 @@ import {ThreadService} from '../thread.service';
 import {Customer} from 'models/Members';
 import { Customers } from '../model/Customers';
 import { Comment } from '@angular/compiler';
+import {NumberStatus} from '../model/NumberStatus';
+import { Threads } from '../model/Threads';
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -24,8 +26,10 @@ cooment:Comment1[]=[];
   comm: Comments;
   position:String;
   userName: String;
+  numberstatus:NumberStatus;
    view:Number;
   time:Date;
+  slchange:Number;
   file: any[] = [];
   checkedPremission: String;
   image: String;
@@ -56,6 +60,10 @@ cooment:Comment1[]=[];
       },
     ]
   };
+  threadId: string;
+  threadName: string;
+  categoryName: string;
+  objThread: any;
   constructor(private commentservice: CommentsService,
     private route: ActivatedRoute,
     public membersService: MembersService,
@@ -71,6 +79,14 @@ cooment:Comment1[]=[];
      this.messageArray1= this.messageArray.reverse();
 
     });
+  this.socketService.receiverMessageLike().subscribe(data=>{
+     this.comments=data;
+     
+  })
+  this.socketService.receiverMessageDisLike().subscribe(data=>{
+    this.comments=data;
+    
+ })
     this.userName = localStorage.getItem("sessionusername");
     this.checkedPremission = localStorage.getItem("sessionpremission");
     this.socketService.newMessageReceivedComment().subscribe(data=>{
@@ -79,11 +95,116 @@ cooment:Comment1[]=[];
        this.messageArray1=[];
     });
   }
-  clickLike(value,value1,value2){
-    
-  }
-  clickDisLike(value,value1,value2){
+  clickLike(value,value1,value2,value3){
+  
+    this.commentservice.getNumberStatusByNameAndId(this.userName,value).subscribe(data=>{
+            
+          if(data.length>0){
+  
+               data.forEach((item,index)=>{
+                   if(item.statusLike==true){
+                     this.slchange=item.numberOfLikes;
+                     console.log("2222"+item);
 
+                     this.commentservice.updateButtonLike(value,this.userName,this.slchange).subscribe(x => console.log('Observer got a next value: ' + x),
+                     err => console.log("success"),
+                     () => console.log('Observer got a complete notification')
+                   );
+                   this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:true});
+                   }
+                   else{
+                    this.slchange=item.numberOfLikes;
+                    this.commentservice.updateButtonLike1(value,this.userName,this.slchange).subscribe(x => console.log('Observer got a next value: ' + x),
+                     err => console.log("success"),
+                     () => console.log('Observer got a complete notification')
+                   );
+                   this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:false});
+                   }
+               })
+          }
+          else{
+               this.numberstatus={
+                userName:this.userName,
+                commentId:value,
+                numberOfLikes:1,
+                numberOfDislikes:0,
+                statusLike:true,
+                statusDisLike:false
+               }
+               this.commentservice.addNumberStatus(this.numberstatus).subscribe(x => console.log('Observer got a next value: ' + x),
+               err => console.log("success"),
+               () => console.log('Observer got a complete notification')
+             );
+             this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:1,numberofdislike:0,status:false});
+          }
+    })
+  }
+  clickDisLike(value,value1,value2,value3){
+    this.commentservice.getNumberStatusByNameAndId(this.userName,value).subscribe(data=>{
+      if(data.length>0){
+           data.forEach((item,index)=>{
+               if(item.statusDisLike==true){
+                 this.slchange=item.numberOfDislikes;
+                 console.log("2222"+item);
+
+                 this.commentservice.updateButtonDislike(value,this.userName,this.slchange).subscribe(x => console.log('Observer got a next value: ' + x),
+                 err => console.log("success"),
+                 () => console.log('Observer got a complete notification')
+               );
+               this.socketService.sendMessageClickDisLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:true});
+               }
+               else{
+                this.slchange=item.numberOfDislikes;
+                this.commentservice.updateButtonDislike1(value,this.userName,this.slchange).subscribe(x => console.log('Observer got a next value: ' + x),
+                 err => console.log("success"),
+                 () => console.log('Observer got a complete notification')
+               );
+               this.socketService.sendMessageClickDisLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:false});
+               }
+           })
+      }
+      else{
+           this.numberstatus={
+            userName:this.userName,
+            commentId:value,
+            numberOfLikes:0,
+            numberOfDislikes:1,
+            statusLike:false,
+            statusDisLike:true
+           }
+           this.commentservice.addNumberStatus(this.numberstatus).subscribe(x => console.log('Observer got a next value: ' + x),
+           err => console.log("success"),
+           () => console.log('Observer got a complete notification')
+         );
+         this.socketService.sendMessageClickDisLike({commentid:value,threadid:value1,username:this.userName,numberoflike:1,numberofdislike:0,status:false});
+      }
+})
+  }
+  clichRemove1(value,value1):void{
+    console.log(value+"----"+value1+""+this.position);
+    if(this.position=="Admin"||this.position=="SubAdmin"){
+this.commentservice.deleteCommentById(value);
+this.socketService.sendMessageRemoveCommentId1({commentid:value,threadid:value1});
+this.showError("Bài viết của bạn đã được xóa!");
+    }
+    else{
+      this.commentservice.getAllCommentByCommentId(value,this.userName).subscribe(data=>{
+       
+        if(data.length>0){
+           this.commentservice.deleteCommentById(value);
+           this.socketService.sendMessageRemoveCommentId1({commentid:value,threadid:value1});
+           this.showError("Bài viết của bạn đã được xóa!");
+        }
+        else{
+          this.showError("Bạn không có quyền xóa bài viết!");
+        }
+
+   })
+   
+   
+    }
+   
+         
   }
   clickRemove(value,value1):void{
    console.log(value+"----"+value1+""+this.position);
@@ -94,7 +215,7 @@ this.showError("Bài viết của bạn đã được xóa!");
     }
     else{
       this.commentservice.getAllCommentByCommentId(value,this.userName).subscribe(data=>{
-       
+       console.log("Username"+this.userName+""+data.length);
         if(data.length>0){
            this.commentservice.deleteCommentById(value);
            this.socketService.sendMessageRemoveCommentId({commentid:value,threadid:value1});
@@ -105,11 +226,24 @@ this.showError("Bài viết của bạn đã được xóa!");
         }
 
    })
-   this.showError("Bạn không có quyền xóa bài viết!");
+  
    
     }
    
    
+  }
+  decodeEntities(str) {
+    // this prevents any overhead from creating the object each time
+    const element = document.createElement('div');
+    if(str && typeof str === 'string') {
+        // strip script/html tags
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+      return str;
   }
   onselect(a: boolean): void {
     this.isCheck = a;
@@ -121,7 +255,7 @@ this.showError("Bài viết của bạn đã được xóa!");
         {
           threadId:id,
           userName: localStorage.getItem("sessionusername"),
-          content: this.htmlContent,
+          content:this.decodeEntities(this.htmlContent),
            image:this.image,
            position:this.position,
           numberOfLikes: 0,
@@ -129,7 +263,7 @@ this.showError("Bài viết của bạn đã được xóa!");
           statusLike:false,
           statusDisLike:false
         }
-
+  
       this.commentservice.addComments(this.comm).subscribe(x => console.log('Observer got a next value: ' + x),
         err => console.log("success"),
         () => console.log('Observer got a complete notification')
@@ -156,23 +290,36 @@ this.showError("Bài viết của bạn đã được xóa!");
     });
     
   }
-  loadUserName(): void {
+ 
 
-
-    this.membersService.getMemberByUsername(this.userName).subscribe(data => {
-      data.forEach((item, index) => {
-        this.image = item.image;
-        this.position=item.position;
-        this.time=new Date();
+       
+    loadUserName():void{
+      if(localStorage.getItem("isLoginSocial")=='true'){
+             this.image=localStorage.getItem("image");
+             this.position="Member";
+      }
+      else{
+    this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+      data.forEach((item,index)=>{
+          this.image=item.image;
+          this.position=item.position;
       })
       console.log(this.image);
-    });
+     });
+    }
+  
 
 
   }
   ngOnInit() {
     this.getAllCommentByThreadID();
     this.loadUserName();
+    this.threadId = this.route.snapshot.paramMap.get('threadId');
+    this.threadService.getAllThreadByThreadId(this.threadId).subscribe(data => {
+      this.objThread = data[0];
+      this.threadName = this.objThread.threadName;
+      this.categoryName = this.objThread.topicName;
+    })
     
   }
   showError(error: String): void {

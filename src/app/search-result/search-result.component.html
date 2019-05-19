@@ -39,8 +39,8 @@
 							<a routerLink="/thread/{{thread.threadId}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
 							<br>
 							<div *ngIf="thread.commentList.length>0">
-							<label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content.substring(0, 40)}}...</label>
-							<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content}}...</label>
+							<label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content.substring(0, 40) + '...'"></label>
+							<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content + '...'"></label>
 							</div>
 							<br>
 							</a>
@@ -50,7 +50,7 @@
 							&nbsp; - &nbsp;Lượt xem: {{thread.numberOfViews}}
 							&nbsp; - &nbsp;Số bình luận: {{thread.numberOfComments}}
 							<br>
-							<fb-like url="https://www.google.com/search?q=thread/{{thread.threadId}}"></fb-like>
+							<fb-like url="https://doantn-truong-thien.herokuapp.com/thread/{{thread.threadId}}"></fb-like>
 							</div>
 						</div>
 					</div>

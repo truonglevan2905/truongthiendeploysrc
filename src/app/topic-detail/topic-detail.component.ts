@@ -93,16 +93,20 @@ export class TopicDetailComponent implements OnInit {
    this.topicdeatilService.getAllTheardByNameTopic(topicName,true,true).subscribe(data=>this.threadsThongBao=data);
   }
   loadUserName():void{
-     
-    this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-      console.log(this.image);
-     });
-  
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+          
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+       
+    })
+    console.log(this.image);
+   });
   }
+}
   ngOnInit() {
   this.getAllThreads();
   this.category = this.route.snapshot.paramMap.get('topicName');

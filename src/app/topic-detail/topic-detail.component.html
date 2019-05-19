@@ -12,17 +12,7 @@
     <app-search-condition></app-search-condition>
 	<app-link-bar></app-link-bar>
     <div class="container">
-      <div id="page-header">
-        <div class="breadcrumbs">
-          <ul class="crumb">
-            <li class="icon-home"><a href="./index.php?style=747" accesskey="h">Board index</a></li>
-            <li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=1">Test Category 1</a></li>
-            <li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></li>
-          </ul>
-
-
-        </div>
-      </div>
+      <app-direct-bar [topicName]="category"></app-direct-bar>
 
       <a name="start_here"></a>
       <div id="page-body">
@@ -56,8 +46,8 @@
                 <a routerLink="/thread/{{thread.threadId}}" style="text-decoration: none;" routerLinkActive="active"><b style="font-size: 20px; word-break: break-all;">{{thread.threadName}}</b>
                 <br>
                 <div *ngIf="thread.commentList.length>0">
-                <label *ngIf="thread.commentList[0].content.length > 40 " style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content.substring(0, 40)}}...</label>
-                <label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;">{{thread.commentList[0].content}}...</label>
+                  <label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content.substring(0, 40) + '...'"></label>
+                  <label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content + '...'"></label>
                  </div>
                 <br>
                 </a>
@@ -67,7 +57,7 @@
                 &nbsp; - &nbsp;Lượt xem: {{thread.numberOfViews}}
                 &nbsp; - &nbsp;Số bình luận: {{thread.numberOfComments}}
                 <br>
-                <fb-like url="https://www.google.com/search?q=thread/{{thread.threadId}}"></fb-like>
+                <fb-like url="https://doantn-truong-thien.herokuapp.com/thread/{{thread.threadId}}"></fb-like>
                 </div>
               </div>
             </div>
@@ -114,7 +104,7 @@
                   &nbsp; - &nbsp;Lượt xem: {{thread1.numberOfViews}}
                   &nbsp; - &nbsp;Số bình luận: {{thread1.numberOfComments}}
                   <br>
-                  <fb-like url="https://www.google.com/search?q=thread/{{thread1.threadId}}"></fb-like>
+                  <fb-like url="https://doantn-truong-thien.herokuapp.com/thread/{{thread1.threadId}}"></fb-like>
                   </div>
                 </div>
               </div>

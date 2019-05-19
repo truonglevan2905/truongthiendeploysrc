@@ -1,0 +1,11 @@
+<div id="page-header">
+  <div class="breadcrumbs">
+    <ul class="crumb">
+      <li class="icon-home"><a routerLink="/">Board index</a></li>
+      <li *ngIf="topicName"> <strong>&#8249;</strong> <a [routerLink]="'/topic/' + topicName">{{topicName}}</a></li>
+      <li *ngIf="threadName"> <strong>&#8249;</strong> <a [routerLink]="'/thread/' + threadId">{{threadName}}</a></li>
+    </ul>
+
+
+  </div>
+</div>

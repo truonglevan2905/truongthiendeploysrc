@@ -16,6 +16,7 @@ export class MembersComponent implements OnInit {
   k: Number;
   userName: String;
   file:any[]=[];
+  position:String;
   checkedPremission:String;
   image:String;
   constructor(public membersservice: MembersService
@@ -72,17 +73,20 @@ export class MembersComponent implements OnInit {
     }
   }
   loadUserName():void{
-     
-    this.membersservice.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-      console.log(this.image);
-     });
-   
-  
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.membersservice.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+}
   ngOnInit() {
     this.getAllMembers();
     if(this.userName!=""||this.userName!=null){

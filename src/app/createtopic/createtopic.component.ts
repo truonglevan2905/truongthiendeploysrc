@@ -93,5 +93,7 @@ export class CreatetopicComponent implements OnInit {
     });
     this.loadUser();
   }
-
+  onSubmit() {
+    
+  }
 }

@@ -6,7 +6,7 @@ var jsonParser = bodyParser.json();
 const mongoose = require('mongoose');
 var Threads = require('../models/Threads');
 var threadDAO = require('../dao/Thread_DAO');
-
+var Topics=require('../models/Topics');
 router.get('/', function (req, res) {
 
   threadDAO.getAllThreads(function (data) {
@@ -32,6 +32,11 @@ router.get('/getThreadById/:id', function (req, res) {
   })
 
 });
+router.get('/getAllThreadByTopicName/:name',function(req,res){
+  threadDAO.getAllThreadByTopiName(req.params.name,function(data){
+    res.send(data);
+  })
+})
 router.put('/updateNewofView/:id/:value',function(req,res){
      threadDAO.updateNewofView(req.params.id,req.params.value,function(data){
       if (data == false) {
@@ -87,6 +92,18 @@ router.post('/addThread', function (req, res) {
       console.log(err);
       res.send(null);
     } else {
+   Topics.find({topicName:req.body.topicName},function(err,data1){
+           data1.forEach((item,index)=>{
+                 Topics.updateOne({topicName:req.body.topicName,isAuthen:true},{numberOfUserViewing:item.numberOfUserViewing+1},function(err){
+                     if(err){
+
+                     }
+                     else{
+                       console.log("UpdateNumberOfView");
+                     }
+                 })
+           })
+    })
       res.send(data);
     }
   })
@@ -100,6 +117,22 @@ router.delete('/delete/:id', function (req, res) {
       res.send("There was a problem adding the information to the database.");
     }
     else {
+      Threads.find({threadId:id_Thread},function(data1){
+         data1.forEach((item,index)=>{
+           Topics.find({topicName:item.topicName},function(data2){
+                 data2.forEach((i,index)=>{
+                  Topics.updateOne({topicName:i.topicName},{numberOfUserViewing:i.numberOfUserViewing-1},function(err){
+                     if(err){
+
+                     }else{
+                       
+                     }
+                  })
+                 })
+           })
+           
+         })
+      })
       res.send("Success");
     }
   })

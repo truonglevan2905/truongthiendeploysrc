@@ -1,12 +1,12 @@
 <li *ngFor="let topic of lstTopics" class="row">
     <dl class="icon">
-  
+    
         <dt title="Unread posts">
             <a routerLink="/topic/{{topic.topicName}}" class="forumtitle">{{topic.topicName}}</a><br />
             {{topic.describe}}
         </dt>
-      <dd class="topics">{{topic.numberOfComment}} <span class="smaller">Topics</span></dd>
-      <dd class="posts">{{topic.numberOfUserViewing}} <span class="smaller">Posts</span></dd>
+      <dd class="topics">{{topic.numberOfUserViewing}} <span class="smaller">Topics</span></dd>
+      <dd class="posts">{{topic.numberOfComment}} <span class="smaller">Posts</span></dd>
       <dd class="lastpost"><span>
           Last post by <a
           routerLink="/memberManage/{{topic.lastUpdate}}">{{topic.lastUpdate}}</a>

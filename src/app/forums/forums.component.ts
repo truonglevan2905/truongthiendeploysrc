@@ -6,6 +6,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import {MembersService} from '../members.service'; 
 import { NotifierService } from 'angular-notifier';
 import { SocketService } from '../socket.service';
+import { MatDialog } from '@angular/material';
+import { ProgressSpinnerDialogComponentComponent } from '../progress-spinner-dialog-component/progress-spinner-dialog-component.component';
 
 @Component({
   selector: 'app-forums',
@@ -30,16 +32,18 @@ export class ForumsComponent implements OnInit {
     public membersService:MembersService,
     public notifierService: NotifierService,
     public appRef: ApplicationRef,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private matDiaLog: MatDialog,
   ) { 
   }
   ngOnInit() {
-
-    this.loadDataTopic();
+    this.forumsService.getAllTopics().subscribe(data => {
+      this.topics = data
+    });
   }
   loadDataTopic() {
 
-    this.forumsService.getAllTopics().subscribe(data => this.topics = data);
+    
     
   }
   loadTopicData(): void {

@@ -29,6 +29,10 @@ router.get('/getUserOnlineByGroup/:groupname',function(req,res){
          res.send(data);
      })
 })
+router.get('/:name',function(req,res){
+   
+  res.render("chat",{receiver:req.params.name});
+})
 router.get('/getUserOnline/:groupname/:username',function(req,res){
     groupDAO.getAllUser(req.params.groupname,req.params.username,function(data){
         res.send(data);

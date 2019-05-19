@@ -25,6 +25,24 @@ exports.getAllTopicByCategory=function(namecate,callback){
         callback(data);
     })
 }
+exports.getAllTopicByTopicName=function(name,callback){
+    Topics.find({topicName:name},function(err,data){
+        callback(data);
+    })
+}
+exports.updateNumberTopic=function(name,sl,callback){
+    Topics.updateOne({topicName:name},{numberOfUserViewing:sl},function(err){
+        var isCheck=true;
+        if(err){
+            isCheck=false;
+        }
+        else{
+            isCheck=true;
+        }
+        callback(isCheck);
+    })
+}
+
 exports.deleteTopicsByID=function(id,callback){
     Topics.deleteOne({topicId:id},function(err){
         var isCheck=true;

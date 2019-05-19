@@ -86,18 +86,20 @@ export class AnnouncementAdminComponent implements OnInit {
     this.isCheck = a;
   }
   loadUserName():void{
-     
-    this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-          this.position=item.position;
-          
-          this.time=new Date();
-      })
-     
-     });
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+}
   createCommit(): void {
     if (this.htmlContent != "") {
       const id = +this.route.snapshot.paramMap.get('threadId');

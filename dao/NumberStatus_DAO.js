@@ -20,21 +20,34 @@ exports.getAllNumberStatus=function(name,commentid,callback){
     })
 
 }
-exports.updateNumberStatusLike=function(name,commentid,sl,callback){
-    NumberStatus.updateOne({userName:name,commentId:commentid},{numberOfLikes:sl},function(err){
+exports.updateNumberStatusLike=function(id,name,sl,callback){
+    NumberStatus.updateOne({commentId:id,userName:name},{numberOfLikes:sl,statusLike:false},function(err){
         var isCheck=true;
         if (err) {
             isCheck=false;
-            console.log("err" + err);
+           
         } else {
             isCheck=true;
-            console.log("Success");
+           
         }
         callback(isCheck);
     })
 }
-exports.updateNumberStatusDisLike=function(name,commentid,sl,callback){
-    NumberStatus.updateOne({userName:name,commentId:commentid},{numberOfDislikes:sl},function(err){
+exports.updateNumberStatusLike1=function(id,name,sl,callback){
+    NumberStatus.updateOne({commentId:id,userName:name},{numberOfLikes:sl,statusLike:true},function(err){
+        var isCheck=true;
+        if (err) {
+            isCheck=false;
+           
+        } else {
+            isCheck=true;
+           
+        }
+        callback(isCheck);
+    })
+}
+exports.updateNumberStatusDisLike=function(id,name,sl,callback){
+    NumberStatus.updateOne({commentId:id,userName:name},{numberOfDislikes:sl,statusDisLike:false},function(err){
         var isCheck=true;
         if (err) {
             isCheck=false;
@@ -47,6 +60,18 @@ exports.updateNumberStatusDisLike=function(name,commentid,sl,callback){
     })
 }
 
-
+exports.updateNumberStatusDisLike1=function(id,name,sl,callback){
+    NumberStatus.updateOne({commentId:id,userName:name},{numberOfDislikes:sl,statusDisLike:true},function(err){
+        var isCheck=true;
+        if (err) {
+            isCheck=false;
+            console.log("err" + err);
+        } else {
+            isCheck=true;
+            console.log("Success");
+        }
+        callback(isCheck);
+    })
+}
 
 

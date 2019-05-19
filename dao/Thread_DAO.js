@@ -29,6 +29,12 @@ exports.deleteThreadsByID=function(id,callback){
         callback(isCheck);
     })
 }
+exports.getAllThreadByTopiName=function(name,callback){
+    Threads.find({topicName:name},function (err,data) {
+        //callback(JSON.stringify(data));
+        callback(JSON.stringify(data));
+    })
+}
 exports.getAllThreads=function(callback) {
     Threads.find({},function (err,data) {
         //callback(JSON.stringify(data));

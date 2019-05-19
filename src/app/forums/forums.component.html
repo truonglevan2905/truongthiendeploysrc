@@ -12,19 +12,10 @@
 	<div id="wrap">
 		<a id="top" name="top" accesskey="t"></a>
 		<app-search-condition></app-search-condition>
-		<button class="button button--primary" (click)="showNotification( 'default', 'Good evening, you lovely person!' )">
-			Default me!
-		  </button>
 
 		<app-link-bar></app-link-bar>
 		<div class="container">
-			<div id="page-header">
-				<div class="breadcrumbs">
-					<ul class="crumb">
-						<li class="icon-home"><a href="/" accesskey="h">Board index</a></li>
-					</ul>
-				</div>
-			</div>
+			<app-direct-bar></app-direct-bar>
 			<a name="start_here"></a>
 			<div id="page-body">
 				<div class="inner">

@@ -74,6 +74,10 @@ this.socketService.receiverMessageChatting().subscribe(data=>{
 //        console.log("111111"+this.messageChatting1);
 //  })
 })
+  this.socketService.ReceviverMessageJonning().subscribe(data=>{
+    this.arrayMessage=data;
+    console.log("thien hoang"+this.arrayMessage);
+  })
       this.socketService.RecieverMessageToSomeOn().subscribe(data=>{
         this.arrayMessage=data;
       console.log(this.arrayMessage);
@@ -81,6 +85,9 @@ this.socketService.receiverMessageChatting().subscribe(data=>{
      this.socketService.reveceiverMessageUserDisconnect().subscribe(data=>{
        console.log("userdisconnect111111");
       this.listMemberOnline=data;
+     })
+     this.socketService.RecevicerMessageLeaveGroupUser().subscribe(data=>{
+         this.joinningAttender=data;
      })
       this.socketService.receiverMessageListNumberOnline().subscribe(data=>{
         this.listMemberOnline=data;
@@ -102,8 +109,12 @@ this.socketService.receiverMessageChatting().subscribe(data=>{
     this.buttonMoi="true";
     this.socketService.messageinvitepeople({receiver:data,image:data1,username:localStorage.getItem("sessionusername")});
 }
- loadUserName(): void {
 
+ loadUserName(): void {
+  if(localStorage.getItem("isLoginSocial")=='true'){
+    this.image=localStorage.getItem("image");
+    this.position="Member";
+}else{
   this.membersService.getMemberByUsername(this.userName).subscribe(data => {
     data.forEach((item, index) => {
       this.image = item.image;
@@ -111,8 +122,9 @@ this.socketService.receiverMessageChatting().subscribe(data=>{
       
       this.socketService.sendListNumberOnline({username:this.userName,image:this.image,position:item.position});
     })
-
+  
   });
+}
 }
 sendMessage(data,data1,data2,data3){
   if(typeof data=="undefined"||data==""){
@@ -125,7 +137,7 @@ sendMessage(data,data1,data2,data3){
   }
 }
 joinGroup(data,data1):void{
-  
+  this.socketService.getAllMessageJoining11111(data);
    this.socketService.joinningRoom({namegroup:data,username:this.userName,image:this.image});
    this.groupuser={
     userName:data1,
@@ -145,7 +157,7 @@ joinGroup(data,data1):void{
           );
            }
    })
-  
+
    this.groupchoosen=data;
    this.statusGroup="true";
    this.statusUser=data;
@@ -154,6 +166,7 @@ joinGroup(data,data1):void{
 leaveGroup(data,data1):void{
     this.authenNumber=0 ;
      this.checkedPrivate='false';
+     
      this.statusGroup='false';
      this.socketService.SendMessageLeaveRoom({username:data,groupname:data1});
      this.socketService.receiverMessageListNumberOnline().subscribe(data=>{
@@ -189,6 +202,7 @@ leaveGroup(data,data1):void{
   ngOnInit() {
    this.sas();
   this.loadUserName();
+  this.socketService.sendListNumberOnline({username:localStorage.getItem("sessionusername")});
   this.messageChatting1="aa";
   this.chatService.getAllGroupName().subscribe(data=>{
     this.groups=data;

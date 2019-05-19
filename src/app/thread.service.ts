@@ -53,6 +53,9 @@ export class ThreadService {
   getAllThreadsByUsername(userName: string, pageIndex: number, pageSize: number): Observable<Thread>{
     return this.http.get(`${this.threadURI}searchByUserName/${userName}?pageSize=${pageSize.toString()}&pageIndex=${pageIndex.toString()}`)
   }
+  getAllByTopicName(name:String):Observable<Thread[]>{
+    return this.http.get<Thread[]>(this.threadURI+"getAllThreadByTopicName/"+name);
+  }
   sendMessage(data)
   {
       this.socket.emit('createhopthu',data);

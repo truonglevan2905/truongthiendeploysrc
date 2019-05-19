@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     user: SocialUser;
      checkedMember:Number;
      checkedAdmin:Number;
-    
+    customers:Customers;
     members:Customers[]=[];
   constructor(public membersService:MembersService,private router: Router,
     private authService: AuthService,
@@ -51,6 +51,31 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => {
       this.authService.authState.subscribe((user) => {
         console.log(user);
+        this.membersService.getMemberByUsername(user.name).subscribe(data=>{
+             if(data.length>0){
+        
+             }
+             else{
+              this.customers = {
+                userName: user.name,
+                password: "",
+                position: "Member",
+                address: "Chưa cập nhật",
+                idNumber:8888,
+                email: user.email,
+                phoneNumber: "Chưa cập nhật",
+                image:user.photoUrl,
+                bannedStatus: "false",
+                activeStatus: true,
+                onlineStatus:false
+              }
+              this.membersService.addNewsMember(this.customers).subscribe(x => console.log('Observer got a next value: ' + x),
+                err => console.log("success"),
+                () => console.log('Observer got a complete notification')
+              );
+            }
+
+        })
         window.localStorage.setItem('sessionusername', user.name);
         window.localStorage.setItem('sessionpremission', 1 + '');
         window.localStorage.setItem('isLoginSocial', 'true');
@@ -63,6 +88,31 @@ export class LoginComponent implements OnInit {
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(() => {
       this.authService.authState.subscribe((user) => {
+        this.membersService.getMemberByUsername(user.name).subscribe(data=>{
+          if(data.length>0){
+        
+          }
+          else{
+           this.customers = {
+             userName: user.name,
+             password: "",
+             position: "Member",
+             address: "Chưa cập nhật",
+             idNumber:8888,
+             email: user.email,
+             phoneNumber: "Chưa cập nhật",
+             image:user.photoUrl,
+             bannedStatus: "false",
+             activeStatus: true,
+             onlineStatus:false
+           }
+           this.membersService.addNewsMember(this.customers).subscribe(x => console.log('Observer got a next value: ' + x),
+             err => console.log("success"),
+             () => console.log('Observer got a complete notification')
+           );
+         }
+
+        })
         window.localStorage.setItem('sessionusername', user.name);
         window.localStorage.setItem('sessionpremission', 1 + '');
         window.localStorage.setItem('isLoginSocial', 'true');
@@ -81,7 +131,7 @@ export class LoginComponent implements OnInit {
       
       if(data.length>0){
         data.forEach((item,index)=>{
-          if(item.position=="Customer"){
+          if(item.position=="Member"){
              this.checkedMember=1;
           }else if(item.position=="Doctor"){
             this.checkedMember=2;

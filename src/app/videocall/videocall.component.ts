@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { SocketService } from '../socket.service';
 
 @Component({
   selector: 'app-videocall',
@@ -38,8 +39,13 @@ export class VideocallComponent implements OnInit {
     this.localVideo.nativeElement.srcObject = stream;
     this.localStream = stream;
     this.callButtonDisabled = false;
+    // this.socketService.sendVideoStream(stream);
   }
-
+  public sendStreamToVideo(stream) {
+    this.trace('Received local stream');
+    this.remoteVideo.nativeElement.srcObject = stream;
+    this.remoteVideo = stream;
+  }
   start() {
     this.trace('Requesting local stream');
     this.startButtonDisabled = true;
@@ -214,9 +220,12 @@ export class VideocallComponent implements OnInit {
     var now = (window.performance.now() / 1000).toFixed(3);
     console.log(now + ': ', arg);
   }
-  constructor() { }
+  constructor(
+    private socketService: SocketService,
+  ) { }
 
   ngOnInit() {
+    //this.start();
   }
 
 }

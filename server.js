@@ -35,7 +35,7 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
   console.log('addr: '+add);
   var fileName = __dirname + '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG/assets/config.json';
   var content = require(fileName);
-  content.api_connect = 'http://' + add + ':3000';
+  content.api_connect = 'http://' + add + ':5000';
   fs.writeFileSync(fileName, JSON.stringify(content));
 })
 app.use('/posts',apiAdmin);

@@ -21,7 +21,7 @@ export class ChecktopicsComponent implements OnInit {
   email1: Emails;
   search: any;
   file: any[] = [];
-  
+  position:String;
  
   checkedPremission: String;
   image: String;
@@ -42,15 +42,21 @@ export class ChecktopicsComponent implements OnInit {
     })
    
   }
-  loadUserName(): void {
-
-    this.membersService.getMemberByUsername(this.userName).subscribe(data => {
-      data.forEach((item, index) => {
-        this.image = item.image;
-      })
-
-    });
+  loadUserName():void{
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+}
   onSearch(data) {
     console.log(data);
   }

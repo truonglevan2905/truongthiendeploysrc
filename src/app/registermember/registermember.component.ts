@@ -80,13 +80,13 @@ export class RegistermemberComponent implements OnInit {
             this.customers = {
               userName: data.username,
               password: data.password,
-              position: "Customer",
+              position: "Member",
               address: data.address,
               idNumber: data.idnumber,
               email: data.email,
               phoneNumber: data.phonenumber,
               image:"assets/img/user.png",
-              bannedStatus: "saasa",
+              bannedStatus: "false",
               activeStatus: true,
               onlineStatus:false
             }
@@ -121,16 +121,20 @@ export class RegistermemberComponent implements OnInit {
     });
   }
   loadUserName():void{
-     
-    this.memberservice.getMemberByUsername(this.userName).subscribe(data=>{
-      data.forEach((item,index)=>{
-          this.image=item.image;
-      })
-      console.log(this.image);
-     });
-  
-  
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+         
+    }
+    else{
+  this.memberservice.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+      
+    })
+    console.log(this.image);
+   });
   }
+}
   ngOnInit() {
   this.createForm();
 

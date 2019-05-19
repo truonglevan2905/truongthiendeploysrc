@@ -52,6 +52,10 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { LinkBarComponent } from './link-bar/link-bar.component';
 import { ChatComponent } from './chat/chat.component';
 import { VideocallComponent } from './videocall/videocall.component';
+import { DirectBarComponent } from './direct-bar/direct-bar.component';
+import { SafeHtml } from './SafeHtml';
+
+
 declare var require: any;
 const configAPI = require('src/assets/config.json');
 const configsocket: SocketIoConfig = { url: configAPI['api_connect'], options: {} };
@@ -103,7 +107,12 @@ export function provideConfig() {
     ProgressSpinnerDialogComponentComponent,
     LinkBarComponent,
     ChatComponent,
-    VideocallComponent
+    VideocallComponent,
+    DirectBarComponent,
+    SafeHtml,
+
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -122,7 +131,9 @@ export function provideConfig() {
     , MatSelectModule
     , MatSnackBarModule
     , NotifierModule,
+    
     MatProgressSpinnerModule,
+    
     SocketIoModule.forRoot(configsocket),
     RouterModule.forRoot([
       { path: 'login', component:ChecktopicsComponent },
@@ -131,7 +142,7 @@ export function provideConfig() {
     ]),
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
-  exports: [FormsModule],
+  exports: [FormsModule, SafeHtml],
   
  
   providers: [ForumsService,TopicServiceService,TopicDetailService,ThreadService,CommentsService, {
@@ -139,7 +150,7 @@ export function provideConfig() {
     useFactory: provideConfig
   }],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorDialogComponent,DialoginvalidcomponentComponent,CreatetopicComponent, ProgressSpinnerDialogComponentComponent]
+  entryComponents: [ErrorDialogComponent,DialoginvalidcomponentComponent,CreatetopicComponent, ProgressSpinnerDialogComponentComponent, ChatComponent]
  
 })
 export class AppModule { }

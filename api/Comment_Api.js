@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 var Comments=require('../models/Comments');
 var commnetDAO=require('../dao/Comments_DAO');
 var Threads = require('../models/Threads');
+var Topics=require('../models/Topics');
 /* GET users listing. */
 router.get('/', function(req, res) {
    
@@ -17,13 +18,12 @@ router.get('/', function(req, res) {
 
 });
 router.get('/getCommentId/:id/:name',function(req,res){
-    commnetDAO.getAllCommentByCommentId(req.params.id.req.params.name,function(err,data){
-        if(err){
-            res.send("There was a problem adding the information to the database.");
-        }else{
+    commnetDAO.getAllCommentByCommentId(req.params.id,req.params.name,function(data){
+       
             res.send(data);
-        }
+        
     })
+
 })
 router.get('/getThreadid/:threadid', function(req, res) {
     Threads.find({threadId:req.params.threadid},function (err,data) {
@@ -89,14 +89,17 @@ router.get('/getThreadid/:threadid', function(req, res) {
      
   
     })
+   
     commentModel.save(function (err) {
         if(err){
             res.send("There was a problem adding the information to the database.");
         }else{
+  
             res.send("Success");
         }
     })
     Comments.find({threadId:req.body.threadId},function (err,data){
+
         Threads.updateOne({threadId:req.body.threadId},{numberOfComments:data.length+1},function(err,i){
             if(err){
                 console.log(err);
@@ -125,6 +128,7 @@ router.get('/getThreadid/:threadid', function(req, res) {
             } else {
                 isCheck=true;
                
+               
             }
             console.log("isCheck"+isCheck);
             
@@ -136,7 +140,6 @@ router.get('/getThreadid/:threadid', function(req, res) {
    
     
    
-
    
      
   
