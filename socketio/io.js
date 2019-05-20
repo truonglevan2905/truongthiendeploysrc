@@ -91,6 +91,7 @@ exports.initialize = function (server) {
        threadDAO.deleteThreadsByID(data.threadid,function(value){
           if(value==true){
             Threads.find({isAuthen:false},function (err,data1) {
+              console.log(data1+"1111111111");
               io.in(data.username).emit("newmessagecheckremovethread",data1);
            })
           }
@@ -155,7 +156,56 @@ exports.initialize = function (server) {
      })
 
     socket.on('messagelike',function(data){
-   
+  //     NumberStatus.find({userName:data.username,commentId:data.commentid},function(err,data){
+  //       if(data.length>0){
+  //         data.forEach((item,index)=>{
+  //           if(item.statusLike==true){
+  //             NumberStatus.updateOne({commentId:data.commentid,userName:data.username},{numberOfLikes:parseInt(item.numberOfLikes)-1,statusLike:false},function(err){
+              
+  //               if (err) {
+                   
+                   
+  //               } else {
+                    
+                   
+  //               }
+                
+  //           })
+  //           }
+  //           else{
+  //             NumberStatus.updateOne({commentId:data.commentid,userName:data.username},{numberOfLikes:parseInt(item.numberOfLikes)+1,statusLike:true},function(err){
+              
+  //               if (err) {
+                   
+                   
+  //               } else {
+                    
+                   
+  //               }
+                
+  //           })
+  //           }
+  //         })
+  //       }
+  //       else{
+  // //       var a=new NumberStatus({
+  // //           userName:data.username,
+  // //               commentId:data.commentid,
+  // //               numberOfLikes:1,
+  // //               numberOfDislikes:0,
+  // //               statusLike:true,
+  // //               statusDisLike:false
+  // // })
+  // // a.save(function(err){
+  // //     if(err){
+
+  // //     }
+  // //     else{
+  // //       console.log('Success');
+  // //     }
+  // // })
+  //       }
+  //   })
          NumberStatus.find({commentId:data.commentid},function(err,data1){
             if(err){
 
@@ -166,19 +216,14 @@ exports.initialize = function (server) {
                data1.forEach((item,index)=>{
                 
                 
-   k=k+parseInt(item.numberOfLikes);                  
+        k=k+parseInt(item.numberOfLikes);                  
           
            
    
          
                
                })
-               if(data.status==true){
-                 k=parseInt(k)-1;
-               }
-               else{
-                 k=parseInt(k)+1;
-               }
+             console.log("KKKKK"+k);
                Comments.updateOne({commentId:data.commentid},{numberOfLikes:k},function(err){
                 if(err){
 
@@ -188,16 +233,18 @@ exports.initialize = function (server) {
                       if(err){
 
                       }else{
+                        console.log(data2);
                         socket.emit("receiverlike",data2);
                       }
                     })
                 }
            })
-         
+          
             }
          })
     }) 
     socket.on('messagedislike',function(data){
+     
       NumberStatus.find({commentId:data.commentid},function(err,data1){
         if(err){
 
@@ -215,12 +262,7 @@ k=k+parseInt(item.numberOfDislikes);
      
            
            })
-           if(data.status==true){
-             k=parseInt(k)-1;
-           }
-           else{
-             k=parseInt(k)+1;
-           }
+          
            Comments.updateOne({commentId:data.commentid},{numberOfDislikes:k},function(err){
             if(err){
 

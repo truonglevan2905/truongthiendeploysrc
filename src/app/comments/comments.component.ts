@@ -104,7 +104,7 @@ cooment:Comment1[]=[];
                data.forEach((item,index)=>{
                    if(item.statusLike==true){
                      this.slchange=item.numberOfLikes;
-                     console.log("2222"+item);
+                     console.log("2222"+this.slchange+"-----"+value);
 
                      this.commentservice.updateButtonLike(value,this.userName,this.slchange).subscribe(x => console.log('Observer got a next value: ' + x),
                      err => console.log("success"),

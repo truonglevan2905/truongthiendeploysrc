@@ -100,8 +100,10 @@
           <b>Tạo bởi:</b> &nbsp; <a routerLink="/aa" routerLinkActive="active" style="text-decoration: none; font-size: 12px; color:dodgerblue">{{topic.createdBy}}</a><br/>
 			 <b>Nội dung:</b>
 			 <div *ngIf="topic.commentList.length>0">
-				<label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content.substring(0, 40) + '...'"></label>
-				<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content + '...'"></label>
+					<!-- <label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content.substring(0, 40) + '...'"></label>
+					<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content + '...'"></label> -->
+				<!-- <label *ngIf="thread.commentList[0].content.length > 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content.substring(0, 40) + '...'"></label>
+				<label *ngIf="thread.commentList[0].content.length <= 40" style="font-size: 12px; word-break: break-all;" [innerHTML]="thread.commentList[0].content + '...'"></label> -->
                  </div>
 		  </div>
 		  <div style="float:right;margin-top:30px;" >
