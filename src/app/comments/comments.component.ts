@@ -262,7 +262,7 @@ this.showError("Bài viết của bạn đã được xóa!");
         {
           threadId:id,
           userName: localStorage.getItem("sessionusername"),
-          content:this.decodeEntities(this.htmlContent),
+          content: this.htmlContent,
            image:this.image,
            position:this.position,
           numberOfLikes: 0,

@@ -39,6 +39,7 @@ export class CreatethreadComponent implements OnInit {
     height: '15rem',
     minHeight: '5rem',
     placeholder: 'Enter text here...',
+    // uploadUrl: '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG',
     translate: 'no',
     customClasses: [
       {
@@ -139,8 +140,8 @@ export class CreatethreadComponent implements OnInit {
           {
             threadId:id,
             userName: localStorage.getItem("sessionusername"),
-            content: this.decodeEntities(this.htmlContent),
-            image: "assets/img/user.png",
+            content: this.htmlContent,
+            image: this.image,
             position:this.position,
             numberOfLikes: 0,
             numberOfDislikes:0,
@@ -154,8 +155,6 @@ export class CreatethreadComponent implements OnInit {
           )
     
           this.showError("Thành công", data);
-          
-          this.htmlContent = "";
           }
           this.threadService.addEmail(this.email).subscribe(x => console.log('Observer got a next value: ' + x),
             err => console.log("success"),
