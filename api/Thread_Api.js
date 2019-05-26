@@ -65,6 +65,10 @@ router.put('/updateThread/:id',function(req,res){
   //   }
   // })
 })
+router.post('/uploadImage', function(req, res) {
+  console.log(req);
+})
+  
 router.post('/addThread', function (req, res) {
 
   var threadModel = new Threads({

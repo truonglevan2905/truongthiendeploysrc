@@ -18,6 +18,9 @@ var apiGroup=require('./api/GroupChat_Api');
 var apiGroupUser=require('./api/GroupUser_Api');
 var app = express();
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

@@ -39,7 +39,6 @@ export class CreatethreadComponent implements OnInit {
     height: '15rem',
     minHeight: '5rem',
     placeholder: 'Enter text here...',
-    // uploadUrl: '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG',
     translate: 'no',
     customClasses: [
       {

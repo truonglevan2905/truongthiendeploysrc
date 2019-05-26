@@ -63,10 +63,6 @@
           </a>
           <div style="font-size: 10px; bottom: 0">
           <b>Tạo bởi:</b> &nbsp; <a routerLink="/aa" routerLinkActive="active" style="text-decoration: none; font-size: 12px; color:dodgerblue">{{topic.createdBy}}</a><br/>
-			 <b>Nội dung:</b>
-			 <div style="height: 15px; width: 200px;" *ngIf="topic.commentList.length>0">
-					<label style="font-size: 12px; word-break: break-all;" [innerHTML]="topic.commentList[0].content + '...'"></label>
-                 </div>
 		  </div>
 		  <div style="float:right;margin-top:30px;" >
 		  <button class="btn" type="button" style="color:white;background: red;" (click)="responseAdmin(id=topic._id,name=topic.topicName,threadid=topic.threadId,username=topic.createdBy)" >Kiểm duyệt</button>
