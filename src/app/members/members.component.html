@@ -26,27 +26,7 @@
 					<h2 class="solo">Members</h2>
 					<div class="panel">
 						<div class="inner"><span class="corners-top"><span></span></span>
-							<ul class="linklist">
-								<li>
-									<a>Find a member</a>
-									&bull;
 
-
-									<form action="search_style_747_sid_47ef40484cd2d7764257c87c6557004b.html" method="get" id="search">
-										<fieldset>
-											<input class="inputbox search tiny" [(ngModel)]="search" type="text" name="keywords" id="search_keywords" size="20" value="Search this topic…"  />
-											<button class="button2" style="background: lightseagreen;color:white;height:30px;width:50px;" (click)="onSearch(search)">Search</button>
-											<input type="hidden" name="t" value="3" />
-							<input type="hidden" name="sf" value="msgonly" />
-							<input type="hidden" name="style" value="747" />
-							
-										</fieldset>
-									</form>
-
-
-								</li>
-
-							</ul>
 							<span class="corners-bottom"><span></span></span>
 						</div>
 					</div>
@@ -55,21 +35,21 @@
 							<table class="table1" cellspacing="1" id="memberlist">
 								<thead>
 									<tr>
-										<th class="name"><span class="rank-img"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_m_sd_a.html">Position</a></span><a
-											 href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_a_sd_a.html">Username</a></th>
-										<th class="posts"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_d_sd_a.html#memberlist">activeStatus</a></th>
-										<th class="info"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_f_sd_a.html#memberlist">bannedStatus</a></th>
-										<th class="joined"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_c_sd_d.html#memberlist">Joined</a></th>
+										<th class="name"><span class="rank-img"><a href="#">Position</a></span><a
+											 href="#">Username</a></th>
+										<th class="posts"><a href="#">activeStatus</a></th>
+										<th class="info"><a href="#">bannedStatus</a></th>
+										<th class="joined"><a href="#">Joined</a></th>
 									</tr>
 								</thead>
 								<tbody *ngFor="let cus of customers|formatmember:search |paginate: { itemsPerPage: 10, currentPage: p }">
 									<tr class="bg1">
 										<td><span class="rank-img">{{cus.position}}</span><a routerLink="/memberManage/{{cus.userName}}" style="color: #AA0000;"
 											 class="username-coloured">{{cus.userName}}</a></td>
-										<td class="posts"><a href="search_style_747_author_id_2_sr_posts_sid_47ef40484cd2d7764257c87c6557004b.html"
+										<td class="posts"><a href="#"
 											 title="Search user’s posts">{{cus.activeStatus}}</a></td>
 										<td class="info">
-											<div><a href="http://www.phpBB3styles.net/" title="Visit website: http://www.phpBB3styles.net/">{{cus.bannedStatus}}</a></div>
+											<div><a href="#">{{cus.bannedStatus}}</a></div>
 										</td>
 										<td>{{cus.joinDate}}</td>
 									</tr>

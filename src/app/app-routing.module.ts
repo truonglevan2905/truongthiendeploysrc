@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { ForumsComponent } from './forums/forums.component';
 import { MembersComponent } from './members/members.component';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
-import { ThreadComponent } from './thread/thread.component';
 import {LoginComponent} from './login/login.component';
 import {RegistermemberComponent} from './registermember/registermember.component';
 import {CommentsComponent} from './comments/comments.component';
