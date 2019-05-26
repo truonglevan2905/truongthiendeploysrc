@@ -13,6 +13,7 @@ var apiComment=require('./api/Comment_Api');
 var apiTopic=require('./api/Topic_Api');
 var apiThread=require('./api/Thread_Api');
 var apiEmail=require('./api/Email_Api');
+var apiNumberStatus=require('./api/NumberStatus_Api');
 var apiGroup=require('./api/GroupChat_Api');
 var apiGroupUser=require('./api/GroupUser_Api');
 var app = express();
@@ -45,6 +46,7 @@ app.use('/apitopic',apiTopic);
 app.use('/apithread',apiThread);
 app.use('/apimail',apiEmail);
 app.use('/apigroup',apiGroup);
+app.use('/apiNumberStatus',apiNumberStatus);
 app.use('/apigroupuser',apiGroupUser);
 app.use(express.static(__dirname + '/dist/DHKTPM11A-LEVANTRUONG-HOANGMINHTHIEN-NG'));
 app.get('*', function(req,res) {
