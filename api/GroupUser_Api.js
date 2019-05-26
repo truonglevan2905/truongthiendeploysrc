@@ -38,4 +38,24 @@ router.get('/getUserOnline/:groupname/:username',function(req,res){
         res.send(data);
     })
 })
+router.delete('/deleteuseroffline/name/groupname',function(req,res){
+    groupDAO.deleteUserOffline(req.params.name,req.params.groupname,function(value){
+        if(value==true){
+            res.send("Success");
+        }
+        else{
+            res.send("Fail");
+        }
+    })
+})
+router.get('/getAllGroup/:name',function(req,res){
+    groupDAO.getAllGroupByUserName(req.params.name,function(data){
+        res.send(data);
+    })
+})
+router.get('/getAllGroupByNameGroup/:name',function(req,res){
+    groupDAO.getAllGroupByGroupName(req.params.name,function(data){
+        res.send(data);
+    })
+})
 module.exports=router;

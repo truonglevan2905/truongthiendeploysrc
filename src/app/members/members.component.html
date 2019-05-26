@@ -28,14 +28,18 @@
 						<div class="inner"><span class="corners-top"><span></span></span>
 							<ul class="linklist">
 								<li>
-									<a href="memberlist_style_747_mode_searchuser_sid_47ef40484cd2d7764257c87c6557004b.html">Find a member</a>
+									<a>Find a member</a>
 									&bull;
 
 
 									<form action="search_style_747_sid_47ef40484cd2d7764257c87c6557004b.html" method="get" id="search">
 										<fieldset>
-											<input type="text" [(ngModel)]="searchTopic" maxlength="150" title="Search for keywords" class=""
-											 placeholder="Search for keywords" />
+											<input class="inputbox search tiny" [(ngModel)]="search" type="text" name="keywords" id="search_keywords" size="20" value="Search this topic…"  />
+											<button class="button2" style="background: lightseagreen;color:white;height:30px;width:50px;" (click)="onSearch(search)">Search</button>
+											<input type="hidden" name="t" value="3" />
+							<input type="hidden" name="sf" value="msgonly" />
+							<input type="hidden" name="style" value="747" />
+							
 										</fieldset>
 									</form>
 
@@ -58,7 +62,7 @@
 										<th class="joined"><a href="memberlist_style_747_mode__sid_47ef40484cd2d7764257c87c6557004b_sk_c_sd_d.html#memberlist">Joined</a></th>
 									</tr>
 								</thead>
-								<tbody *ngFor="let cus of customers |paginate: { itemsPerPage: 10, currentPage: p }">
+								<tbody *ngFor="let cus of customers|formatmember:search |paginate: { itemsPerPage: 10, currentPage: p }">
 									<tr class="bg1">
 										<td><span class="rank-img">{{cus.position}}</span><a routerLink="/memberManage/{{cus.userName}}" style="color: #AA0000;"
 											 class="username-coloured">{{cus.userName}}</a></td>

@@ -25,6 +25,14 @@ router.get('/getCommentId/:id/:name',function(req,res){
     })
 
 })
+router.get('/getCommentIdComment/:id',function(req,res){
+    commnetDAO.getAllCommentByCommentId(req.params.id,function(data){
+       
+            res.send(data);
+        
+    })
+
+})
 router.get('/getThreadid/:threadid', function(req, res) {
     Threads.find({threadId:req.params.threadid},function (err,data) {
         //callback(JSON.stringify(data));
@@ -83,8 +91,8 @@ router.get('/getThreadid/:threadid', function(req, res) {
         position:req.body.position,
         numberOfLikes:req.body.numberOfLikes,
         numberOfDislikes:req.body.numberOfDislikes,
-    statusLike:req.body.statusLike,
-    statusDisLike:req.body.statusDisLike
+      statusLike:req.body.statusLike,
+       statusDisLike:req.body.statusDisLike
 
      
   

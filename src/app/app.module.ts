@@ -54,6 +54,10 @@ import { ChatComponent } from './chat/chat.component';
 import { VideocallComponent } from './videocall/videocall.component';
 import { DirectBarComponent } from './direct-bar/direct-bar.component';
 import { SafeHtml } from './SafeHtml';
+import { ChatgroupComponent } from './chatgroup/chatgroup.component';
+import { DialogCallComponent } from './dialog-call/dialog-call.component';
+import { FormatmemberPipe } from './pipe/formatmember.pipe';
+
 
 
 declare var require: any;
@@ -110,6 +114,9 @@ export function provideConfig() {
     VideocallComponent,
     DirectBarComponent,
     SafeHtml,
+    ChatgroupComponent,
+    DialogCallComponent,
+    FormatmemberPipe,
 
     
     
@@ -150,7 +157,7 @@ export function provideConfig() {
     useFactory: provideConfig
   }],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorDialogComponent,DialoginvalidcomponentComponent,CreatetopicComponent, ProgressSpinnerDialogComponentComponent, ChatComponent]
+  entryComponents: [ErrorDialogComponent,DialoginvalidcomponentComponent,CreatetopicComponent, ProgressSpinnerDialogComponentComponent, ChatComponent,DialogCallComponent]
  
 })
 export class AppModule { }

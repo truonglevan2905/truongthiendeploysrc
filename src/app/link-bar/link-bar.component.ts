@@ -15,6 +15,7 @@ export class LinkBarComponent implements OnInit {
   checkedPremission: string;
   userName: string;
   image: string;
+  position:String;
   isLoginSocial: string;
   constructor(
 
@@ -38,14 +39,24 @@ export class LinkBarComponent implements OnInit {
     }
   }
 
-  loadUserName(): void{
-    this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-     data.forEach((item,index)=>{
-         this.image=item.image;
-     })
-     console.log(this.image);
-    });
+  loadUserName():void{
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+
+
+
+}
   logout():void{
     window.localStorage.clear();
     location.reload(true);

@@ -19,6 +19,28 @@ exports.getAllUserOnlineByGroup=function(groupname,callback){
         callback(JSON.stringify(data));
     })
 }
+exports.deleteUserOffline=function(name,groupname,callback){
+      GroupUser.deleteOne({userName:name,groupName:groupname},function(err){
+          var isCheck=true;
+          if(err){
+              isCheck=false;
+          }
+          else{
+              isCheck=true;
+          }
+          callback(isCheck);
+      })
+}
+exports.getAllGroupByUserName=function(name,callback){
+    GroupUser.find({userName:name},function(err,data){
+        callback(JSON.stringify(data));
+    })
+}
+exports.getAllGroupByGroupName=function(name,callback){
+    GroupUser.find({groupName:name},function(err,data){
+        callback(JSON.stringify(data));
+    })
+}
 exports.getAllUser=function(groupname,username,callback){
     GroupUser.find({groupName:groupname,userName:username,statusGroup:true},function(err,data){
         callback(JSON.stringify(data));

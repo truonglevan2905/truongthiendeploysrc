@@ -25,3 +25,27 @@ exports.getAllGroupName=function(callback){
      callback(JSON.stringify(data));
     })
  }
+ exports.getAllGroupNameByUserNameGroup=function(groupname,username,callback){
+    Group.find({nameGroup:groupname,userName:username},function(err,data){
+        callback(JSON.stringify(data));
+       })
+
+ }
+
+ exports.deleteGroupChat=function(name,username,callback){
+     Group.find({nameGroup:name,userName:username},function(err){
+         var isCheck=true;
+           if(err){
+             isCheck=false;
+           }
+           else{
+               isCheck=true;
+           }
+           callback(isCheck);
+     })
+ }
+ exports.getAllGroupByUserNam=function(name,callback){
+    Group.find({userName:name},function(err,data){
+        callback(JSON.stringify(data));
+       })
+ }

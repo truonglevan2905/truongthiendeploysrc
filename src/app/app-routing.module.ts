@@ -16,6 +16,7 @@ import { InformationmemberComponent } from './informationmember/informationmembe
 import { AnnouncementAdminComponent } from './announcement-admin/announcement-admin.component';
 import {VideocallComponent} from './videocall/videocall.component';
 import {ChatComponent} from './chat/chat.component';
+import { ChatgroupComponent } from './chatgroup/chatgroup.component';
 const routes: Routes = [
   { path: '', redirectTo: 'forums', pathMatch: 'full' },
   { path: 'forums', component: ForumsComponent },
@@ -32,9 +33,11 @@ const routes: Routes = [
   {path:'danhgiacheck',component:ChecktopicsComponent},
   {path:'informationmember',component:InformationmemberComponent},
   { path: 'memberManage/:username', component: MemberManagementComponent},
+  
   {path:'threadID/:threadId',component:AnnouncementAdminComponent},
   {path:'chat',component:ChatComponent},
-  {path:'call',component:VideocallComponent}
+  {path:'call',component:VideocallComponent},
+  {path:'chatgroup/:nameGroup',component:ChatgroupComponent}
 ];
 
 @NgModule({

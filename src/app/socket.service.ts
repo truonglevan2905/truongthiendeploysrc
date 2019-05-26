@@ -11,7 +11,8 @@ import { MatSnackBar } from '@angular/material';
 import { Route, Router } from '@angular/router';
 import {GroupUser} from './model/GroupUser';
 import {GroupUsers} from 'models/usergroup';
-
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 declare var require: any;
 
 @Injectable({
@@ -21,7 +22,8 @@ export class SocketService {
     config = require('src/assets/config.json');
     private socket = io(this.config['api_connect']);
   constructor(private snackBar: MatSnackBar
-    , private routes: Router) {
+    , private routes: Router,
+    public dialog: MatDialog) {
       this.socket.on('notifyX', (data) => {
         let snackBarRef = this.snackBar.open(data, 'Xem ngay', {
             duration: 5000,
@@ -210,6 +212,22 @@ RecevicerMessageLeaveGroupUser(){
     
     return observable;
 }
+sendmessagedeletegroupname(data){
+    this.socket.emit("messagedeletegroup",data);
+}
+receivermessagedeletedgroupname(){
+    
+    let observable = new Observable<Groups[]>(observer=>{
+        this.socket.on("receivermessagedeletegroup", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+}
 messageJoinningGroup(){
     let observable = new Observable<GroupUser[]>(observer=>{
         this.socket.on("newjoinningRoom", (data)=>{
@@ -244,6 +262,45 @@ inviteChatting(data){
 }
 messageinvitepeople(data){
     this.socket.emit("messageinvitepeople",data);
+}
+invitepeople():void{
+     this.socket.on("invitepeeple",function(data){
+     alert(data.conntent);
+     });
+    
+}
+sendmessageCall(data){
+    this.socket.emit("messagecalling",data);
+}
+receivingmessageCalling(){
+   
+    let observable = new Observable<{conntent:String,receiver:String,username:String}>(observer=>{
+        this.socket.on("receivercalling", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+}
+receivingmessagecall(){
+    let observable = new Observable<{conntent:String,receiver:String,username:String}>(observer=>{
+        this.socket.on("receivercall", (data)=>{
+        
+            observer.next(data);
+           
+        });
+        return () => {this.socket.disconnect();}
+    });
+    
+    return observable;
+  
+}
+
+aaa(data){
+    this.socket.emit("aaa",data);
 }
 receiverMessageChatting(){
     let observable = new Observable<{content:String}>(observer=>{

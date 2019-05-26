@@ -4693,7 +4693,7 @@ input.button3:hover {
 
             <div class="nav" >
                     <ul class="bar">
-                      <li class="active"><a><i class="fa fa-home"></i> Board index</a></li>
+                      <li class="active"><a href="/"><i class="fa fa-home"></i> Board index</a></li>
                       <li ><a><i class="fa fa-group"></i> Members</a></li>
                       <li ><a ><i class="fa fa-info"></i> MAIL</a></li>
                     <li><a><i class="fa fa-info"></i>ĐÁNH GIÁ</a></li>	
@@ -4735,16 +4735,16 @@ input.button3:hover {
             
 			
            <div style="float:left;width:40%;height:auto;">
-			<input type="text" id="receiver" name="receiver" value="<%=receiver%>"/>	
-                <input type="text"  id="txt" name="txt"/><br/>
+			<input type="hidden" id="receiver" name="receiver" value="<%=receiver%>"/>	
+                <input type="hidden"  id="txt" name="txt"/><br/>
                 <video id="localStream" controls width="300"></video>
                 <br/><br/>
                 <video id="remoteStream" controls width="300"></video>
                 <br/><br/>
-                <input type="text" id="remoteId" placeholder="RemoteId"/>
-                <button id="btnCall">Start</button>
-                <button id="btnCall">Call</button>
-                <button id="btnCall">Hang Up</button>
+                <input type="hidden" id="remoteId" placeholder="RemoteId"/>
+                <button id="btnCall" class="btn btn-success">Connect </button>
+                <button id="btnCall1" class="btn btn-success">Call</button>
+               
                   
                     <!--group_message_section-->
                    
@@ -4811,6 +4811,18 @@ input.button3:hover {
 	<a id="bottom" name="bottom" accesskey="z"></a>
 	
 </div>
+<script>
+		$(document).ready(function(){
+					socket.on("receiveridchat",function(data){
+						console.log("SAaaaaaaaaaa"+data.id);
+						$("#remoteId").val(data.id);
+						alert("Connectting...")
+					})
+				})
+				
+
+				
+		</script>
 <script>
         var customeConfig;
 //         $.ajax({
@@ -4883,21 +4895,39 @@ input.button3:hover {
             }
         
             $('#btnCall').click(()=>{
-               const id=$('#remoteId').val();
-               openStream().then(stream=>{
+				// const id=$("#remoteId").val();
+				socket.emit("idroom",{"id":$("#txt").val(),"receiver":$('#receiver').val()});
+            //    const id=;
+            //    openStream().then(stream=>{
+            //        playStream('localStream',stream);
+            //        const call=peer.call(id,stream);
+            //        call.on('stream',remoteStream=>playStream('remoteStream',remoteStream));
+            //    })
+			})
+			$("#btnCall1").click(()=>{
+					console.log("sáas"+$("#remoteId").val());
+					openStream().then(stream=>{
                    playStream('localStream',stream);
-                   const call=peer.call(id,stream);
+                   const call=peer.call($("#remoteId").val(),stream);
                    call.on('stream',remoteStream=>playStream('remoteStream',remoteStream));
                })
-            })
-            peer.on('call',call=>{
-              const id=$('#remoteId').val();
-               openStream().then(stream=>{
-                 call.answer(stream);
-                 playStream('localStream',stream);
-                 call.on('stream',remoteStream=>playStream('remoteStream',remoteStream));
-               });
-            })
+				})
+				peer.on('call',call=>{
+             
+			 openStream().then(stream=>{
+			   call.answer(stream);
+			   playStream('localStream',stream);
+			   call.on('stream',remoteStream=>playStream('remoteStream',remoteStream));
+			 });
+		  })
+            // peer.on('call',call=>{
+             
+            //    openStream().then(stream=>{
+            //      call.answer(stream);
+            //      playStream('localStream',stream);
+            //      call.on('stream',remoteStream=>playStream('remoteStream',remoteStream));
+            //    });
+            // })
             </script>
 </body>
 </html>

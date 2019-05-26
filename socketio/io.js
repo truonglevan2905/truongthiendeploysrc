@@ -1,15 +1,15 @@
 var sio = require('socket.io');
 var io = null;
 var name;
-var Comments=require('../models/Comments');
-var commnetDAO=require('../dao/Comments_DAO');
-var Threads=require('../models/Threads');
+var Comments = require('../models/Comments');
+var commnetDAO = require('../dao/Comments_DAO');
+var Threads = require('../models/Threads');
 var threadDAO = require('../dao/Thread_DAO');
-var Group=require('../models/groupchat');
-var groupDao=require('../dao/GroupChat_DAO');
-var Members=require('../models/Members');
-var GroupUser=require('../models/usergroup');
-var NumberStatus=require('../models/NumberStatus');
+var Group = require('../models/groupchat');
+var groupDao = require('../dao/GroupChat_DAO');
+var Members = require('../models/Members');
+var GroupUser = require('../models/usergroup');
+var NumberStatus = require('../models/NumberStatus');
 exports.io = function (callback) {
   return io;
 };
@@ -19,7 +19,7 @@ exports.initialize = function (server) {
   io.on("connection", function (socket) {
 
     console.log("ket noi");
-    socket.on('notify', function(data) {
+    socket.on('notify', function (data) {
       io.sockets.emit('notifyX', data);
     })
     //joinning room by threadId in comment screen
@@ -33,377 +33,355 @@ exports.initialize = function (server) {
       socket.join(data);
 
     });
-   
+
     socket.on('message1', function (data) {
 
-    
+
       io.in(data.threadid).emit("newmessage1", { threadid: data.threadid, user: data.username, message: data.content });
-    
+
     })
     //response message  in comment screen
     socket.on('message', function (data) {
 
-        Comments.find({threadId:data.threadid},function(err,data1){
-                if(err){
+      Comments.find({ threadId: data.threadid }, function (err, data1) {
+        if (err) {
 
-                }else{
-  io.in(data.threadid).emit("newmessage", { threadid: data.threadid, user: data.username, message: data.content,numberOfLikes:0,numberOfDislikes:0 });
-      console.log("message" + data.threadid);
-                }
-        })
-    
+        } else {
+          io.in(data.threadid).emit("newmessage", { threadid: data.threadid, user: data.username, message: data.content, numberOfLikes: 0, numberOfDislikes: 0 });
+          console.log("message" + data.threadid);
+        }
+      })
+
     })
-    socket.on('messagecommentid',function(data){
+    socket.on('messagecommentid', function (data) {
       socket.join(data.threadid);
-      commnetDAO.deleteCommentsByID(data.commentid,function(i){
-         if(i==true){
-          Comments.find({threadId:data.threadid},function (err,data1) {
-            if(err){
-    
-            }else{
-              console.log("socketio"+data1);
-               io.in(data.threadid).emit("newmessagecomment",data1);
+      commnetDAO.deleteCommentsByID(data.commentid, function (i) {
+        if (i == true) {
+          Comments.find({ threadId: data.threadid }, function (err, data1) {
+            if (err) {
+
+            } else {
+              console.log("socketio" + data1);
+              io.in(data.threadid).emit("newmessagecomment", data1);
             }
-        })
-         }
+          })
+        }
 
       })
-     
+
 
     })
-    socket.on('messagecommentid1',function(data){
+    socket.on('messagecommentid1', function (data) {
       socket.join(data.threadid);
-      commnetDAO.deleteCommentsByID(data.commentid,function(i){
-         if(i==true){
-        
-              console.log("socketio"+data1);
-               io.in(data.threadid).emit("newmessagecomment1",);
-            
-        
-         }
+      commnetDAO.deleteCommentsByID(data.commentid, function (i) {
+        if (i == true) {
+
+          console.log("socketio" + data1);
+          io.in(data.threadid).emit("newmessagecomment1");
+
+
+        }
 
       })
-     
+
 
     })
-    socket.on('messagethreadid',function(data){
-       socket.join(data.username);
-       threadDAO.deleteThreadsByID(data.threadid,function(value){
-          if(value==true){
-            Threads.find({isAuthen:false},function (err,data1) {
-              console.log(data1+"1111111111");
-              io.in(data.username).emit("newmessagecheckremovethread",data1);
-           })
-          }
-       })
-
-    })
-//response messages in hop thu screen
-    socket.on('createhopthu', function (username) {
-    
-     
-    //  emailDAO.getAllEmailByUserName(username,function(data1){
-        
-       
-    //  })
-     
-    })
-    socket.on('checkthread',function(data){
+    socket.on('messagethreadid', function (data) {
       socket.join(data.username);
-      Threads.updateOne({_id:data.id},{isAuthen:true},function(err){
-        var status="";
-        if(err){
-            status=false;
+      threadDAO.deleteThreadsByID(data.threadid, function (value) {
+        if (value == true) {
+          Threads.find({ isAuthen: false }, function (err, data1) {
+            console.log(data1 + "1111111111");
+            io.in(data.username).emit("newmessagecheckremovethread", data1);
+          })
         }
-        else{
-          Threads.find({isAuthen:false},function (err,data1) {
-           io.in(data.username).emit("newmessagecheckthread",data1);
-        })
-        }
-       
+      })
+
     })
+    //response messages in hop thu screen
+    socket.on('createhopthu', function (username) {
+
+
+      //  emailDAO.getAllEmailByUserName(username,function(data1){
+
+
+      //  })
+
+    })
+    socket.on('checkthread', function (data) {
+      socket.join(data.username);
+      Threads.updateOne({ _id: data.id }, { isAuthen: true }, function (err) {
+        var status = "";
+        if (err) {
+          status = false;
+        }
+        else {
+          Threads.find({ isAuthen: false }, function (err, data1) {
+            io.in(data.username).emit("newmessagecheckthread", data1);
+          })
+        }
+
+      })
     })
     //chating room created
-     socket.on('creategroup',function(data){
-      console.log("co nguoi ket noi "+socket.id);
+    socket.on('creategroup', function (data) {
+      console.log("co nguoi ket noi " + socket.id);
       console.log(socket.adapter.rooms);
-   groupDao.getAllByGroupName(data.namegroup,function(item){
-    console.log(item);
-      if(item=="[]"){
-       console.log("Hi");
-        var addgroup=new Group({
-          userName:data.username,
-          nameGroup:data.namegroup,
-          position:data.position
-        })
-        addgroup.save(function(err){
-              if(err){
-  
-              }else{
-                Group.find({},function(err,data1){
-                  io.sockets.emit("createdGroup",data1);
-                 })
-              }
-        })
-      }
-      else{
-        console.log("Hello");
-      }
-   })
-     
-    
-       
-     })
+      groupDao.getAllByGroupName(data.namegroup, function (item) {
+        console.log(item);
+        if (item == "[]") {
+          console.log("Hi");
+          var addgroup = new Group({
+            userName: data.username,
+            nameGroup: data.namegroup,
+            position: data.position
+          })
+          addgroup.save(function (err) {
+            if (err) {
 
-    socket.on('messagelike',function(data){
-  //     NumberStatus.find({userName:data.username,commentId:data.commentid},function(err,data){
-  //       if(data.length>0){
-  //         data.forEach((item,index)=>{
-  //           if(item.statusLike==true){
-  //             NumberStatus.updateOne({commentId:data.commentid,userName:data.username},{numberOfLikes:parseInt(item.numberOfLikes)-1,statusLike:false},function(err){
-              
-  //               if (err) {
-                   
-                   
-  //               } else {
-                    
-                   
-  //               }
-                
-  //           })
-  //           }
-  //           else{
-  //             NumberStatus.updateOne({commentId:data.commentid,userName:data.username},{numberOfLikes:parseInt(item.numberOfLikes)+1,statusLike:true},function(err){
-              
-  //               if (err) {
-                   
-                   
-  //               } else {
-                    
-                   
-  //               }
-                
-  //           })
-  //           }
-  //         })
-  //       }
-  //       else{
-  // //       var a=new NumberStatus({
-  // //           userName:data.username,
-  // //               commentId:data.commentid,
-  // //               numberOfLikes:1,
-  // //               numberOfDislikes:0,
-  // //               statusLike:true,
-  // //               statusDisLike:false
-  // // })
-  // // a.save(function(err){
-  // //     if(err){
-
-  // //     }
-  // //     else{
-  // //       console.log('Success');
-  // //     }
-  // // })
-  //       }
-  //   })
-         NumberStatus.find({commentId:data.commentid},function(err,data1){
-            if(err){
-
-            }else
-            {  
-              var k=0;
-            
-               data1.forEach((item,index)=>{
-                
-                
-        k=k+parseInt(item.numberOfLikes);                  
-          
-           
-   
-         
-               
-               })
-             console.log("KKKKK"+k);
-               Comments.updateOne({commentId:data.commentid},{numberOfLikes:k},function(err){
-                if(err){
-
-                }
-                else{
-                    Comments.find({threadId:data.threadid},function(err,data2){
-                      if(err){
-
-                      }else{
-                        console.log(data2);
-                        socket.emit("receiverlike",data2);
-                      }
-                    })
-                }
-           })
-          
-            }
-         })
-    }) 
-    socket.on('messagedislike',function(data){
-     
-      NumberStatus.find({commentId:data.commentid},function(err,data1){
-        if(err){
-
-        }else
-        {  
-          var k=0;
-        
-           data1.forEach((item,index)=>{
-            
-            
-k=k+parseInt(item.numberOfDislikes);                  
-      
-       
-
-     
-           
-           })
-          
-           Comments.updateOne({commentId:data.commentid},{numberOfDislikes:k},function(err){
-            if(err){
-
-            }
-            else{
-                Comments.find({threadId:data.threadid},function(err,data2){
-                  if(err){
-
-                  }else{
-                    socket.emit("receiverdislike",data2);
-                  }
-                })
-            }
-       })
-     
-        }
-     })
-    })
-   socket.on('joinningRoom',function(data){
-     socket.join(data.namegroup);
-   
-     socket.phong=data.namegroup;
-     console.log("Room"+socket.phong);
-     GroupUser.find({groupName:socket.phong,statusGroup:true,content:""},function(err,data1){
-            if(err){
-
-            }else{
-              io.in(socket.phong).emit("newjoinningRoom",data1);
-            }
-     })
-     GroupUser.find({groupName:socket.phong,statusGroup:false},function(err,data2){
-      if(err){
-
-      }else{
-      
-        io.in(socket.phong).emit("newmessagfromgroupjonning",data2);
-      }
-})
-
-   })
-   socket.on('sendmessagetosomeone',function(data){
-     console.log("Group Name1111"+data.groupname);
-     socket.join(data.groupname);
-     socket.phong=data.groupname;
-    var goupuser=new GroupUser({
-      userName:data.username,
-      image:data.image,
-      content:data.content,
-      groupName:data.groupname,
-      statusGroup:false
-    })
-    goupuser.save(function(err){
-      if(err){
-
-      }
-      else{
-         GroupUser.find({groupName:data.groupname,statusGroup:false},function(err,data1){
-      
-          io.in(socket.phong).emit("newmessagfromgroup",data1);
-         
-         })
-      }
-    })
-     
-   })
-   socket.on('listnumberonline',function(data){
-    socket.username=data.username;
-        Members.updateOne({userName:data.username},{onlineStatus:true},function(err){
-              if(err){
-
-              }
-              else{
-                Members.find({onlineStatus:true},function (err,data1) {
-                  socket.broadcast.emit('messagelistnumberonline',data1);
+            } else {
+              Group.find({}, function (err, data1) {
+                io.sockets.emit("createdGroup", data1);
               })
-              }
-        })
-    
-   })
-   socket.on('messageintive',function(data){
-     console.log("333333333333"+data.receiver+"-------"+data.username);
-       if(data.receiver==data.username){
-         var conntent=data.username+""+"muốn nói chuyện với bạn";
-         socket.broadcast.emit('messageAttendChatting',conntent);
-       }
-   })
-   socket.on('messagelist',function(data){
-  
-   GroupUser.find({groupName:data,statusGroup:false},function(err,data1){
-     
-     io.in(data).emit("newmessagfromgroupjonning",data1);
-    })
-  })
-   socket.on('messageleaveroom',function(data){
-      GroupUser.deleteOne({groupName:data.groupname,userName:data.username},function(err){
-        if(err){
-
-        }else{
-          GroupUser.find({groupName:data.groupname,statusGroup:true},function(err,data2){
-         io.in(data.groupname).emit('receivermessageleaveroom',data2);
+            }
           })
-           
+        }
+        else {
+          console.log("Hello");
         }
       })
-    
-   })
-   socket.on('messageinvitepeople',function(data){
-         
-   })
-  socket.on('hello',function(data){
-    console.log("333333333333333333"+data.tn);
-  })
-  socket.on('messagechat',function(data){
-    socket.join(data.receiver);
-      socket.receiver=data.receiver;
-      console.log(data.receiver+""+data.username+""+data.message);
-      Members.find({userName:data.username},function(err,data1){
-           if(data1.length>0){
-             data1.forEach((item,index)=>{
-                var a=item.image.slice(6);
-              
 
-              io.in(socket.receiver).emit("messagereceiver",{username:data.username,message:data.message,thoigian:new Date(),image:a});
-             })
-           }
-      })
-     
-  })
-     socket.on('disconnect', function () {
-       console.log(socket.username);
-          Members.updateOne({userName:socket.username},{onlineStatus:false},function(err){
-            if(err){
 
-            }else{
-              Members.find({onlineStatus:true},function (err,data1) {
-                socket.broadcast.emit('messageuserdisconnect',data1);
-            })
+
+    })
+
+    socket.on('messagelike', function (data) {
+   socket.comentd=data.threadid;
+   socket.join(data.threadid);
+      NumberStatus.find({ commentId: data.commentid }, function (err, data4) {
+        if (err) {
+
+        } else {
+          var k = 0;
+
+          data4.forEach((item, index) => {
+
+
+            k = k + parseInt(item.numberOfLikes);
+
+
+
+
+
+          })
+          console.log("KKKKK" + k);
+          Comments.updateOne({ commentId: data.commentid }, { numberOfLikes: k }, function (err) {
+            if (err) {
+
+            }
+            else {
+              Comments.find({ threadId: data.threadid }, function (err, data5) {
+                if (err) {
+
+                } else {
+                  console.log(data5);
+                  io.in(data.threadid).emit("receiverlike", data5);
+                }
+              })
             }
           })
 
-      console.log('user disconnected'+socket.username);
+        }
+      })
+
+    })
+    socket.on('messagedislike', function (data) {
+      socket.comentd=data.threadid;
+      socket.join(data.threadid);
+      NumberStatus.find({ commentId: data.commentid }, function (err, data1) {
+        if (err) {
+
+        } else {
+          var k = 0;
+
+          data1.forEach((item, index) => {
+
+
+            k = k + parseInt(item.numberOfDislikes);
+
+
+
+
+
+          })
+
+          Comments.updateOne({ commentId: data.commentid }, { numberOfDislikes: k }, function (err) {
+            if (err) {
+
+            }
+            else {
+              Comments.find({ threadId: data.threadid }, function (err, data2) {
+                if (err) {
+
+                } else {
+                  io.in(data.threadid).emit("receiverdislike", data2);
+                }
+              })
+            }
+          })
+
+        }
+      })
+    })
+    socket.on('joinningRoom', function (data) {
+      socket.phong4 = data.namegroup;
+      socket.join(socket.phong4);
+      console.log("Room" + data.namegroup);
+      GroupUser.find({ groupName: socket.phong4, statusGroup: true, content: "" }, function (err, data1) {
+        if (err) {
+
+        } else {
+          io.in(socket.phong4).emit("newjoinningRoom", data1);
+        }
+      })
+      GroupUser.find({ groupName: socket.phong4, statusGroup: false }, function (err, data2) {
+        if (err) {
+
+        } else {
+                console.log("asssssss"+data2);
+          io.in(socket.phong4).emit("newmessagfromgroupjonning", data2);
+        }
+      })
+
+    })
+    socket.on('messagedeletegroup',function(data){
+       Group.deleteOne({nameGroup:data.groupname,userName:data.username},function(err){
+         if(err){
+
+         }
+         else{
+            Group.find({},function(err,data1){
+                io.sockets.emit("receivermessagedeletegroup",data1);
+            })
+         }
+       })
+    })
+    socket.on('sendmessagetosomeone', function (data) {
+      console.log("Group Name1111" + data.groupname);
+      socket.join(data.groupname);
+      socket.phong = data.groupname;
+      var goupuser = new GroupUser({
+        userName: data.username,
+        image: data.image,
+        content: data.content,
+        groupName: data.groupname,
+        statusGroup: false
+      })
+      goupuser.save(function (err) {
+        if (err) {
+
+        }
+        else {
+          GroupUser.find({ groupName: data.groupname, statusGroup: false }, function (err, data1) {
+
+            io.in(socket.phong).emit("newmessagfromgroup", data1);
+
+          })
+        }
+      })
+
+    })
+    socket.on('listnumberonline', function (data) {
+      socket.username = data.username;
+      Members.updateOne({ userName: data.username }, { onlineStatus: true }, function (err) {
+        if (err) {
+
+        }
+        else {
+          Members.find({ onlineStatus: true }, function (err, data1) {
+            socket.broadcast.emit('messagelistnumberonline', data1);
+          })
+        }
+      })
+
+    })
+    socket.on('messageintive', function (data) {
+      console.log("333333333333" + data.receiver + "-------" + data.username);
+      if (data.receiver == data.username) {
+        var conntent = data.username + "" + "muốn nói chuyện với bạn";
+        socket.broadcast.emit('messageAttendChatting', conntent);
+      }
+    })
+    socket.on('messagelist', function (data) {
+
+      GroupUser.find({ groupName: data, statusGroup: false }, function (err, data1) {
+
+        io.in(data).emit("newmessagfromgroupjonning", data1);
+      })
+    })
+    socket.on('messageleaveroom', function (data) {
+      GroupUser.deleteOne({ groupName: data.groupname, userName: data.username }, function (err) {
+        if (err) {
+
+        } else {
+          console.log("Success");
+          // GroupUser.find({ groupName: data.groupname, statusGroup: true }, function (err, data2) {
+          //   io.in(data.groupname).emit('receivermessageleaveroom', data2);
+          // })
+
+        }
+      })
+
+    })
+    socket.on('messageinvitepeople', function (data) {
+           if(data.receiver==data.username){
+             console.log("Asssssssssssss");
+            socket.broadcast.emit('invitepeeple',{conntent:data.username1+" mời bạn tham gia Room:"+data.groupname,receiver:data.receiver,username:data.username});
+           }
+    })
+    socket.on('messagecalling',function(data){
+      console.log("asssssssssssssssss")
+    socket.broadcast.emit('receivercalling',{conntent:data.username+"đang gọi bạn",receiver:data.receiver,username:data.username});
+       socket.emit('receivercall',{conntent:"Bạn đang gọi cho "+data.receiver,receiver:data.receiver,username:data.username});
+    })
+    socket.on('idroom',function(data){
+        socket.roomchat=data.receiver;
+        socket.join(socket.roomchat);
+        console.log("xxzxz"+data.receiver+"--"+data.id);
+        io.in(socket.roomchat).emit("receiveridchat",{id:data.id});
+    })
+    socket.on('hello', function (data) {
+      console.log("333333333333333333" + data.tn);
+    })
+    socket.on('messagechat', function (data) {
+      socket.join(data.receiver);
+      socket.receiver = data.receiver;
+      console.log(data.receiver + "" + data.username + "" + data.message);
+      Members.find({ userName: data.username }, function (err, data1) {
+        if (data1.length > 0) {
+          data1.forEach((item, index) => {
+            var a = item.image.slice(6);
+
+
+            io.in(socket.receiver).emit("messagereceiver", { username: data.username, message: data.message, thoigian: new Date(), image: a });
+          })
+        }
+      })
+
+    })
+    socket.on('disconnect', function () {
+      console.log(socket.username);
+      Members.updateOne({ userName: socket.username }, { onlineStatus: false }, function (err) {
+        if (err) {
+
+        } else {
+          Members.find({ onlineStatus: true }, function (err, data1) {
+            socket.broadcast.emit('messageuserdisconnect', data1);
+          })
+        }
+      })
+
+      console.log('user disconnected' + socket.username);
     });
 
   })

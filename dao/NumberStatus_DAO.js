@@ -20,6 +20,11 @@ exports.getAllNumberStatus=function(name,commentid,callback){
     })
 
 }
+exports.getAllCommentById=function(id,callback){
+    NumberStatus.find({commentId:id},function(err,data){
+        callback(JSON.stringify(data));
+    })
+}
 exports.updateNumberStatusLike=function(id,name,sl,callback){
     NumberStatus.updateOne({commentId:id,userName:name},{numberOfLikes:sl,statusLike:false},function(err){
         var isCheck=true;

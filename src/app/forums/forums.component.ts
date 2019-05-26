@@ -25,6 +25,7 @@ export class ForumsComponent implements OnInit {
    file:any[]=[];
    checkedPremission:String;
    image:String;
+   position:String;
    notifier: any;
   constructor(
 
@@ -35,17 +36,34 @@ export class ForumsComponent implements OnInit {
     private socketService: SocketService,
     private matDiaLog: MatDialog,
   ) { 
+    this.userName=localStorage.getItem("sessionusername"); 
+     
+    this.checkedPremission=localStorage.getItem("sessionpremission");
   }
   ngOnInit() {
+    this.loadUserName();
     this.forumsService.getAllTopics().subscribe(data => {
       this.topics = data
     });
   }
-  loadDataTopic() {
-
-    
-    
+  loadUserName():void{
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+
+
+
+}
   loadTopicData(): void {
 
   }

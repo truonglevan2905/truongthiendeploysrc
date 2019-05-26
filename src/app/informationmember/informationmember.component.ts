@@ -16,6 +16,8 @@ export class InformationmemberComponent implements OnInit {
   userName:String;
   listMember:any[]=[];
   address:String;
+  image:String;
+  position:String;
   constructor(private membersService:MembersService,  public dialog: MatDialog) { 
     this.userName=localStorage.getItem("sessionusername");
 
@@ -23,15 +25,28 @@ export class InformationmemberComponent implements OnInit {
 
   
   }
-  loadUser():void{
-   this.membersService.getMemberByUsername(this.userName).subscribe(data=>this.listMember=data);
-   
-  
+  loadUserName():void{
+    if(localStorage.getItem("isLoginSocial")=='true'){
+           this.image=localStorage.getItem("image");
+           this.position="Member";
+    }
+    else{
+  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+    data.forEach((item,index)=>{
+        this.image=item.image;
+        this.position=item.position;
+    })
+    console.log(this.image);
+   });
   }
+
+
+
+}
   
   ngOnInit() {
   
-    this.loadUser();
+    this.loadUserName();
   }
  
   editUser():void{

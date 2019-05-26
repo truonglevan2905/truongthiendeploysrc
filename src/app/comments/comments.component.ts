@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommentsService } from '../comments.service';
 import { Comments } from '../model/Comments';
 import { Comment1} from 'models/Comments';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { SocketService } from '../socket.service';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
@@ -24,8 +24,9 @@ export class CommentsComponent implements OnInit {
   isCheck: boolean;
 cooment:Comment1[]=[];
   comm: Comments;
-  position:String;
-  userName: String;
+  position: string;
+  userName: string;
+  topicName: string;
   numberstatus:NumberStatus;
    view:Number;
   time:Date;
@@ -33,6 +34,7 @@ cooment:Comment1[]=[];
   file: any[] = [];
   checkedPremission: String;
   image: String;
+  createUser: string;
   messageArray: Array<{ threadid: Number, user: String, message: String,numberOfLikes:Number,numberOfDislikes:Number }> = [];
   messageArray1: Array<{ threadid: Number, user: String, message: String,numberOfLikes:Number,numberOfDislikes:Number }> = [];
   name = 'Angular 6';
@@ -69,7 +71,8 @@ cooment:Comment1[]=[];
     public membersService: MembersService,
     public dialog: MatDialog,
     public socketService: SocketService,
-    public threadService:ThreadService
+    public threadService:ThreadService,
+    private router: Router,
 
   ) {
 
@@ -104,13 +107,12 @@ cooment:Comment1[]=[];
                data.forEach((item,index)=>{
                    if(item.statusLike==true){
                      this.slchange=item.numberOfLikes;
-                     console.log("2222"+this.slchange+"-----"+value);
-
+                   
                      this.commentservice.updateButtonLike(value,this.userName,this.slchange).subscribe(x => console.log('Observer got a next value: ' + x),
                      err => console.log("success"),
                      () => console.log('Observer got a complete notification')
                    );
-                   this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:true});
+                
                    }
                    else{
                     this.slchange=item.numberOfLikes;
@@ -118,7 +120,7 @@ cooment:Comment1[]=[];
                      err => console.log("success"),
                      () => console.log('Observer got a complete notification')
                    );
-                   this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:false});
+                  //  this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:value2,numberofdislike:value3,status:false});
                    }
                })
           }
@@ -135,9 +137,14 @@ cooment:Comment1[]=[];
                err => console.log("success"),
                () => console.log('Observer got a complete notification')
              );
-             this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:1,numberofdislike:0,status:false});
+           
           }
     })
+  //   this.commentservice.getAllNumberStatusByCommentId(value).subscribe(x => console.log('Observer got a next value: ' + x),
+  //   err => console.log("success"),
+  //   () => console.log('Observer got a complete notification')
+  // );
+    this.socketService.sendMessageClickLike({commentid:value,threadid:value1,username:this.userName,numberoflike:0,numberofdislike:0,status:true});
   }
   clickDisLike(value,value1,value2,value3){
     this.commentservice.getNumberStatusByNameAndId(this.userName,value).subscribe(data=>{
@@ -319,6 +326,8 @@ this.showError("Bài viết của bạn đã được xóa!");
       this.objThread = data[0];
       this.threadName = this.objThread.threadName;
       this.categoryName = this.objThread.topicName;
+      this.createUser = this.objThread.createdBy;
+      this.topicName = this.objThread.topicName;
     })
     
   }
@@ -332,5 +341,10 @@ this.showError("Bài viết của bạn đã được xóa!");
     location.reload(true);
 
 
+  }
+  deleteBaiViet(id: any) {
+    this.threadService.deleteTheadId(id);
+    this.showError("Bài viết  xóa thành công");
+    this.router.navigate(['topic/' + this.topicName]);
   }
 }

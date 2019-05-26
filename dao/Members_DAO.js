@@ -30,6 +30,11 @@ exports.getAllMemberByUserName=function(username,callback){
         callback(JSON.stringify(data));
     })
 }
+exports.getAllUserOnlineChat=function(callback){
+    Member.find({onlineStatus:true},function(err,data){
+        callback(JSON.stringify(data));
+    })
+}
 exports.getAllMemberByUserName=function (name,pass,callback) {
     Member.find({userName:name,password:pass},function (err,data) {
         callback(JSON.stringify(data));

@@ -16,6 +16,7 @@ export class MembersComponent implements OnInit {
   k: Number;
   userName: String;
   file:any[]=[];
+  search:String;
   position:String;
   checkedPremission:String;
   image:String;
@@ -92,6 +93,9 @@ export class MembersComponent implements OnInit {
     if(this.userName!=""||this.userName!=null){
       this.loadUserName(); 
      }
+  }
+  onSearch(data) {
+    console.log(data);
   }
   logout(): void {
     window.localStorage.clear();

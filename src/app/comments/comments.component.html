@@ -32,6 +32,7 @@
 	<div class="buttons movedown">
 	
 		<button *ngIf="userName!=null"  class="butn"  title="Post a reply" (click)="onselect(a=true)">Post a reply</button>
+		<button *ngIf="(userName!=null && userName === createUser) || position === 'Admin' || position === 'SubAdmin'"  class="butn"  title="Delete this topic" (click)="deleteBaiViet(threadId)">Xóa bài viết này</button>
 	
 	</div>
 
@@ -55,13 +56,13 @@
 		  </div>
 					</div>
 					<div *ngFor="let comment of messageArray1" >
-							
+						
 							<div style="width:15%;height:auto;float:left;" >
 							  <img src="{{image}}" style="width:50px;height:50px;margin-left:50px;margin-top: 20px;"/><br/>
-							  <a href="#" style="margin-left: 20px;">{{userName|uppercase}}-{{position|uppercase}}</a><br/>
+							  <a routerLink="/memberManage/{{comment.user}}" style="margin-left: 20px;">{{userName|uppercase}}-{{position|uppercase}}</a><br/>
 							</div>			
 					<div id="p3" class="post bg2 unreadpost" style="width:85%;height:auto;float:right;" >
-							<button style="float:right;" title="Xoá comment" (click)="clickRemove(id=comment.commentId,threadid=comment.threadId)">X</button>
+							<button style="float:right;" *ngIf="(userName!=null && userName === createUser) || position === 'Admin' || position === 'SubAdmin'" title="Xoá comment" (click)="clickRemove(id=comment.commentId,threadid=comment.threadId)">X</button>
 						<div style="width:100%;height:50px;border:10px;background:#CDCDB4;">
 							
 					<span style="color:black;">{{comment.user}}--{{time| date: 'hh:mm dd/MM/yyyy'}}</span>
@@ -79,7 +80,7 @@
 		<div *ngFor="let comment of comments | paginate: { itemsPerPage: 8, currentPage: p }">
 			<div style="width:15%;height:auto;float:left;">
 			  <img src="{{comment.image}}" style="width:50px;height:50px;margin-left:50px;margin-top: 20px;"/><br/>
-			  <a href="#" style="margin-left: 20px;">{{comment.userName|uppercase}}-{{comment.position|uppercase}}</a><br/>
+			  <a routerLink="/memberManage/{{comment.userName}}" style="margin-left: 20px;">{{comment.userName|uppercase}}-{{comment.position|uppercase}}</a><br/>
 			  
 			</div>			
 	<div id="p3" class="post bg2 unreadpost" style="width:85%;height:auto;float:right;" >
@@ -120,7 +121,6 @@
 </div>
 
 
-	<p></p><p><a href="./viewforum.php?style=747&amp;f=2" class="left-box left" accesskey="r">Return to Test Forum 1</a></p>
 
 
 

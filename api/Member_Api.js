@@ -53,7 +53,11 @@ router.get('/getMemberByName/:username', function(req, res) {
          res.send(data);
     })
 });
-
+router.get('/getMemberOnlineChat',function(req,res){
+    memberDAO.getAllUserOnlineChat(function(data){
+        res.send(data);
+    })
+})
 router.post('/addMember',function (req,res) {
     console.log(req.file);
     var adminModel=new Member({

@@ -17,6 +17,7 @@ export class HopthuComponent implements OnInit {
   containValue:any[]=[];
   ema:Emails;
   sl:Number;
+  position:String;
   userName:String;
   file:any[]=[];
   receiverHT:String;
@@ -63,13 +64,20 @@ addMorevalue():void{
                 this.email.push(this.ema);
 }
 loadUserName():void{
-     
-  this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
-    data.forEach((item,index)=>{
-        this.image=item.image;
-    })
-    console.log(this.image);
-   });
+  if(localStorage.getItem("isLoginSocial")=='true'){
+         this.image=localStorage.getItem("image");
+         this.position="Member";
+  }
+  else{
+this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+  data.forEach((item,index)=>{
+      this.image=item.image;
+      this.position=item.position;
+  })
+  console.log(this.image);
+ });
+}
+
 
 
 }

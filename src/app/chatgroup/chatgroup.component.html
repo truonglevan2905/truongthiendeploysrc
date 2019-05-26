@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js"></script>
+	<style>
+	 ul li{
+
+		display: inline;
+	 }
+	</style>
+	<meta charset="utf-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ 
+
+</head>
+
+<body id="phpbb" class="section-viewtopic ltr">
+<div id="wrap">
+<a id="top" name="top" accesskey="t"></a>
+
+	<div id="header">
+		
+		<app-search-condition></app-search-condition>
+		<app-link-bar></app-link-bar>
+		
+	</div>
+	
+	<div style="width:100%;">
+	<div id="page-header">
+		<div class="breadcrumbs">
+			<ul class="crumb">
+				<li class="icon-home"><a href="./index.php?style=747" accesskey="h">Board index</a></li>
+				<li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=1">Test Category 1</a></li><li> <strong>&#8249;</strong> <a href="./viewforum.php?style=747&amp;f=2">Test Forum 1</a></li>
+			</ul>
+			
+			
+		</div>
+	</div>
+
+	<a name="start_here"></a>
+	<div id="page-body">
+		
+<h2><a href="./viewtopic.php?style=747&amp;f=2&amp;t=3">Sticky</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body --><div style="display: none !important;">Unread forum<br /></div>
+
+<div class="topic-actions">
+	
+		<div class="pagination">
+			<a href="#unread">First unread post</a> &bull; 1 post
+			 &bull; Page <strong>1</strong> of <strong>1</strong>
+		</div>
+	
+
+</div>
+<div class="clear"></div>
+
+
+	<div class="head">
+		<a href="#p3">Sticky</a>
+		<!-- Poster -->
+		<span class="white_label">
+			by <a href="./memberlist.php?style=747&amp;mode=viewprofile&amp;u=54"></a>
+		</span>
+	</div>
+	
+	<a id="unread"></a>
+	
+
+	<hr class="divider" />
+ 
+
+
+
+
+  
+ <div>
+ <div>
+    <div>
+        <div>
+          
+            <div class="col-sm-7 message_section" >
+				
+
+				
+                <div class="row" >
+                  
+                    <!--group_message_section-->
+                    <div class="chat_area">
+                        <ul class="list-unstyled" *ngFor="let item of arrayMessage">
+                            <li class="left clearfix" >
+									
+										<img src="{{item.image}}" alt="User Avatar" class="img-circle" style="width:30px;height:30px;" />
+									
+									
+								
+                                <div class="chat-body1 clearfix" >
+                                    <span class="user" ><a routerLink="/memberManage/{{item.userName}}">{{item.userName}}</a></span>
+                                    <p>{{item.content}}</p>
+                                    <div class="chat_time">{{item.createdContent | date:'hh:mm a'}}</div>
+                                </div>
+							</li>
+							
+							
+                        </ul>
+                    </div>
+                  
+                    <div class="message_write">
+                        <textarea class="form-control" placeholder="type a message" [(ngModel)]="messageData"></textarea>
+                        <div class="clearfix"></div>
+                        <div class="chat_bottom">
+                            <button type="button" class="pull-right btn btn-success" (click)="sendMessage(content=messageData,username=userName,image=this.image,groupname=groupchoosen)">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-5 chat_sidebar">
+                <div class="row">
+                    <div class="title-block">
+                        <div class="input-group col-md-12">
+							<h3>Members</h3>
+							<span style="float:right;">Room:{{groupchoosen}}<button class="pull-right btn btn-danger"  (click)="leaveGroup(userName,groupchoosen)" >Leave</button></span>
+                        </div>
+                    </div>
+                    <div class="member_list">
+        
+        
+		<ul class="list-unstyled"  *ngFor="let item of  joinningAttender">
+                            <li class="left clearfix">
+                                <span class="chat-img pull-left">
+                                    <img src="assets/img/user.png" alt="User Avatar" class="img-circle"/>
+                                </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                        <strong class="primary-font"> <a routerLink="/memberManage/{{item.userName}}"> {{item.userName}}:</a>  </strong>
+                                        <span class="badge pull-right connected">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+</div>
+<div style="clear: both;"></div>
+
+	<div class="head"><a href="./viewonline.php?style=747">Who is online</a></div>
+	<div class="middle">Users browsing this forum: No registered users and 3 guests</div>
+</div>
+
+	<div id="page-footer">
+		
+		
+
+		<div class="copyright">Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
+			
+		</div>
+	</div>
+</div>
+	<div class="footer">
+		Style by <a href="http://www.bradleyv.com" title="Brad">Brad Veryard</a>
+	</div>
+</div>
+
+<div>
+	<a id="bottom" name="bottom" accesskey="z"></a>
+	
+</div>
+
+</body>
+</html>

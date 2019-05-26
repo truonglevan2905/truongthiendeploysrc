@@ -63,4 +63,27 @@ router.get('/getgroup',function(req,res){
    res.send(data);
   })
 })
+router.get('/getAllGroupChatByUserName/:name',function(req,res){
+  groupDAO.getAllGroupByUserNam(req.params.name,function(data){
+    res.send(data);
+  })
+})
+router.get('/checkgroupusername/:groupname/:username',function(req,res){
+  console.log("saaaaaaaaaaa"+req.params.groupname+"dsds"+req.params.username);
+     groupDAO.getAllGroupNameByUserNameGroup(req.params.groupname,req.params.username,function(data){
+       console.log("saasasas"+data);
+      res.send(data);
+     })
+})
+router.delete('/deleteGroupName/:name/:username',function(req,res){
+    console.log(req.params.name+"-------------"+req.params.username);
+    groupDAO.deleteGroupChat(req.params.name,req.params.username,function(value){
+      if(value==true){
+        res.send("Success");
+      }
+      else{
+        res.send("Fail");
+      }
+    })
+})
 module.exports=router;

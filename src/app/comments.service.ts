@@ -42,4 +42,8 @@ export class CommentsService {
   updateButtonDislike1(id:any,name:any,sl:any):Observable<NumberStatus>{
     return this.http.put<NumberStatus>(this.numberStatusURI+"updateDiskLikeButton1/"+id+"/"+name+"/"+sl,{id,name,sl});
   }
+  getAllNumberStatusByCommentId(id:any):Observable<NumberStatus>{
+    return this.http.put<NumberStatus>(this.numberStatusURI+"getNumberStatusByCommentId/"+id,id);
+  }
+  
 }

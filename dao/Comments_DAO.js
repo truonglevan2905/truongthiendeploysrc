@@ -34,6 +34,15 @@ exports.getAllCommentByThreadID=function (id,callback) {
         }
     })
 }
+exports.getAllCommentByID=function(id,callback){
+    Comments.find({commentId:id},function (err,data) {
+        if(err){
+
+        }else{
+        callback(JSON.stringify(data));
+        }
+    })
+}
 exports.updateViewOfLike=function(value,callback){
     
 
