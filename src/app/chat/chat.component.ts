@@ -292,7 +292,7 @@ leaveGroup(data,data1):void{
   }
   showErro1r( receiver: String,error: String): void{
     this.dialog.open(DialogCallComponent, {
-      data: {username:receiver,errorMsg: error} ,width : '250px'
+      data: {username:receiver,errorMsg: error} ,width : '280px'
     });
    
   }

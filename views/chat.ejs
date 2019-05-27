@@ -4669,9 +4669,9 @@ input.button3:hover {
              var message="<li class='left clearfix'>"+
                 "<img src="+data.image+" alt='User Avatar' class='img-circle' style='width:30px;height:30px;' />"+
                 "<div class='chat-body1 clearfix'>"+
-                " <span class='user'>"+data.username+"</span>"+
-                " <p>"+data.message+"</p>"+
-                " <div class='chat_time'>"+data.thoigian+"</div>"+
+                " <span class='user' style='color:darkcyan;'>"+data.username+"</span>"+
+                " <p style='color:darkcyan;'>"+data.message+"</p>"+
+                " <div class='chat_time' style='color:darkcyan;'>"+data.thoigian+"</div>"+
                 "</div>"+
                 "</li>";
                 $("#binhluan").append(message); 
@@ -4683,15 +4683,24 @@ input.button3:hover {
 <body id="phpbb" class="section-viewtopic ltr">
        
 <div id="wrap">
-<a href="/" title="Board index" id="logo"><img src="/styles/oxygen/imageset/logo.png" width="126px" height="42" alt="" title="" /></a>
+		<a id="top" name="top" accesskey="t"></a>
+		
 
-<div id="header">
+
+<div id="header" style="background-image: url('/styles/oxygen/imageset/bg15.jpg'); height: 300px; background-size: cover;">
 		
-		
-      
-      <div>
-		
+	<a href="/" title="Board index" id="logo"><img src="/styles/oxygen/imageset/logo.png" width="126"
+		height="42" alt="" title="" /></a>
+	<div class="search_box">
+	  <form >
+		<fieldset>
+		  <input  type="text" maxlength="128" title="Search for keywords" class=""
+			placeholder="Search for keywords" />
+		</fieldset>
+	  </form>
 	</div>
+</div>
+
 	
 	<div style="width:100%;">
 	
@@ -4739,16 +4748,16 @@ input.button3:hover {
 				
 
 				
-                            <div class="row">
+                            <div class="row" >
                               
                                 <!--group_message_section-->
-                                <div class="chat_area">
-                                    <ul class="list-unstyled" id="binhluan">
+                                <div class="chat_area" style="background:#FFEBCD;">
+                                    <ul class="list-unstyled" id="binhluan" style="background:#FFEBCD;">
                                       
                                     </ul>
                                 </div>
                               
-                                <div class="message_write">
+                                <div class="message_write"  style="background:#FFEBCD;">
                                     <form action="">
                                     <textarea class="form-control" placeholder="type a message" id="message" name="message" ></textarea>
                                     <div class="clearfix"></div>
@@ -4771,7 +4780,7 @@ input.button3:hover {
         </div>
     </div>
 </div>
-</div>
+
 <div style="clear: both;"></div>
 
 	

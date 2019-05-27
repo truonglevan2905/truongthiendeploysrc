@@ -65,16 +65,16 @@
                     <!--group_message_section-->
                     <div class="chat_area">
                         <ul class="list-unstyled" *ngFor="let item of arrayMessage">
-                            <li class="left clearfix" >
+                            <li class="left clearfix"  style="background: #EED5D2;">
 									
 										<img src="{{item.image}}" alt="User Avatar" class="img-circle" style="width:30px;height:30px;" />
 									
 									
 								
-                                <div class="chat-body1 clearfix" >
+                                <div class="chat-body1 clearfix"  style="background: #FFF8DC;">
                                     <span class="user" ><a routerLink="/memberManage/{{item.userName}}">{{item.userName}}</a></span>
-                                    <p>{{item.content}}</p>
-                                    <div class="chat_time">{{item.createdContent | date:'hh:mm a'}}</div>
+                                    <p style="color:darkcyan;">{{item.content}}</p>
+                                    <div class="chat_time" style="color:darkcyan;">{{item.createdContent | date:'hh:mm a'}}</div>
                                 </div>
 							</li>
 							
@@ -82,7 +82,7 @@
                         </ul>
                     </div>
                   
-                    <div class="message_write">
+                    <div class="message_write" style="background:#FFEBCD;">
                         <textarea class="form-control" placeholder="type a message" [(ngModel)]="messageData"></textarea>
                         <div class="clearfix"></div>
                         <div class="chat_bottom">
@@ -94,9 +94,9 @@
 
             <div class="col-sm-5 chat_sidebar">
                 <div class="row">
-                    <div class="title-block">
-                        <div class="input-group col-md-12">
-							<h3>Members</h3>
+                    <div class="title-block" style="background:#FFEBCD;">
+                        <div class="input-group col-md-12"style="background:#FFEBCD;">
+							<h3 style="margin-left: 20px;color: darkcyan;">Thành Viên</h3>
 							<span style="float:right;">Room:{{groupchoosen}}<button class="pull-right btn btn-danger"  (click)="leaveGroup(userName,groupchoosen)" >Leave</button></span>
                         </div>
                     </div>

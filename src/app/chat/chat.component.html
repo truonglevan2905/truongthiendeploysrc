@@ -58,11 +58,12 @@
  <div>
     <div>
         <div>
-            <div class="col-sm-5 chat_sidebar">
+            <div class="col-sm-6 chat_sidebar">
                 <div class="row">
-                    <div class="title-block">
-                        <div class="input-group col-md-12">
-                            <h3>Groups</h3>
+                    <div class="title-block" style="background:#FFEBCD;">
+                        <div class="input-group col-md-12" style="background:#FFEBCD;
+						">
+                            <h3 style="margin-left: 30px;color: darkcyan;">Nhóm</h3>
                         </div>
                     </div>
                     <div class="group_list">
@@ -78,7 +79,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="title-block">
+                    <div class="title-block" style="background:#FFEBCD;">
                         <div class="input-group col-md-12">
                             <span class="pull-left" style="color:#fff;"><strong>{{connectionState | async}}</strong></span>
                             <span class="badge pull-right" [ngClass]="{ connected:(connectionState | async) === 'Connected', 
@@ -86,19 +87,19 @@
                             disconnected:(connectionState | async) === 'Disconnected'}">&nbsp;</span>
                         </div>
 
-                        <div class="input-group col-md-12" style="margin-top: 10px;">
-                            <button class="btn btn-success" (click)="reConnect()" *ngIf="(connectionState | async) !== 'Connected'">Re-Connect</button>
+                        <div class="input-group col-md-12" style="background:#FFEBCD;">
+                            <button class="btn btn-success" (click)="reConnect()" *ngIf="(connectionState | async) !== 'Connected'">Kết nối </button>
                           
                         </div>
                     </div>
                 </div>
 			</div>
 			<div class="col-sm-6 message_section"  >
-			<div class="col-sm-6 chat_sidebar" >
-					<div class="row" style="width:400px ;">
-						<div class="title-block">
-							<div class="input-group col-md-12">
-								<h3>Members Online</h3>
+			<div class="col-sm-12 chat_sidebar" >
+					<div class="row" style="width:450px ;">
+						<div class="title-block" style="background:#FFEBCD;">
+							<div class="input-group col-md-12" style="background:#FFEBCD;">
+								<h3 style="margin-left: 30px;color: darkcyan;">Thành viên online</h3>
 							</div>
 						</div>
 						<div class="member_list">
@@ -110,7 +111,7 @@
 									</span>
 									<div class="chat-body clearfix" >
 										<div class="header_sec">
-											<strong><h4><a routerLink="/memberManage/{{member.userName}}">{{member.userName}}</a></h4><button  class="btn btn-success" (click)="invitePeople(member.userName,member.image)" >Mời</button><button class="btn btn-success" (click)="call(member.userName)">Call</button></strong>
+											<strong><h4><a routerLink="/memberManage/{{member.userName}}">{{member.userName}}</a></h4><button  class="btn btn-success" (click)="invitePeople(member.userName,member.image)" >Mời</button><button class="btn btn-success" (click)="call(member.userName)"><img src="assets/img/dienthoai.png" style="width: 15px;height: 15px;"/>Call</button></strong>
 											<strong style="float: right;" ><h4>{{member.position}}</h4></strong>
 											<strong></strong>
 											<span class="badge pull-right connected">&nbsp;</span>
