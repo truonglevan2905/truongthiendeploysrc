@@ -140,7 +140,7 @@ export class CreatethreadComponent implements OnInit {
             threadId:id,
             userName: localStorage.getItem("sessionusername"),
             content: this.htmlContent,
-            image: "assets/img/user.png",
+            image: this.image,
             position:this.position,
             numberOfLikes: 0,
             numberOfDislikes:0,

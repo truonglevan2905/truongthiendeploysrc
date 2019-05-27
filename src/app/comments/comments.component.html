@@ -63,12 +63,10 @@
 							
 					<span style="color:black;">{{comment.user}}--{{time| date: 'hh:mm dd/MM/yyyy'}}</span>
 						</div>
-						<div style="width:100%;height:auto;">
-								{{comment.message|titlecase}}
+						<div style="width:100%;height:auto;" [innerHTML]="comment.message">
 						</div>
 						<div style="margin-top:30px;float: right;">
-								<button style="margin-top: 20px;"  ><img src="assets/img/iconlike.jpg" style="width:30px;height:30px;"/>{{comment.numberOfLikes}}Like</button>
-								<button style="margin-top: 20px;"><img src="assets/img/dislikeicon.jpg" style="width:30px;height:30px;"/>{{comment.numberOfDislikes}}DisLike</button>
+							<fb-like url="https://doantn-truong-thien.herokuapp.com/thread/{{threadId}}/comment.content"></fb-like>
 								</div>
 						
 					</div>
