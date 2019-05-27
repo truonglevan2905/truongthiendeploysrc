@@ -26,7 +26,7 @@ exports.getAllCommentByCommentId=function(id,name,callback){
     })
 }
 exports.getAllCommentByThreadID=function (id,callback) {
-    Comments.find({threadId:id},function (err,data) {
+    Comments.find({threadId:id}, null, {sort: {commentDate: 1}}, function (err,data) {
         if(err){
 
         }else{

@@ -28,6 +28,7 @@ cooment:Comment1[]=[];
   userName: string;
   topicName: string;
   numberstatus:NumberStatus;
+  joinDate: any;
    view:Number;
   time:Date;
   slchange:Number;
@@ -192,7 +193,7 @@ cooment:Comment1[]=[];
     if(this.position=="Admin"||this.position=="SubAdmin"){
 this.commentservice.deleteCommentById(value);
 this.socketService.sendMessageRemoveCommentId1({commentid:value,threadid:value1});
-this.showError("Bài viết của bạn đã được xóa!");
+this.showError("Bình luận của bạn đã được xóa!");
     }
     else{
       this.commentservice.getAllCommentByCommentId(value,this.userName).subscribe(data=>{
@@ -200,7 +201,7 @@ this.showError("Bài viết của bạn đã được xóa!");
         if(data.length>0){
            this.commentservice.deleteCommentById(value);
            this.socketService.sendMessageRemoveCommentId1({commentid:value,threadid:value1});
-           this.showError("Bài viết của bạn đã được xóa!");
+           this.showError("Bình luận của bạn đã được xóa!");
         }
         else{
           this.showError("Bạn không có quyền xóa bài viết!");
@@ -270,7 +271,7 @@ this.showError("Bài viết của bạn đã được xóa!");
           statusLike:false,
           statusDisLike:false
         }
-  
+        this.time = new Date();
       this.commentservice.addComments(this.comm).subscribe(x => console.log('Observer got a next value: ' + x),
         err => console.log("success"),
         () => console.log('Observer got a complete notification')
@@ -280,6 +281,7 @@ this.showError("Bài viết của bạn đã được xóa!");
 
 
       this.htmlContent = '';
+      this.isCheck = false;
     }
     else {
       this.showError("Bạn chưa nhập vào field.");
@@ -304,12 +306,21 @@ this.showError("Bài viết của bạn đã được xóa!");
       if(localStorage.getItem("isLoginSocial")=='true'){
              this.image=localStorage.getItem("image");
              this.position="Member";
+             this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
+              data.forEach((item,index)=>{
+                  this.image=item.image;
+                  this.position=item.position;
+                  this.joinDate = item.joinDate;
+              })
+              console.log(this.image);
+             });
       }
       else{
     this.membersService.getMemberByUsername(this.userName).subscribe(data=>{
       data.forEach((item,index)=>{
           this.image=item.image;
           this.position=item.position;
+          this.joinDate = item.joinDate;
       })
       console.log(this.image);
      });
@@ -344,7 +355,7 @@ this.showError("Bài viết của bạn đã được xóa!");
   }
   deleteBaiViet(id: any) {
     this.threadService.deleteTheadId(id);
-    this.showError("Bài viết  xóa thành công");
+    this.showError("Bài viết xóa thành công");
     this.router.navigate(['topic/' + this.topicName]);
   }
 }
