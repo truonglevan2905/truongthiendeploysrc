@@ -117,8 +117,8 @@
             
           </div>
         </div>
-        <div class="buttons" *ngIf="userName !== null">
-            <a routerLink="/createthread/{{name}}" class="butn"><span></span>Post a new topic</a>
+        <div class="buttons" style="background-color: #80BEE7" *ngIf="userName !== null">
+            <a routerLink="/createthread/{{name}}" class="butn"><span></span>Tạo bài viết mới</a>
           </div>
         <label style="float:right;"><pagination-controls (pageChange)="p = $event" ></pagination-controls></label>
 

@@ -27,7 +27,7 @@
 
 	<div class="buttons movedown">
 	
-		<button *ngIf="userName!=null"  class="butn"  title="Post a reply" (click)="onselect(a=true)">Post a reply</button>
+		<button *ngIf="userName!=null"  class="butn"  title="Post a reply" (click)="onselect(a=true)">Bình luận</button>
 		<button *ngIf="(userName!=null && userName === createUser) || position === 'Admin' || position === 'SubAdmin'"  class="butn"  title="Delete this topic" (click)="deleteBaiViet(threadId)">Xóa bài viết này</button>
 	
 	</div>
@@ -45,10 +45,10 @@
 	<div *ngIf="isCheck" id="khungbaiviet" style="border:1px;background-color:lightgrey;height: auto;border: 5px;" >
 	
 		<div class="container1" style="background: white;">
-			<h1 style="color:black;">Tạo comment bài viết</h1>
+			<h1 style="color:black;">Bình luận cho bài viết</h1>
 			<angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
 		
-			<button style="background-color: red;border-radius:5px; height:30px; float: right; " (click)="createCommit()"><span style="color:white;">Tạo comment</span></button>
+			<button style="background-color: red;border-radius:5px; height:30px; float: right; " (click)="createCommit()"><span style="color:white;">Gửi bình luận</span></button>
 		  </div>
 					</div>
 					<div *ngFor="let comment of messageArray1" >
@@ -63,7 +63,8 @@
 							
 					<span style="color:black;">{{comment.user}}--{{time| date: 'hh:mm dd/MM/yyyy'}}</span>
 						</div>
-						<div style="width:100%;height:auto;" [innerHTML]="comment.message">
+						<div style="width:100%;height:auto;">
+								{{comment.message|titlecase}}
 						</div>
 						<div style="margin-top:30px;float: right;">
 								<button style="margin-top: 20px;"  ><img src="assets/img/iconlike.jpg" style="width:30px;height:30px;"/>{{comment.numberOfLikes}}Like</button>
@@ -84,11 +85,10 @@
 			
 	<span style="color:black;">{{comment.userName|uppercase}}--{{comment.commentDate| date: 'hh:mm dd/MM/yyyy'}}</span>
 		</div>
-		<div style="width:100%;height:auto; white-space: pre-line;" [innerHTML]="comment.content">
-		</div>
+		<div style="width:100%;height:auto; white-space: pre-line;" [innerHTML]="comment.content"></div>
 		<div style="margin-top:30px;float: right;">
-			<button style="margin-top: 20px;" (click)="clickLike(id=comment.commentId,threadid=comment.threadId,numberlike=comment.numberOfLikes,numberdislike=comment.numberOfDislikes)" ><img src="assets/img/iconlike.jpg" style="width:30px;height:30px;"/>{{comment.numberOfLikes}}Like</button>
-								<button style="margin-top: 20px;" (click)="clickDisLike(id=comment.commentId,threadid=comment.threadId,numberlike=comment.numberOfLikes,numberdislike=comment.numberOfDislikes)"><img src="assets/img/dislikeicon.jpg" style="width:30px;height:30px;"/>{{comment.numberOfDislikes}}DisLike</button>
+			<fb-like url="https://doantn-truong-thien.herokuapp.com/thread/{{threadId}}/comment.content"></fb-like>
+						
 		</div>
 	</div>
 	

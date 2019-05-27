@@ -22,7 +22,6 @@
 			</div>
 			<a name="start_here"></a>
 			<div id="page-body">
-				<form method="post" action="memberlist_style_747_sid_47ef40484cd2d7764257c87c6557004b.html">
 					<h2 class="solo">Members</h2>
 					<div class="panel">
 						<div class="inner"><span class="corners-top"><span></span></span>
@@ -35,23 +34,19 @@
 							<table class="table1" cellspacing="1" id="memberlist">
 								<thead>
 									<tr>
-										<th class="name"><span class="rank-img"><a href="#">Position</a></span><a
-											 href="#">Username</a></th>
-										<th class="posts"><a href="#">activeStatus</a></th>
-										<th class="info"><a href="#">bannedStatus</a></th>
-										<th class="joined"><a href="#">Joined</a></th>
+										<th class="name"><a
+											 href="#">Tên người dùng</a></th>
+										<th class="posts"><a href="#">Vị trí</a></th>
+										<th class="joined"><a href="#">Ngày tham gia</a></th>
 									</tr>
 								</thead>
 								<tbody *ngFor="let cus of customers|formatmember:search |paginate: { itemsPerPage: 10, currentPage: p }">
 									<tr class="bg1">
-										<td><span class="rank-img">{{cus.position}}</span><a routerLink="/memberManage/{{cus.userName}}" style="color: #AA0000;"
+										<td><a routerLink="/memberManage/{{cus.userName}}" style="color: #AA0000;"
 											 class="username-coloured">{{cus.userName}}</a></td>
 										<td class="posts"><a href="#"
-											 title="Search user’s posts">{{cus.activeStatus}}</a></td>
-										<td class="info">
-											<div><a href="#">{{cus.bannedStatus}}</a></div>
-										</td>
-										<td>{{cus.joinDate}}</td>
+											 title="Search user’s posts">{{cus.position}}</a></td>
+										<td><span class="rank-img">{{cus.joinDate | date: 'dd/MM/yyyy'}}</span></td>
 									</tr>
 
 
@@ -60,36 +55,12 @@
 							<span class="corners-bottom"><span></span></span>
 						</div>
 					</div>
-				</form>
 				<hr />
 				<ul class="linklist">
 					<li class="rightside pagination">
 						<pagination-controls (pageChange)="p = $event"></pagination-controls>
 					</li>
 				</ul>
-				<form method="post" id="jumpbox" action="index.html" onsubmit="if(this.f.value == -1){return false;}">
-					<fieldset class="jumpbox">
-						<label for="f" accesskey="j">Jump to:</label>
-						<select name="f" id="f" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
-							<option value="-1">Select a forum</option>
-							<option value="-1">------------------</option>
-							<option value="1">Test Category 1</option>
-							<option value="2">&nbsp; &nbsp;Test Forum 1</option>
-							<option value="3">&nbsp; &nbsp;Test Forum 2</option>
-							<option value="4">&nbsp; &nbsp;Test Forum 3</option>
-							<option value="6">&nbsp; &nbsp;&nbsp; &nbsp;Test Forum 4</option>
-							<option value="5">&nbsp; &nbsp;Test Forum 5</option>
-							<option value="7">&nbsp; &nbsp;Test Forum 6</option>
-							<option value="9">&nbsp; &nbsp;Test Forum 7</option>
-							<option value="8">phpBB3styles.net</option>
-							<option value="14">&nbsp; &nbsp;Styles Support</option>
-							<option value="18">&nbsp; &nbsp;Styles Request</option>
-							<option value="13">&nbsp; &nbsp;Feedback & Tips</option>
-							<option value="12">&nbsp; &nbsp;Announcements</option>
-						</select>
-						<input type="submit" value="Go" class="button2" />
-					</fieldset>
-				</form>
 			</div>
 		</div>
 	</div>

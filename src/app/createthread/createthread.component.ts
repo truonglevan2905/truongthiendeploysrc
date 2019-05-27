@@ -140,7 +140,7 @@ export class CreatethreadComponent implements OnInit {
             threadId:id,
             userName: localStorage.getItem("sessionusername"),
             content: this.htmlContent,
-            image: this.image,
+            image: "assets/img/user.png",
             position:this.position,
             numberOfLikes: 0,
             numberOfDislikes:0,
@@ -154,6 +154,8 @@ export class CreatethreadComponent implements OnInit {
           )
     
           this.showError("Thành công", data);
+          
+          this.htmlContent = "";
           }
           this.threadService.addEmail(this.email).subscribe(x => console.log('Observer got a next value: ' + x),
             err => console.log("success"),
