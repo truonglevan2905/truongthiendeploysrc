@@ -46,7 +46,7 @@
     "multer": "^1.4.1",
     "ngx-pagination": "^3.2.1",
     "ngx-socket-io": "^2.1.1",
-    "nodemailer": "^6.1.1",
+    "nodemailer": "^6.4.16",
     "path": "^0.12.7",
     "pug": "^2.0.3",
     "rxjs": "~6.3.3",
